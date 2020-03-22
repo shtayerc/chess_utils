@@ -1,5 +1,5 @@
 /*
-chess_utils v0.1.0
+chess_utils v0.1.1
 
 Copyright (c) 2020 David Murko
 
@@ -356,6 +356,9 @@ int notation_tag_index(Notation *n, const char *key);
 
 //given Tag is appended to n->tag_list
 void notation_tag_add(Notation *n, Tag *tag);
+
+//remove Tag with given key
+void notation_tag_remove(Notation *n, const char *key);
 
 //returns Tag for given key
 Tag * notation_tag_get(Notation *n, const char *key);
@@ -1678,6 +1681,21 @@ notation_tag_add(Notation *n, Tag *tag)
     n->tag_count++;
     n->tag_list = (Tag*)realloc(n->tag_list, sizeof(Tag)*n->tag_count);
     n->tag_list[last] = *tag;
+}
+
+void
+notation_tag_remove(Notation *n, const char *key)
+{
+    int i = notation_tag_index(n, key);
+    if(i == -1)
+        return;
+
+    int j;
+    for(j=1; j+i < n->tag_count; j++){
+        n->tag_list[i+(j-1)] = n->tag_list[i+j];
+    }
+    n->tag_count--;
+    n->tag_list = (Tag*)realloc(n->tag_list, sizeof(Tag)*n->tag_count);
 }
 
 Tag *

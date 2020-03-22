@@ -674,6 +674,8 @@ test_notation_tag_functions()
     notation_tag_add(&n, &tag);
     tag = *notation_tag_get(&n, "NewTag");
     assert(!strcmp(tag.key, "NewTag") && !strcmp(tag.value, "Value"));
+    notation_tag_remove(&n, "NewTag");
+    assert(notation_tag_get(&n, "NewTag") == NULL && n.tag_count == 7);
     notation_free(&n);
 }
 
