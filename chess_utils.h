@@ -1,5 +1,5 @@
 /*
-chess_utils v0.1.1
+chess_utils v0.1.2
 
 Copyright (c) 2020 David Murko
 
@@ -418,6 +418,14 @@ void pgn_write_variation(FILE *f, Variation *v, char *line, int i);
 
 //output PGN for given Notation
 void pgn_write_file(FILE *f, Notation *n);
+
+//
+//UCI FUNCTIONS
+//
+
+//process UCI engine output and set parameters and SAN move list
+void uci_line_parse(const char *str, int len, const char *fen, int *depth,
+        int *multipv, int *cp, char **move_list, int move_count);
 
 #ifdef __cplusplus
 }
@@ -2112,6 +2120,46 @@ pgn_write_file(FILE *f, Notation *n)
     fprintf(f, "\n");
     pgn_write_variation(f, n->line_main, line, 0);
     fprintf(f, "%s %s\n\n", line, result);
+}
+
+void
+uci_line_parse(const char *str, int len, const char *fen, int *depth,
+        int *multipv, int *cp, char **move_list, int move_count)
+{
+    char buffer[len];
+    char *tmp, *saveptr, *last;
+    int moves = 0;
+    int i = 0;
+    Board b;
+    Square src, dst;
+    Piece prom_piece;
+    Status status;
+    board_fen_import(&b, fen);
+    snprintf(buffer, len, str);
+    last = strtok_r(buffer, " ", &saveptr);
+    if(last == NULL)
+        return;
+
+    tmp = strtok_r(NULL, " ", &saveptr);
+    while(tmp != NULL){
+        if(!strcmp(last, "depth"))
+            *depth = strtol(tmp, NULL, 10);
+        if(!strcmp(last, "multipv"))
+            *multipv = strtol(tmp, NULL, 10);
+        if(!strcmp(last, "cp"))
+            *cp = strtol(tmp, NULL, 10);
+        if(!strcmp(last, "pv"))
+            moves = 1;
+        if(moves && i < move_count){
+            status = board_move_uci_status(&b, tmp, &src, &dst, &prom_piece);
+            board_move_san_export(&b, src, dst, prom_piece, move_list[i++],
+                    SAN_LEN, status);
+            board_move_do(&b, src, dst, prom_piece, status);
+        }
+
+        last = tmp;
+        tmp = strtok_r(NULL, " ", &saveptr);
+    }
 }
 
 #endif

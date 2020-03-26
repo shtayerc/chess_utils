@@ -770,6 +770,26 @@ test_pgn_write_file()
     notation_free(&n);
 }
 
+void
+test_uci_line_parse()
+{
+    int depth, multipv, cp;
+    int move_count = 10;
+    char **move_list = (char**)malloc(sizeof(char*)*move_count);
+    int i;
+    for(i=0; i < move_count; i++){
+        move_list[i] = (char*)malloc(sizeof(char)*UCI_LEN);
+    }
+    uci_line_parse("info depth 20 seldepth 32 multipv 1 score cp 54 nodes 3442296 nps 1228952 hashfull 939 tbhits 0 time 2801 pv e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 g1f3 g8f6 c1e3 f8d6 f1d3 e8g8 e1g1 b8c6 b1c3 c6b4 c3b5 c7c6 b5d6 d8d6 c2c3 b4d3 d1d3",
+            1024, FEN_DEFAULT, &depth, &multipv, &cp, move_list, move_count);
+    assert(depth == 20 && multipv == 1 && cp == 54 && !strcmp(move_list[0],
+                "e4") && !strcmp(move_list[9], "Bd6"));
+    for(i=0; i < move_count; i++){
+        free(move_list[i]);
+    }
+    free(move_list);
+}
+
 int main(){
     //STRING UTILS
     test_strtok_r();
@@ -840,5 +860,8 @@ int main(){
     //PGN FUNCTIONS
     test_pgn_read_file();
     test_pgn_write_file();
+
+    //UCI FUNCTIONS
+    test_uci_line_parse();
     return 0;
 }
