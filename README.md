@@ -9,6 +9,12 @@ Chess library for C/C++
 - PGN read/write
 
 ### EXAMPLE USAGE
+
+```c
+#define CHESS_UTILS_IMPLEMENTATION
+#include "chess_utils.h"
+```
+
 ```c
 Board b;
 board_fen_import(&b, FEN_DEFAULT);

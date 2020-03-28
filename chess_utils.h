@@ -1,5 +1,5 @@
 /*
-chess_utils v0.1.2
+chess_utils v0.1.3
 
 Copyright (c) 2020 David Murko
 
@@ -129,26 +129,17 @@ typedef struct {
     int tag_count;
 } Notation;
 
-const char *FEN_DEFAULT = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-const char *PIECE_STR = ".pnbrqkPNBRQK";
-const char *CASTLE_STR_SHORT = "O-O";
-const char *CASTLE_STR_LONG  = "O-O-O";
-const char *piece_map[] = { "", "", "N", "B", "R", "Q", "K", "", "N", "B", "R",
-    "Q", "K" };
+//
+//GLOBAL VARIABLES
+//
 
-const OffsetIndex offset_map[] = { OffsetNone, OffsetBlackPawn, OffsetKnight,
-    OffsetBishop, OffsetRook, OffsetQueen, OffsetKing, OffsetWhitePawn,
-    OffsetKnight, OffsetBishop, OffsetRook, OffsetQueen, OffsetKing };
-
-const int piece_offset[][9] = {
-    {16, 32, 17, 15, 0, 0, 0, 0, 0},
-    {-16, -32, -17, -15, 0, 0, 0, 0, 0},
-    {-18, -33, -31, -14, 18, 33, 31, 14, 0},
-    {-17, -15, 17, 15, 0, 0, 0, 0, 0},
-    {-16, 1, 16, -1, 0, 0, 0, 0, 0},
-    {-17, -16, -15, 1, 17, 16, 15, -1, 0},
-    {-17, -16, -15, 1, 17, 16, 15, -1, 0}
-}; //offset
+extern const char *FEN_DEFAULT;
+extern const char *PIECE_STR;
+extern const char *CASTLE_STR_SHORT;
+extern const char *CASTLE_STR_LONG;
+extern const char *piece_map[];
+extern const OffsetIndex offset_map[];
+extern const int piece_offset[][9];
 
 //
 //STRING UTILS
@@ -430,6 +421,31 @@ void uci_line_parse(const char *str, int len, const char *fen, int *depth,
 #ifdef __cplusplus
 }
 #endif
+
+#endif // _CHESS_UTILS_H_
+
+#ifdef CHESS_UTILS_IMPLEMENTATION
+
+const char *FEN_DEFAULT = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const char *PIECE_STR = ".pnbrqkPNBRQK";
+const char *CASTLE_STR_SHORT = "O-O";
+const char *CASTLE_STR_LONG  = "O-O-O";
+const char *piece_map[] = { "", "", "N", "B", "R", "Q", "K", "", "N", "B", "R",
+    "Q", "K" };
+
+const OffsetIndex offset_map[] = { OffsetNone, OffsetBlackPawn, OffsetKnight,
+    OffsetBishop, OffsetRook, OffsetQueen, OffsetKing, OffsetWhitePawn,
+    OffsetKnight, OffsetBishop, OffsetRook, OffsetQueen, OffsetKing };
+
+const int piece_offset[][9] = {
+    {16, 32, 17, 15, 0, 0, 0, 0, 0},
+    {-16, -32, -17, -15, 0, 0, 0, 0, 0},
+    {-18, -33, -31, -14, 18, 33, 31, 14, 0},
+    {-17, -15, 17, 15, 0, 0, 0, 0, 0},
+    {-16, 1, 16, -1, 0, 0, 0, 0, 0},
+    {-17, -16, -15, 1, 17, 16, 15, -1, 0},
+    {-17, -16, -15, 1, 17, 16, 15, -1, 0}
+}; //offset
 
 char*
 strtok_r(char *str, const char *delim, char **nextp)
@@ -2162,4 +2178,4 @@ uci_line_parse(const char *str, int len, const char *fen, int *depth,
     }
 }
 
-#endif
+#endif // CHESS_UTILS_IMPLEMENTATION

@@ -1,4 +1,5 @@
 #include <assert.h>
+#define CHESS_UTILS_IMPLEMENTATION
 #include "../chess_utils.h"
 
 void
