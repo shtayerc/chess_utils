@@ -1,5 +1,5 @@
 /*
-chess_utils v0.1.3
+chess_utils v0.1.4
 
 Copyright (c) 2020 David Murko
 
@@ -334,6 +334,11 @@ void variation_move_next(Variation *v);
 
 //v->move_current is decreased for 1 if higher than 0
 void variation_move_prev(Variation *v);
+
+//move number is set for white moves and first move of variation
+//index is for move_list, prev_index is index from parent variation
+void variation_movenumber_export(Variation *v, int index, int prev_index,
+        char *str, int len);
 
 //
 //NOTATION FUNCTIONS
@@ -1675,6 +1680,22 @@ variation_move_prev(Variation *v)
         v->move_current--;
 }
 
+
+void
+variation_movenumber_export(Variation *v, int index, int prev_index, char *num,
+        int len)
+{
+    num[0] = '\0';
+    int movenumber = (index / 2) + (prev_index / 2) + 1;
+
+    //after white's move it is black's turn
+    if(v->move_list[index].board.turn == Black)
+        snprintf(num, len, "%d.", movenumber);
+    //add 3 dots when first move is from black
+    else if(index == 1)
+        snprintf(num, len, "%d...", movenumber);
+}
+
 void
 notation_tag_init(Notation *n)
 {
@@ -2087,22 +2108,22 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
 
     Move *m;
     int j;
-    int move_step = 1;
+    char num[MOVENUM_LEN];
     for(j=1; j<v->move_count; j++){
         m = &v->move_list[j];
-        if(j==1 && i)
+        if(j == 1 && i)
             pgn_write_concate(f, line, 1, "(");
 
-        if(v->move_list[0].comment != NULL && j==1)
+        if(j == 1 && v->move_list[0].comment != NULL)
             pgn_write_comment(f, line, v->move_list[0].comment);
 
-        if(m->board.turn == Black)
-            pgn_write_concate(f, line, 6, "%d.",  (j/2)+move_step+i/2);
-        else if(j==1){
-            pgn_write_concate(f, line, 9, "%d...", (j/2)+(i/2));
-        }else if(v->move_list[j-2].variation != NULL){
-            pgn_write_concate(f, line, 9, "%d...", (j/2)+(i/2));
-        }
+        variation_movenumber_export(v, j, i, num, MOVENUM_LEN);
+        if(strlen(num))
+            pgn_write_concate(f, line, strlen(num), num);
+
+        if(j > 1 && v->move_list[j-2].variation != NULL
+                && m->board.turn == White)
+                pgn_write_concate(f, line, 9, "%d...", (j/2)+(i/2));
 
         pgn_write_concate(f, line, strlen(m->san)+1, "%s", m->san);
         if(m->nag_move)
@@ -2114,9 +2135,9 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
             pgn_write_comment(f, line, m->comment);
 
         if(v->move_list[j-1].variation != NULL)
-            pgn_write_variation(f, v->move_list[j-1].variation, line, i+j);
+            pgn_write_variation(f, v->move_list[j-1].variation, line, i + j-1);
 
-        if(j+1 == v->move_count && i)
+        if(j + 1 == v->move_count && i)
             pgn_write_concate(f, line, 2, ")");
     }
 }
