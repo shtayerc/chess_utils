@@ -308,8 +308,6 @@ void board_fen_export(Board *b, char *FEN_str);
 //MOVE FUNCTIONS
 //
 
-Move * move_new(Square src, Square dst, Piece prom_piece, Board *b,
-        const char *san);
 void move_init(Move *m);
 
 //free related Variations recursively and free comment
@@ -1590,20 +1588,6 @@ board_fen_export(Board *b, char *FEN_str)
     }
     concate(FEN_str, FEN_LEN, "%d %d", (b->half_move),
             b->move_number);
-}
-
-Move *
-move_new(Square src, Square dst, Piece prom_piece, Board *b, const char *san)
-{
-    Move *move = (Move*)malloc(sizeof(Move));
-    move->src = src;
-    move->dst = dst;
-    move->prom_piece = prom_piece;
-    move->board = *b;
-    move->comment = NULL;
-    move->variation = NULL;
-    snprintf(move->san, SAN_LEN, san);
-    return move;
 }
 
 void

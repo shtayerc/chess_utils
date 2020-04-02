@@ -640,11 +640,9 @@ test_board_fen_import()
 void
 test_move_functions()
 {
-    Board b;
-    Move *m = move_new(e2, e4, Empty, &b, "e4");
-    move_init(m);
-    move_free(m);
-    free(m);
+    Move m;
+    move_init(&m);
+    move_free(&m);
 }
 
 void
