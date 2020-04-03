@@ -1,5 +1,5 @@
 /*
-chess_utils v0.1.4
+chess_utils v0.2.0
 
 Copyright (c) 2020 David Murko
 
@@ -119,7 +119,8 @@ struct Move {
     char *comment;
     int nag_move;
     int nag_position;
-    Variation *variation;
+    Variation **variation_list;
+    int variation_count;
 };
 
 typedef struct {
@@ -408,6 +409,7 @@ void pgn_write_concate(FILE *f, char *line, int len, const char *fmt, ...);
 void pgn_write_comment(FILE *f, char *line, const char *str);
 
 //output Variation - i is previous Variation move index
+//if i == -1 no parentheses will be written
 void pgn_write_variation(FILE *f, Variation *v, char *line, int i);
 
 //output PGN for given Notation
@@ -1593,7 +1595,8 @@ board_fen_export(Board *b, char *FEN_str)
 void
 move_init(Move *m)
 {
-    m->variation = NULL;
+    m->variation_list = NULL;
+    m->variation_count = 0;
     m->comment = NULL;
     m->nag_move = 0;
     m->nag_position = 0;
@@ -1602,11 +1605,15 @@ move_init(Move *m)
 void
 move_free(Move *m)
 {
+    int i;
     if(m->comment != NULL)
         free(m->comment);
-    if(m->variation != NULL){
-        variation_free(m->variation);
-        free(m->variation);
+    for(i = 0; i < m->variation_count; i++){
+        variation_free(m->variation_list[i]);
+        free(m->variation_list[i]);
+    }
+    if(m->variation_list != NULL){
+        free(m->variation_list);
     }
 }
 
@@ -1629,7 +1636,7 @@ void
 variation_free(Variation *v)
 {
     int i;
-    for(i=0; i<v->move_count; i++){
+    for(i = 0; i < v->move_count; i++){
         move_free(&v->move_list[i]);
     }
     free(v->move_list);
@@ -1805,15 +1812,20 @@ notation_variation_add(Notation *n, Square src, Square dst, Piece prom_piece,
 {
     Variation *v = n->line_current;
     Move *m = &v->move_list[v->move_current];
-    m->variation = (Variation*)malloc(sizeof(Variation));
-    variation_init(m->variation, b);
-    m->variation->move_list[0].src = src;
-    m->variation->move_list[0].dst = dst;
-    m->variation->move_list[0].prom_piece = prom_piece;
-    m->variation->prev = v;
-    snprintf(m->variation->move_list[0].san, SAN_LEN, san);
-    variation_move_add(m->variation, src, dst, prom_piece, b, san);
-    n->line_current = m->variation;
+    m->variation_count++;
+    m->variation_list = (Variation**)realloc(m->variation_list,
+            sizeof(Variation*) * m->variation_count);
+    m->variation_list[m->variation_count-1] = (Variation*)malloc(sizeof(
+                Variation));
+    Variation * new_v = m->variation_list[m->variation_count-1];
+    variation_init(new_v, b);
+    new_v->move_list[0].src = src;
+    new_v->move_list[0].dst = dst;
+    new_v->move_list[0].prom_piece = prom_piece;
+    new_v->prev = v;
+    snprintf(new_v->move_list[0].san, SAN_LEN, san);
+    variation_move_add(new_v, src, dst, prom_piece, b, san);
+    n->line_current = new_v;
 }
 
 void
@@ -1823,10 +1835,19 @@ notation_variation_delete(Notation *n)
         return;
     Variation *deleted = n->line_current;
     n->line_current = n->line_current->prev;
-    int i;
-    for(i=0; i<n->line_current->move_count; i++){
-        if(n->line_current->move_list[i].variation == deleted){
-            n->line_current->move_list[i].variation = NULL;
+
+    int i, j, l;
+    Move *m;
+    for(i = 0; i < n->line_current->move_count; i++){
+        m = &n->line_current->move_list[i];
+        for(j = 0; j < m->variation_count; j++){
+            if(m->variation_list[j] == deleted){
+                m->variation_list[j] = NULL;
+                for(l = j+1; l < m->variation_count; l++){
+                    m->variation_list[l-1] = m->variation_list[l];
+                }
+                m->variation_count--;
+            }
         }
     }
     variation_free(deleted);
@@ -1840,37 +1861,71 @@ notation_variation_promote(Notation *n)
         return;
 
     Variation *v = n->line_current;
-    Variation *prev = v->prev;
-    Variation *tmp;
-    int i,j;
+    Variation *parent = v->prev;
+    Variation *tmp_v;
+    Variation **tmp_list;
+    int tmp_count;
+    int i, j, l;
+    int found = 0;
 
-    for(i=0; i<prev->move_count && prev->move_list[i].variation != v; i++);
+    //find move and variation index of promoted variation
+    for(i = 0; i < parent->move_count && !found; i++){
+        for(l = 0; l < parent->move_list[i].variation_count && !found; l++){
+            if(parent->move_list[i].variation_list[l] == v){
+                found = 1;
+                i--;
+                break;
+            }
+        }
+    }
 
-    if(prev->move_list[i].variation != v)
+    if(!found)
         return;
 
-    tmp = (Variation*)malloc(sizeof(Variation));
-    variation_init(tmp, &prev->move_list[i].board);
-    tmp->move_count = prev->move_count-i;
-    tmp->move_list = (Move*)realloc(tmp->move_list,
-            sizeof(Move)*tmp->move_count);
-    tmp->prev = prev;
-    prev->move_list[i].variation = NULL;
-    for(j=0; j+i<prev->move_count; j++){
-        tmp->move_list[j] = prev->move_list[j+i];
+    if(parent->move_list[i].variation_count < 1)
+        return;
+
+    if(parent->move_list[i].variation_list[l] != v)
+        return;
+
+    //tmp_v is ex parent variation
+    tmp_v = (Variation*)malloc(sizeof(Variation));
+    variation_init(tmp_v, &parent->move_list[i].board);
+    tmp_v->move_count = parent->move_count - i;
+    tmp_v->move_list = (Move*)realloc(tmp_v->move_list, sizeof(Move)
+            * tmp_v->move_count);
+    tmp_v->prev = parent;
+
+    //remove variations from ex parent variation
+    parent->move_list[i].variation_list[l] = tmp_v;
+    tmp_list = parent->move_list[i].variation_list;
+    tmp_count = parent->move_list[i].variation_count;
+    parent->move_list[i].variation_list = NULL;
+    parent->move_list[i].variation_count = 0;
+
+    //moves after i are copied to tmp_v
+    for(j = 0; j+i < parent->move_count; j++){
+        tmp_v->move_list[j] = parent->move_list[j+i];
     }
 
-    prev->move_list = (Move*)realloc(prev->move_list,
-            sizeof(Move)*(i+v->move_count));
-    prev->prev = prev->prev;
-    prev->move_count = i+v->move_count;
-    for(j=1; j<v->move_count; j++){
-        prev->move_list[i+j]= v->move_list[j];
+    //resize parent variation and add moves from ex sub variation
+    parent->move_list = (Move*)realloc(parent->move_list,
+            sizeof(Move) * (i + v->move_count));
+    parent->prev = parent->prev; //this is fine
+    parent->move_count = i + v->move_count;
+    for(j = 1; j < v->move_count; j++){
+        parent->move_list[i+j]= v->move_list[j];
     }
 
-    prev->move_current = i+v->move_current;
-    prev->move_list[i].variation = tmp;
-    n->line_current = prev;
+    //put variations back
+    parent->move_list[i].variation_list = tmp_list;
+    parent->move_list[i].variation_count = tmp_count;
+
+    //promoted variation becomes current
+    parent->move_current = i + v->move_current;
+    n->line_current = parent;
+
+    //free ex sub variation
     free(v->move_list);
     free(v);
 }
@@ -1930,6 +1985,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     Variation *v, *new_v;
+    Move *m;
     v = n->line_main;
     for(i=0; i<index; i++){
         pgn_read_next(f);
@@ -1975,10 +2031,14 @@ pgn_read_file(FILE *f, Notation *n, int index)
                 }
 
                 if(variation_start){
+                    m = &v->move_list[v->move_current-1];
+                    b = m->board;
+                    m->variation_count++;
+                    m->variation_list = (Variation**)realloc(m->variation_list,
+                            sizeof(Variation*) * m->variation_count);
                     new_v = (Variation*)malloc(sizeof(Variation));
-                    b = v->move_list[v->move_current-1].board;
                     variation_init(new_v, &b);
-                    v->move_list[v->move_current-1].variation = new_v;
+                    m->variation_list[m->variation_count-1] = new_v;
                     new_v->prev = v;
                     v = new_v;
                 }
@@ -2091,11 +2151,16 @@ void
 pgn_write_variation(FILE *f, Variation *v, char *line, int i){
 
     Move *m;
-    int j;
+    int j, l;
     char num[MOVENUM_LEN];
+    int is_main = 0;
+    if(i == -1){
+        is_main = 1;
+        i = 0;
+    }
     for(j=1; j<v->move_count; j++){
         m = &v->move_list[j];
-        if(j == 1 && i)
+        if(j == 1 && !is_main)
             pgn_write_concate(f, line, 1, "(");
 
         if(j == 1 && v->move_list[0].comment != NULL)
@@ -2105,7 +2170,7 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
         if(strlen(num))
             pgn_write_concate(f, line, strlen(num), num);
 
-        if(j > 1 && v->move_list[j-2].variation != NULL
+        if(j > 1 && v->move_list[j-2].variation_count > 0
                 && m->board.turn == White)
                 pgn_write_concate(f, line, 9, "%d...", (j/2)+(i/2));
 
@@ -2118,10 +2183,12 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
         if(m->comment != NULL)
             pgn_write_comment(f, line, m->comment);
 
-        if(v->move_list[j-1].variation != NULL)
-            pgn_write_variation(f, v->move_list[j-1].variation, line, i + j-1);
+        for(l = 0; l < v->move_list[j-1].variation_count; l++){
+            pgn_write_variation(f, v->move_list[j-1].variation_list[l], line,
+                    i + j-1);
+        }
 
-        if(j + 1 == v->move_count && i)
+        if(j + 1 == v->move_count && !is_main)
             pgn_write_concate(f, line, 2, ")");
     }
 }
@@ -2139,7 +2206,7 @@ pgn_write_file(FILE *f, Notation *n)
             snprintf(result, 10, n->tag_list[i].value);
     }
     fprintf(f, "\n");
-    pgn_write_variation(f, n->line_main, line, 0);
+    pgn_write_variation(f, n->line_main, line, -1);
     fprintf(f, "%s %s\n\n", line, result);
 }
 
