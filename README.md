@@ -23,15 +23,14 @@ Notation n;
 notation_init(&n, &b);
 notation_tag_set(&n, "White", "New game");
 
-char *san = "e4";
+const char *san = "e4";
 Status status;
 Square src, dst;
 Piece prom_piece;
 status = board_move_san_status(&b, san, &src, &dst, &prom_piece);
 if(status != Invalid){
     board_move_do(&b, src, dst, prom_piece, status);
-    variation_move_add(n.line_current, src, dst, prom_piece, &b, san); //add new move
-    variation_move_prev(n.line_current);
+    variation_move_add(n.line_current, src, dst, prom_piece, &b, san);
     FILE *f = fopen("new_game.pgn", "w");
     pgn_write_file(f, &n);
     fclose(f);

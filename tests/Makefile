@@ -3,6 +3,7 @@ CPP=g++
 FILES=test.c
 FLAGS=-g -std=c99 -Wextra -Wall
 EXE=test
+EXAMPLEFILE=new_game.pgn
 TESTFILE_01=tmp_test_01.pgn
 TESTFILE_02=tmp_test_02.pgn
 
@@ -10,7 +11,7 @@ all:
 	$(CC) $(FLAGS) $(FILES) -o $(EXE)
 
 clean:
-	rm -f $(EXE) $(TESTFILE_01) $(TESTFILE_02)
+	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02)
 
 cpp:
 	$(CPP) -Wextra -Wall $(FILES) -o $(EXE)

@@ -837,6 +837,33 @@ test_uci_line_parse()
     free(move_list);
 }
 
+void
+test_readme_example()
+{
+    Board b;
+    board_fen_import(&b, FEN_DEFAULT);
+
+    Notation n;
+    notation_init(&n, &b);
+    notation_tag_set(&n, "White", "New game");
+
+    const char *san = "e4";
+    Status status;
+    Square src, dst;
+    Piece prom_piece;
+    status = board_move_san_status(&b, san, &src, &dst, &prom_piece);
+    if(status != Invalid){
+        board_move_do(&b, src, dst, prom_piece, status);
+        variation_move_add(n.line_current, src, dst, prom_piece, &b, san);
+        FILE *f = fopen("new_game.pgn", "w");
+        pgn_write_file(f, &n);
+        fclose(f);
+    }else{
+        printf("Invalid move\n");
+    }
+    notation_free(&n);
+}
+
 int main(){
     //STRING UTILS
     test_strtok_r();
@@ -911,5 +938,7 @@ int main(){
 
     //UCI FUNCTIONS
     test_uci_line_parse();
+
+    test_readme_example();
     return 0;
 }
