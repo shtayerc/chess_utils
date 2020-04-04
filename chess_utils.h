@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.1
+chess_utils v0.2.2
 
 Copyright (c) 2020 David Murko
 
@@ -336,6 +336,9 @@ void variation_move_next(Variation *v);
 
 //v->move_current is decreased for 1 if higher than 0
 void variation_move_prev(Variation *v);
+
+//returns current Move in given variation
+Move * variation_move_get(Variation *v);
 
 //move number is set for white moves and first move of variation
 //index is for move_list, prev_index is index from parent variation
@@ -1691,6 +1694,11 @@ variation_move_prev(Variation *v)
         v->move_current--;
 }
 
+Move *
+variation_move_get(Variation *v)
+{
+    return &v->move_list[v->move_current];
+}
 
 void
 variation_movenumber_export(Variation *v, int index, int prev_index, char *num,
@@ -1811,7 +1819,7 @@ notation_line_is_main(Notation *n)
 Move *
 notation_move_get(Notation *n)
 {
-    return &n->line_current->move_list[n->line_current->move_current];
+    return variation_move_get(n->line_current);
 }
 
 int
