@@ -203,7 +203,7 @@ char file2char(File file);
 char rank2char(Rank rank);
 char piece2char(Piece piece);//WhitePawn -> 'P'
 
-//returns offset for given move and for given piecefrom piece_offset array
+//returns offset for given move and for given piece from piece_offset array
 int move_offset_find(Square src, Square dst, OffsetIndex offset_index);
 
 //UCI string is set for given move
@@ -481,7 +481,7 @@ concate(char *str, int len, const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    vsnprintf(str+strlen(str), len, fmt, args);
+    vsnprintf(str + strlen(str), len, fmt, args);
     va_end(args);
 }
 
@@ -513,10 +513,10 @@ void
 trimcomment(char *str)
 {
     int j, i;
-    for(i=0; str[i] != '\0'; i++){
+    for(i = 0; str[i] != '\0'; i++){
         if(str[i] == '{'){
             i++;
-            for(j=0; str[i+j] != '}'; j++){
+            for(j = 0; str[i+j] != '}'; j++){
                 str[j] = str[i+j];
             }
             str[j] = '\0';
@@ -529,8 +529,8 @@ void
 charremove(char *str, int i)
 {
     int j;
-    for(j=1; str[i+j-1] != '\0'; j++){
-        str[i+(j-1)] = str[i+j];
+    for(j = 1; str[i + j-1] != '\0'; j++){
+        str[i + (j-1)] = str[i+j];
     }
 }
 
@@ -539,7 +539,7 @@ charcount(const char *str, char target)
 {
     unsigned int i;
     int count = 0;
-    for(i=0; i<strlen(str); i++){
+    for(i = 0; i < strlen(str); i++){
         if(str[i] == target)
             count++;
     }
@@ -551,7 +551,7 @@ charcount_before(const char *str, char target, char end)
 {
     int i;
     int count = 0;
-    for(i=0; str[i] != end; i++){
+    for(i = 0; str[i] != end; i++){
         if(str[i] == target)
             count++;
     }
@@ -563,7 +563,7 @@ charcount_after(const char *str, char target, char start)
 {
     unsigned int i;
     int count = 0;
-    for(i=0; str[i] != start; i++);
+    for(i = 0; str[i] != start; i++);
 
     for(; i < strlen(str); i++){
         if(str[i] == target)
@@ -578,7 +578,7 @@ str_is_move(const char *str){
     if(strlen(str) < 2)
         return 0;
     const char *allowed = "12345678abcdefghxBNKQRO-+#=";
-    for(i=0; i<strlen(str); i++){
+    for(i = 0; i < strlen(str); i++){
         if(strchr(allowed, str[i]) == NULL)
             return 0;
     }
@@ -608,7 +608,7 @@ tag_extract(const char *str, Tag *tag)
     if(str[0] != '[')
         return 0;
 
-    for(j=0; str[i] != ' '; j++){
+    for(j = 0; str[i] != ' '; j++){
         tag->key[j] = str[i++];
     }
     tag->key[j] = '\0';
@@ -617,7 +617,7 @@ tag_extract(const char *str, Tag *tag)
         return 0;
 
     i++;
-    for(j=0; str[i] != '"'; j++){
+    for(j = 0; str[i] != '"'; j++){
         tag->value[j] = str[i++];
     }
     tag->value[j] = '\0';
@@ -649,21 +649,21 @@ square2rank(Square sq)
 File
 char2file(char ch)
 {
-    return (File)((ch)-97);
+    return (File)((ch) - 97);
 }
 
 Rank
 char2rank(char ch)
 {
-    return (Rank)abs((ch - 49)-7);
+    return (Rank)abs((ch - 49) - 7);
 }
 
 Piece
 char2piece(char ch)
 {
     unsigned int i;
-    for (i = 0; i < strlen(PIECE_STR); i++) {
-        if (PIECE_STR[i] == ch)
+    for(i = 0; i < strlen(PIECE_STR); i++){
+        if(PIECE_STR[i] == ch)
             return (Piece)i;
     }
     return Empty;
@@ -678,7 +678,7 @@ file2char(File file)
 char
 rank2char(Rank rank)
 {
-    return (char)(abs((int)rank - 7)+49);
+    return (char)(abs((int)rank - 7) + 49);
 }
 
 char
@@ -692,7 +692,7 @@ move_offset_find(Square src, Square dst, OffsetIndex offset_index)
 {
     int i, offset;
     Square sq;
-    for (i=0; piece_offset[offset_index][i] != 0; i++) {
+    for (i = 0; piece_offset[offset_index][i] != 0; i++) {
         offset = piece_offset[offset_index][i];
         sq = (Square)(src + offset);
         while (sq != dst) {
@@ -720,21 +720,22 @@ move_uci_export(Square src, Square dst, Piece prom_piece, char *uci, int len)
 void
 board_clear(Board *b)
 {
-    memset(b->position, Empty, 128*sizeof(Piece));
+    memset(b->position, Empty, 128 * sizeof(Piece));
 }
 
 void
 board_print(Board *b)
 {
+    int i;
     printf("turn:%d KQkq:%d%d%d%d en_passant:%d half_move:%d\
             move_number:%d\n\n", b->turn, b->castling[White][KingSide],
             b->castling[White][QueenSide], b->castling[Black][KingSide],
             b->castling[Black][QueenSide], b->en_passant, b->half_move,
             b->move_number);
-    for(int i = 0; i < 128; i++){
+    for(i = 0; i < 128; i++){
         if(!(i & 0x88))
             printf("%c ", piece2char(b->position[i]));
-        if((i+1) % 16 == 0)
+        if((i + 1) % 16 == 0)
             printf("\n");
     }
     printf("\n");
@@ -743,7 +744,7 @@ board_print(Board *b)
 Color
 board_square_piece_color(Board *b, Square sq)
 {
-    if (b->position[sq] == Empty)
+    if(b->position[sq] == Empty)
         return NoColor;
     return (Color)(b->position[sq] >= WhitePawn);
 }
@@ -768,48 +769,48 @@ board_square_is_attacked(Board *b, Square sq, Color color)
     Piece queen = (color == White) ? WhiteQueen : BlackQueen;
     Piece king = (color == White) ? WhiteKing : BlackKing;
 
-    for (i=0; piece_offset[OffsetKnight][i] != 0; i++) {
+    for(i = 0; piece_offset[OffsetKnight][i] != 0; i++){
         src = (Square)(sq + piece_offset[OffsetKnight][i]);
-        if (src & 0x88)
+        if(src & 0x88)
             continue;
 
-        if (board_move_knight_is_valid(b, src, sq, color))
+        if(board_move_knight_is_valid(b, src, sq, color))
             return 1;
     }
 
-    for (i=0; piece_offset[OffsetBishop][i] != 0; i++) {
+    for(i = 0; piece_offset[OffsetBishop][i] != 0; i++){
         src = (Square)(sq + piece_offset[OffsetBishop][i]);
-        if (!(src & 0x88) && b->position[src] == king)
+        if(!(src & 0x88) && b->position[src] == king)
             return 1;
 
-        while (!(src & 0x88)) {
-            if (!board_move_pattern_bishop_is_valid(b, src, sq, color))
+        while(!(src & 0x88)) {
+            if(!board_move_pattern_bishop_is_valid(b, src, sq, color))
                 break;
-            if (b->position[src] == bishop || b->position[src] == queen)
+            if(b->position[src] == bishop || b->position[src] == queen)
                 return 1;
             src = (Square)(src + piece_offset[OffsetBishop][i]);
         }
     }
 
-    for (i=0; piece_offset[OffsetRook][i] != 0; i++) {
+    for(i = 0; piece_offset[OffsetRook][i] != 0; i++){
         src = (Square)(sq + piece_offset[OffsetRook][i]);
-        if (!(src & 0x88) && b->position[src] == king)
+        if(!(src & 0x88) && b->position[src] == king)
             return 1;
 
-        while (!(src & 0x88)) {
-            if (!board_move_pattern_rook_is_valid(b, src, sq, color))
+        while(!(src & 0x88)){
+            if(!board_move_pattern_rook_is_valid(b, src, sq, color))
                 break;
-            if (b->position[src] == rook || b->position[src] == queen)
+            if(b->position[src] == rook || b->position[src] == queen)
                 return 1;
             src = (Square)(src + piece_offset[OffsetRook][i]);
         }
     }
-    for (i=2; piece_offset[pawn_offset][i] != 0; i++) {
+    for(i = 2; piece_offset[pawn_offset][i] != 0; i++){
         src = (Square)(sq + piece_offset[pawn_offset][i]);
-        if (src & 0x88)
+        if(src & 0x88)
             continue;
 
-        if (b->position[src] == pawn)
+        if(b->position[src] == pawn)
             return 1;
     }
 
@@ -844,16 +845,16 @@ board_is_out_of_moves(Board *b)
     Color color = b->turn;
     Piece prom_piece = (color == White) ? WhiteQueen : BlackQueen;
 
-    for (rank=0; rank < 8; rank++) {
-        for (file=0; file < 8; file++) {
+    for(rank = 0; rank < 8; rank++){
+        for(file = 0; file < 8; file++){
             src = filerank2square((File)file, (Rank)rank);
-            if (board_square_piece_color(b, src) == color) {
+            if(board_square_piece_color(b, src) == color){
                 piece = b->position[src];
-                for (i=0; piece_offset[offset_map[piece]][i] != 0; i++) {
+                for(i = 0; piece_offset[offset_map[piece]][i] != 0; i++){
                     dst = src;
                     offset = piece_offset[offset_map[piece]][i];
                     dst = (Square)(dst + offset);
-                    while(!(dst & 0x88)) {
+                    while(!(dst & 0x88)){
                         if (board_move_status(b, src, dst, prom_piece))
                             return 0;
                         dst = (Square)(dst + offset);
@@ -869,8 +870,9 @@ int
 board_move_pattern_knight_is_valid(Board *b, Square src, Square dst,
         Color color)
 {
-    for (int i=0; piece_offset[OffsetKnight][i] != 0; i++) {
-        if (src + piece_offset[OffsetKnight][i] == dst){
+    int i;
+    for(i = 0; piece_offset[OffsetKnight][i] != 0; i++){
+        if(src + piece_offset[OffsetKnight][i] == dst){
             return (board_square_piece_color(b, dst) != color);
         }
     }
@@ -883,17 +885,17 @@ board_move_pattern_bishop_is_valid(Board *b, Square src, Square dst,
 {
     Color src_color;
     int offset = move_offset_find(src, dst, OffsetBishop);
-    if (!offset)
+    if(!offset)
         return 0;
 
-    while (src != dst) {
+    while(src != dst){
         src = (Square)(src + offset);
         src_color = board_square_piece_color(b, src);
-        if (src_color == color) {
+        if(src_color == color){
             src = (Square)(src - offset);
             break;
         }
-        if (src_color == !color)
+        if(src_color == !color)
             break;
     }
     return (src == dst);
@@ -904,17 +906,17 @@ board_move_pattern_rook_is_valid(Board *b, Square src, Square dst, Color color)
 {
     Color src_color;
     int offset = move_offset_find(src, dst, OffsetRook);
-    if (!offset)
+    if(!offset)
         return 0;
 
-    while (src != dst) {
+    while(src != dst){
         src = (Square)(src + offset);
         src_color = board_square_piece_color(b, src);
-        if (src_color == color) {
+        if(src_color == color){
             src = (Square)(src - offset);
             break;
         }
-        if (src_color == !color)
+        if(src_color == !color)
             break;
     }
     return (src == dst);
@@ -962,23 +964,23 @@ board_move_pawn_status(Board *b, Square src, Square dst, Color color)
     int offset = 0;
     OffsetIndex offset_index = ((color == White) ? OffsetWhitePawn
             : OffsetBlackPawn);
-    for (i=0; piece_offset[offset_index][i] != 0; i++) {
-        if ((src + piece_offset[offset_index][i]) == dst) {
+    for(i = 0; piece_offset[offset_index][i] != 0; i++){
+        if((src + piece_offset[offset_index][i]) == dst){
             offset = piece_offset[offset_index][i];
             break;
         }
     }
-    if (!offset)
+    if(!offset)
         return Invalid;
 
-    switch(i) {
+    switch(i){
     case 0:
-        if (b->position[src+offset] != Empty)
+        if(b->position[src+offset] != Empty)
             return Invalid;
         break;
 
     case 1:
-        if (square2rank(src) != start_rank
+        if(square2rank(src) != start_rank
                 || b->position[src + piece_offset[offset_index][0]] != Empty
                 || b->position[src+offset] != Empty)
             return Invalid;
@@ -987,13 +989,13 @@ board_move_pawn_status(Board *b, Square src, Square dst, Color color)
     case 2:
     case 3:
         dst_color = board_square_piece_color(b, dst);
-        if (dst == b->en_passant)
+        if(dst == b->en_passant)
             return EnPassant;
-        if (dst_color != !color)
+        if(dst_color != !color)
             return Invalid;
         break;
     }
-    if (board_move_is_promotion(b, src, dst))
+    if(board_move_is_promotion(b, src, dst))
         return Promotion;
     return Valid;
 }
@@ -1029,39 +1031,39 @@ board_move_king_status(Board *b, Square src, Square dst, Color color)
         },
     };
 
-    if ((src == e8 && dst == g8) || (src == e1 && dst == g1))
+    if((src == e8 && dst == g8) || (src == e1 && dst == g1))
         side = KingSide;
-    if ((src == e8 && dst == c8) || (src == e1 && dst == c1))
+    if((src == e8 && dst == c8) || (src == e1 && dst == c1))
         side = QueenSide;
 
-    if (side != NoSide) {
-        for (i=0; i<2; i++){
+    if(side != NoSide){
+        for(i = 0; i < 2; i++){
             sq = castle_squares[color][side][i];
-            if (b->position[sq] != Empty
+            if(b->position[sq] != Empty
                     || board_square_is_attacked(b, sq, (color == White ? Black
                             : White)))
                 return Invalid;
         }
 
-        if (b->position[rook_squares[color][side][0]] != rook)
+        if(b->position[rook_squares[color][side][0]] != rook)
             return Invalid;
 
-        if (!b->castling[color][side])
+        if(!b->castling[color][side])
             return Invalid;
         return Castling;
     }
 
-    for (i=0; piece_offset[OffsetKing][i] != 0; i++) {
-        if (src + piece_offset[OffsetKing][i] == dst) {
+    for(i = 0; piece_offset[OffsetKing][i] != 0; i++){
+        if(src + piece_offset[OffsetKing][i] == dst){
             offset = piece_offset[OffsetKing][i];
             break;
         }
     }
-    if (!offset)
+    if(!offset)
         return Invalid;
 
     dst_color = board_square_piece_color(b, dst);
-    if (dst_color == color)
+    if(dst_color == color)
         return Invalid;
 
     return Valid;
@@ -1111,8 +1113,8 @@ board_move_which(Board *b, Square src, Square dst, char *which)
     Piece piece = b->position[src];
     which[0] = '\0';
 
-    for(rank=0; rank<8; rank++){
-        for(file=0; file<8; file++){
+    for(rank = 0; rank < 8; rank++){
+        for(file = 0; file < 8; file++){
             sq = filerank2square((File)file, (Rank)rank);
             if(b->position[sq] == piece && board_move_status(b, sq, dst,
                         Empty) && sq != src){
@@ -1139,15 +1141,16 @@ board_move_status(Board *b, Square src, Square dst, Piece prom_piece)
     Piece piece = b->position[src];
     Status status = Valid;
 
-    if (src == dst)
+    if(src == dst)
         return Invalid;
-    if (color != b->turn)
+    if(color != b->turn)
         return Invalid;
+
     switch(piece){
     case WhitePawn:
     case BlackPawn:
         tmp_valid = board_move_pawn_status(b, src, dst, color);
-        if (tmp_valid == Invalid)
+        if(tmp_valid == Invalid)
             return Invalid;
         else
             status = tmp_valid;
@@ -1155,32 +1158,32 @@ board_move_status(Board *b, Square src, Square dst, Piece prom_piece)
 
     case WhiteKnight:
     case BlackKnight:
-        if (!board_move_knight_is_valid(b, src, dst, color))
+        if(!board_move_knight_is_valid(b, src, dst, color))
             return Invalid;
         break;
 
     case WhiteBishop:
     case BlackBishop:
-        if (!board_move_bishop_is_valid(b, src, dst, color))
+        if(!board_move_bishop_is_valid(b, src, dst, color))
             return Invalid;
         break;
 
     case WhiteRook:
     case BlackRook:
-        if (!board_move_rook_is_valid(b, src, dst, color))
+        if(!board_move_rook_is_valid(b, src, dst, color))
             return Invalid;
         break;
 
     case WhiteQueen:
     case BlackQueen:
-        if (!board_move_queen_is_valid(b, src, dst, color))
+        if(!board_move_queen_is_valid(b, src, dst, color))
             return Invalid;
         break;
 
     case WhiteKing:
     case BlackKing:
         tmp_valid = board_move_king_status(b, src, dst, color);
-        if (tmp_valid == Invalid)
+        if(tmp_valid == Invalid)
             return Invalid;
         else
             status = tmp_valid;
@@ -1221,8 +1224,8 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
     case 'Q':
     case 'K':
         //to lower if black
-        piece = char2piece(color == Black ? san_str[0]+32 : san_str[0]);
-        switch(last-rank_index){
+        piece = char2piece(color == Black ? san_str[0] + 32 : san_str[0]);
+        switch(last - rank_index){
         case 1:
             file_index = 2;
             rank_index = 3;
@@ -1315,6 +1318,7 @@ board_move_uci_status(Board *b, const char *uci, Square *src, Square *dst,
 
     if(strlen(uci) != 4 && strlen(uci) != 5)
         return Invalid;
+
     snprintf(src_str, 3, "%c%c", uci[0], uci[1]);
     snprintf(dst_str, 3, "%c%c", uci[2], uci[3]);
 
@@ -1342,7 +1346,7 @@ board_move_do(Board *b, Square src, Square dst, Piece prom_piece,
 
     switch (status){
     case Castling:
-        switch(dst) {
+        switch(dst){
         case g1:
             b->position[h1] = Empty;
             b->position[f1] = WhiteRook;
@@ -1369,7 +1373,7 @@ board_move_do(Board *b, Square src, Square dst, Piece prom_piece,
         break;
 
     case EnPassant:
-        if (b->turn == White)
+        if(b->turn == White)
             b->position[dst-piece_offset[OffsetWhitePawn][0]] = Empty;
         else
             b->position[dst-piece_offset[OffsetBlackPawn][0]] = Empty;
@@ -1398,13 +1402,13 @@ board_move_do(Board *b, Square src, Square dst, Piece prom_piece,
         break;
 
     case BlackPawn:
-        if (dst - src == piece_offset[OffsetBlackPawn][1])
+        if(dst - src == piece_offset[OffsetBlackPawn][1])
             b->en_passant = (Square)(dst - piece_offset[OffsetBlackPawn][0]);
         b->half_move = 0;
         break;
 
     case WhitePawn:
-        if (dst - src == piece_offset[OffsetWhitePawn][1])
+        if(dst - src == piece_offset[OffsetWhitePawn][1])
             b->en_passant = (Square)(dst - piece_offset[OffsetWhitePawn][0]);
         b->half_move = 0;
         break;
@@ -1443,11 +1447,13 @@ board_move_san_export(Board *b, Square src, Square dst, Piece prom_piece,
     const char *prom_char = piece_map[prom_piece];
     char file = file2char(square2file(dst));
     char rank = rank2char(square2rank(dst));
+    const char *capture = board_move_is_capture(b, src, dst) ? "x" : "";
     const char *check = board_move_is_check(b, src, dst, prom_piece, status,
             (b->turn == White ? Black : White)) ? "+" : "";
+
     if(board_move_is_checkmate(b, src, dst, prom_piece, status))
         check = "#";
-    const char *capture = board_move_is_capture(b, src, dst) ? "x" : "";
+
     board_move_which(b, src, dst, which);
 
     snprintf(san, len, "%s%s%s%c%c%s", piece_char, which, capture, file, rank,
@@ -1455,10 +1461,10 @@ board_move_san_export(Board *b, Square src, Square dst, Piece prom_piece,
     switch(piece){
     case BlackKing:
     case WhiteKing:
-        if (src == e1 || src == e8) {
-            if (dst == g1 || dst == g8)
+        if(src == e1 || src == e8){
+            if(dst == g1 || dst == g8)
                 snprintf(san, len, "%s%s", CASTLE_STR_SHORT, check);
-            if (dst == c1 || dst == c8)
+            if(dst == c1 || dst == c8)
                 snprintf(san, len, "%s%s", CASTLE_STR_LONG, check);
         }
         break;
@@ -1466,12 +1472,12 @@ board_move_san_export(Board *b, Square src, Square dst, Piece prom_piece,
     case BlackPawn:
     case WhitePawn:
         offset_index = offset_map[piece];
-        if (dst - src == piece_offset[offset_index][2]
+        if(dst - src == piece_offset[offset_index][2]
                 || dst - src == piece_offset[offset_index][3]){
             snprintf(san, len, "%s%c%s%c%c%s", piece_char,
                     file2char(square2file(src)), capture, file, rank, check);
         }
-        if (board_move_is_promotion(b, src, dst))
+        if(board_move_is_promotion(b, src, dst))
             concate(san, len, "=%s%s", prom_char, check);
         break;
 
@@ -1492,13 +1498,13 @@ board_fen_import(Board *b, const char *FEN_str)
     Square en_passant;
     snprintf(fen, FEN_LEN, FEN_str);
     char *p = strtok_r(fen, " ", &saveptr);
-    for (i = 0; i < strlen(p); i++) {
-        if (p[i] >= '1' && p[i] <= '8') {
+    for(i = 0; i < strlen(p); i++){
+        if(p[i] >= '1' && p[i] <= '8'){
             file += (p[i] - 48);
-        }else if (p[i] == '/') {
-            rank = (Rank)(rank +1);
+        }else if(p[i] == '/'){
+            rank = (Rank)(rank + 1);
             file = 0;
-        }else {
+        }else{
             b->position[filerank2square((File)file, rank)] = char2piece(p[i]);
             if (p[i] == 'K' || p[i] == 'k')
                 b->kings[(p[i] == 'K' ? White : Black)] = filerank2square(
@@ -1510,8 +1516,8 @@ board_fen_import(Board *b, const char *FEN_str)
     b->turn = (p[0] == 'w' ? White : Black);
 
     p = strtok_r(NULL, " ", &saveptr);
-    for (i = 0; i < strlen(p); i++) {
-        switch (p[i]) {
+    for(i = 0; i < strlen(p); i++){
+        switch (p[i]){
         case 'K':
             b->castling[White][KingSide] = 1;
             break;
@@ -1552,41 +1558,41 @@ board_fen_export(Board *b, char *FEN_str)
     int rank, file;
     Piece piece;
     int empty;
-    for (rank = 0; rank < 8; rank++) {
+    for(rank = 0; rank < 8; rank++){
         empty = 0;
-        for (file = 0; file < 8; file++) {
+        for(file = 0; file < 8; file++){
             piece = b->position[filerank2square((File)file, (Rank)rank)];
-            if (piece > 0) {
-                if (empty) {
-                    concate(FEN_str, FEN_LEN, "%c", (48+empty));
+            if(piece > 0){
+                if(empty){
+                    concate(FEN_str, FEN_LEN, "%c", (48 + empty));
                     empty = 0;
                 }
                 concate(FEN_str, FEN_LEN, "%c", piece2char(piece));
-            }else {
+            }else{
                 empty++;
             }
         }
-        if (empty)
-            concate(FEN_str, FEN_LEN, "%c", (48+empty));
+        if(empty)
+            concate(FEN_str, FEN_LEN, "%c", (48 + empty));
         concate(FEN_str, FEN_LEN, "%c", (rank == 7 ? ' ' : '/'));
     }
     concate(FEN_str, FEN_LEN, "%c ", (b->turn ? 'w' : 'b'));
 
-    if (b->castling[White][KingSide])
+    if(b->castling[White][KingSide])
         concate(FEN_str, FEN_LEN, "%c", 'K');
-    if (b->castling[White][QueenSide])
+    if(b->castling[White][QueenSide])
         concate(FEN_str, FEN_LEN, "%c", 'Q');
-    if (b->castling[Black][KingSide])
+    if(b->castling[Black][KingSide])
         concate(FEN_str, FEN_LEN, "%c", 'k');
-    if (b->castling[Black][QueenSide])
+    if(b->castling[Black][QueenSide])
         concate(FEN_str, FEN_LEN, "%c", 'q');
-    if (FEN_str[strlen(FEN_str)-1] == ' ')
+    if(FEN_str[strlen(FEN_str)-1] == ' ')
         concate(FEN_str, FEN_LEN, "%c", '-');
     concate(FEN_str, FEN_LEN, "%c", ' ');
 
-    if (b->en_passant == none) {
+    if(b->en_passant == none){
         concate(FEN_str, FEN_LEN, "%c ", '-');
-    }else {
+    }else{
         concate(FEN_str, FEN_LEN, "%c%c ",
                 file2char(square2file(b->en_passant)),
                 rank2char(square2rank(b->en_passant)));
@@ -1674,14 +1680,14 @@ variation_move_add(Variation *v, Square src, Square dst, Piece prom_piece,
 void
 variation_move_next(Variation *v)
 {
-    if (v->move_current+1 < v->move_count)
+    if(v->move_current + 1 < v->move_count)
         v->move_current++;
 }
 
 void
 variation_move_prev(Variation *v)
 {
-    if (v->move_current > 0)
+    if(v->move_current > 0)
         v->move_current--;
 }
 
@@ -1717,7 +1723,7 @@ int
 notation_tag_index(Notation *n, const char *key)
 {
     int i;
-    for(i=0; i < n->tag_count; i++){
+    for(i = 0; i < n->tag_count; i++){
         if(!strcmp(n->tag_list[i].key, key))
             return i;
     }
@@ -1741,8 +1747,8 @@ notation_tag_remove(Notation *n, const char *key)
         return;
 
     int j;
-    for(j=1; j+i < n->tag_count; j++){
-        n->tag_list[i+(j-1)] = n->tag_list[i+j];
+    for(j = 1; j+i < n->tag_count; j++){
+        n->tag_list[i + (j-1)] = n->tag_list[i+j];
     }
     n->tag_count--;
     n->tag_list = (Tag*)realloc(n->tag_list, sizeof(Tag)*n->tag_count);
@@ -1760,8 +1766,8 @@ notation_tag_get(Notation *n, const char *key)
 void
 notation_tag_set(Notation *n, const char *key, const char *value)
 {
-    int index = notation_tag_index(n, key);
     Tag tag;
+    int index = notation_tag_index(n, key);
     if(index == -1){
         snprintf(tag.key, TAG_LEN, key);
         snprintf(tag.value, TAG_LEN, value);
@@ -1793,7 +1799,7 @@ notation_free(Notation *n)
 int
 notation_move_is_last(Notation *n)
 {
-    return n->line_current->move_current+1 == n->line_current->move_count;
+    return n->line_current->move_current + 1 == n->line_current->move_count;
 }
 
 int
@@ -1857,7 +1863,7 @@ notation_variation_delete(Notation *n)
         j = move_variation_find(m, deleted);
         if(j != -1){
             m->variation_list[j] = NULL;
-            for(l = j+1; l < m->variation_count; l++){
+            for(l = j + 1; l < m->variation_count; l++){
                 m->variation_list[l-1] = m->variation_list[l];
             }
             m->variation_count--;
@@ -1912,7 +1918,7 @@ notation_variation_promote(Notation *n)
     parent->move_list[i].variation_count = 0;
 
     //moves after i are copied to tmp_v
-    for(j = 0; j+i < parent->move_count; j++){
+    for(j = 0; j + i < parent->move_count; j++){
         tmp_v->move_list[j] = parent->move_list[j+i];
     }
 
@@ -1972,30 +1978,32 @@ pgn_read_file(FILE *f, Notation *n, int index)
 {
     char buffer[BUFFER_LEN];
     char fen[FEN_LEN];
-    snprintf(fen, FEN_LEN, FEN_DEFAULT);
     char word[WORD_LEN];
     char comment[COMMENT_LEN];
-    comment[0] = '\0';
+    char san[SAN_LEN];
     char result[10] = "*";
+    char *tmp;
+    char *saveptr;
     int i, comment_start, comment_end, variation_start, variation_end;
     int tags = 1;
     int comments = 0;
     int anglebrackets = 0; //pgn standard
     int nags = 0;
     int nag = 0;
-    char *tmp;
-    char *saveptr;
     Tag tag;
-    char san[SAN_LEN];
     Status status;
     Square src, dst;
     Piece prom_piece;
     Board b;
-    board_fen_import(&b, FEN_DEFAULT);
     Variation *v, *new_v;
     Move *m;
+
+    snprintf(fen, FEN_LEN, FEN_DEFAULT);
+    comment[0] = '\0';
+    board_fen_import(&b, FEN_DEFAULT);
     v = n->line_main;
-    for(i=0; i<index; i++){
+
+    for(i = 0; i < index; i++){
         pgn_read_next(f);
     }
 
@@ -2089,7 +2097,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
                         v->move_list[v->move_current].comment = (char*)malloc(
                                 sizeof(char)*COMMENT_LEN);
                         snprintf(v->move_list[v->move_current].comment,
-                                strlen(comment)+1, comment);
+                                strlen(comment) + 1, comment);
                     }
                 }
 
@@ -2124,7 +2132,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
 void
 pgn_write_concate(FILE *f, char *line, int len, const char *fmt, ...)
 {
-    if(strlen(line)+len >= PGN_LINE_LEN){
+    if(strlen(line) + len >= PGN_LINE_LEN){
         fprintf(f, "%s\n", line);
         line[0] = '\0';
     }
@@ -2135,7 +2143,7 @@ pgn_write_concate(FILE *f, char *line, int len, const char *fmt, ...)
 
     va_list args;
     va_start(args, fmt);
-    vsnprintf(line+strlen(line), PGN_LINE_LEN, fmt, args);
+    vsnprintf(line + strlen(line), PGN_LINE_LEN, fmt, args);
     va_end(args);
 }
 
@@ -2148,9 +2156,9 @@ pgn_write_comment(FILE *f, char *line, const char *str)
 
     snprintf(comment, COMMENT_LEN, str);
     word = strtok_r(comment, " ", &saveptr);
-    pgn_write_concate(f, line, strlen(word)+1, "{%s", word);
+    pgn_write_concate(f, line, strlen(word) + 1, "{%s", word);
     while((word = strtok_r(NULL, " ", &saveptr)) != NULL){
-        pgn_write_concate(f, line, strlen(word)+1, "%s", word);
+        pgn_write_concate(f, line, strlen(word) + 1, "%s", word);
     }
     pgn_write_concate(f, line, 2, "}");
 }
@@ -2166,7 +2174,7 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
         is_main = 1;
         i = 0;
     }
-    for(j=1; j<v->move_count; j++){
+    for(j = 1; j < v->move_count; j++){
         m = &v->move_list[j];
         if(j == 1 && !is_main)
             pgn_write_concate(f, line, 1, "(");
@@ -2180,9 +2188,9 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
 
         if(j > 1 && v->move_list[j-2].variation_count > 0
                 && m->board.turn == White)
-                pgn_write_concate(f, line, 9, "%d...", (j/2)+(i/2));
+                pgn_write_concate(f, line, 9, "%d...", (j / 2) + (i / 2));
 
-        pgn_write_concate(f, line, strlen(m->san)+1, "%s", m->san);
+        pgn_write_concate(f, line, strlen(m->san) + 1, "%s", m->san);
         if(m->nag_move)
             pgn_write_concate(f, line, 5, "$%d", m->nag_move);
         if(m->nag_position)
@@ -2206,13 +2214,15 @@ pgn_write_file(FILE *f, Notation *n)
 {
     int i;
     char line[PGN_LINE_LEN];
-    line[0] = '\0';
     char result[10];
-    for(i=0; i<n->tag_count; i++){
+    line[0] = '\0';
+
+    for(i = 0; i < n->tag_count; i++){
         fprintf(f, "[%s \"%s\"]\n", n->tag_list[i].key, n->tag_list[i].value);
         if(!strcmp(n->tag_list[i].key, "Result"))
             snprintf(result, 10, n->tag_list[i].value);
     }
+
     fprintf(f, "\n");
     pgn_write_variation(f, n->line_main, line, -1);
     fprintf(f, "%s %s\n\n", line, result);
@@ -2230,6 +2240,7 @@ uci_line_parse(const char *str, int len, const char *fen, int *depth,
     Square src, dst;
     Piece prom_piece;
     Status status;
+
     board_fen_import(&b, fen);
     snprintf(buffer, len, str);
     last = strtok_r(buffer, " ", &saveptr);
