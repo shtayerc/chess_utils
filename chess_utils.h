@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.0
+chess_utils v0.2.1
 
 Copyright (c) 2020 David Murko
 
@@ -313,6 +313,9 @@ void move_init(Move *m);
 
 //free related Variations recursively and free comment
 void move_free(Move *m);
+
+//returns index of given variation in variation_list if not found returns -1
+int move_variation_find(Move *m, Variation *v);
 
 //
 //VARIATION FUNCTIONS
@@ -1617,6 +1620,17 @@ move_free(Move *m)
     }
 }
 
+int
+move_variation_find(Move *m, Variation *v)
+{
+    int i;
+    for(i = 0; i < m->variation_count; i++){
+        if(m->variation_list[i] == v)
+            return i;
+    }
+    return -1;
+}
+
 void
 variation_init(Variation *v, Board *b)
 {
@@ -1840,14 +1854,13 @@ notation_variation_delete(Notation *n)
     Move *m;
     for(i = 0; i < n->line_current->move_count; i++){
         m = &n->line_current->move_list[i];
-        for(j = 0; j < m->variation_count; j++){
-            if(m->variation_list[j] == deleted){
-                m->variation_list[j] = NULL;
-                for(l = j+1; l < m->variation_count; l++){
-                    m->variation_list[l-1] = m->variation_list[l];
-                }
-                m->variation_count--;
+        j = move_variation_find(m, deleted);
+        if(j != -1){
+            m->variation_list[j] = NULL;
+            for(l = j+1; l < m->variation_count; l++){
+                m->variation_list[l-1] = m->variation_list[l];
             }
+            m->variation_count--;
         }
     }
     variation_free(deleted);
@@ -1866,20 +1879,15 @@ notation_variation_promote(Notation *n)
     Variation **tmp_list;
     int tmp_count;
     int i, j, l;
-    int found = 0;
 
     //find move and variation index of promoted variation
-    for(i = 0; i < parent->move_count && !found; i++){
-        for(l = 0; l < parent->move_list[i].variation_count && !found; l++){
-            if(parent->move_list[i].variation_list[l] == v){
-                found = 1;
-                i--;
-                break;
-            }
-        }
+    for(i = 0; i < parent->move_count; i++){
+        l = move_variation_find(&parent->move_list[i], v);
+        if(l != -1)
+            break;
     }
 
-    if(!found)
+    if(l == -1)
         return;
 
     if(parent->move_list[i].variation_count < 1)
