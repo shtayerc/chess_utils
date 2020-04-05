@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.2
+chess_utils v0.2.3
 
 Copyright (c) 2020 David Murko
 
@@ -425,9 +425,9 @@ void pgn_write_file(FILE *f, Notation *n);
 //UCI FUNCTIONS
 //
 
-//process UCI engine output and set parameters and SAN move list
+//UCI moves from engine output are added to given variation
 void uci_line_parse(const char *str, int len, const char *fen, int *depth,
-        int *multipv, int *cp, char **move_list, int move_count);
+        int *multipv, int *cp, Variation *v);
 
 #ifdef __cplusplus
 }
@@ -2238,18 +2238,19 @@ pgn_write_file(FILE *f, Notation *n)
 
 void
 uci_line_parse(const char *str, int len, const char *fen, int *depth,
-        int *multipv, int *cp, char **move_list, int move_count)
+        int *multipv, int *cp, Variation *v)
 {
     char buffer[len];
+    char san[SAN_LEN];
     char *tmp, *saveptr, *last;
     int moves = 0;
-    int i = 0;
     Board b;
     Square src, dst;
     Piece prom_piece;
     Status status;
 
     board_fen_import(&b, fen);
+    variation_init(v, &b);
     snprintf(buffer, len, str);
     last = strtok_r(buffer, " ", &saveptr);
     if(last == NULL)
@@ -2265,11 +2266,12 @@ uci_line_parse(const char *str, int len, const char *fen, int *depth,
             *cp = strtol(tmp, NULL, 10);
         if(!strcmp(last, "pv"))
             moves = 1;
-        if(moves && i < move_count){
+        if(moves){
             status = board_move_uci_status(&b, tmp, &src, &dst, &prom_piece);
-            board_move_san_export(&b, src, dst, prom_piece, move_list[i++],
-                    SAN_LEN, status);
+            board_move_san_export(&b, src, dst, prom_piece, san, SAN_LEN,
+                    status);
             board_move_do(&b, src, dst, prom_piece, status);
+            variation_move_add(v, src, dst, prom_piece, &b, san);
         }
 
         last = tmp;
