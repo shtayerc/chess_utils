@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.3
+chess_utils v0.2.4
 
 Copyright (c) 2020 David Murko
 
@@ -425,8 +425,8 @@ void pgn_write_file(FILE *f, Notation *n);
 //UCI FUNCTIONS
 //
 
-//UCI moves from engine output are added to given variation
-void uci_line_parse(const char *str, int len, const char *fen, int *depth,
+//UCI moves from engine output are added to / replaced in given variation
+void uci_line_parse(const char *str, int len, Board *b, int *depth,
         int *multipv, int *cp, Variation *v);
 
 #ifdef __cplusplus
@@ -2237,20 +2237,26 @@ pgn_write_file(FILE *f, Notation *n)
 }
 
 void
-uci_line_parse(const char *str, int len, const char *fen, int *depth,
+uci_line_parse(const char *str, int len, Board *b, int *depth,
         int *multipv, int *cp, Variation *v)
 {
     char buffer[len];
     char san[SAN_LEN];
     char *tmp, *saveptr, *last;
     int moves = 0;
-    Board b;
+    int i = 1;
     Square src, dst;
     Piece prom_piece;
     Status status;
+    Board tmp_b = *b;
 
-    board_fen_import(&b, fen);
-    variation_init(v, &b);
+    move_init(&v->move_list[0]);
+    v->move_list[0].src = none;
+    v->move_list[0].dst = none;
+    v->move_list[0].prom_piece = Empty;
+    v->move_list[0].board = tmp_b;
+    v->move_list[0].san[0] = '\0';
+
     snprintf(buffer, len, str);
     last = strtok_r(buffer, " ", &saveptr);
     if(last == NULL)
@@ -2267,11 +2273,22 @@ uci_line_parse(const char *str, int len, const char *fen, int *depth,
         if(!strcmp(last, "pv"))
             moves = 1;
         if(moves){
-            status = board_move_uci_status(&b, tmp, &src, &dst, &prom_piece);
-            board_move_san_export(&b, src, dst, prom_piece, san, SAN_LEN,
+            status = board_move_uci_status(&tmp_b, tmp, &src, &dst,
+                    &prom_piece);
+            board_move_san_export(&tmp_b, src, dst, prom_piece, san, SAN_LEN,
                     status);
-            board_move_do(&b, src, dst, prom_piece, status);
-            variation_move_add(v, src, dst, prom_piece, &b, san);
+            board_move_do(&tmp_b, src, dst, prom_piece, status);
+            if(i >= v->move_count){
+                variation_move_add(v, src, dst, prom_piece, &tmp_b, san);
+            }else{
+                move_init(&v->move_list[i]);
+                v->move_list[i].src = src;
+                v->move_list[i].dst = dst;
+                v->move_list[i].prom_piece = prom_piece;
+                v->move_list[i].board = tmp_b;
+                snprintf(v->move_list[i].san, SAN_LEN, san);
+            }
+            i++;
         }
 
         last = tmp;

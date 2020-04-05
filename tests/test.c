@@ -821,9 +821,17 @@ void
 test_uci_line_parse()
 {
     Variation v;
+    Board b;
     int depth, multipv, cp;
-    uci_line_parse("info depth 20 seldepth 32 multipv 1 score cp 54 nodes 3442296 nps 1228952 hashfull 939 tbhits 0 time 2801 pv e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 g1f3 g8f6 c1e3 f8d6 f1d3 e8g8 e1g1 b8c6 b1c3 c6b4 c3b5 c7c6 b5d6 d8d6 c2c3 b4d3 d1d3",
-            1024, FEN_DEFAULT, &depth, &multipv, &cp, &v);
+    const char * line = "info depth 20 seldepth 32 multipv 1 score cp 54 nodes 3442296 nps 1228952 hashfull 939 tbhits 0 time 2801 pv e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 g1f3 g8f6 c1e3 f8d6 f1d3 e8g8 e1g1 b8c6 b1c3 c6b4 c3b5 c7c6 b5d6 d8d6 c2c3 b4d3 d1d3";
+    board_fen_import(&b, FEN_DEFAULT);
+    variation_init(&v, &b);
+    uci_line_parse(line, 1024, &b, &depth, &multipv, &cp, &v);
+    assert(depth == 20 && multipv == 1 && cp == 54
+            && !strcmp(v.move_list[1].san, "e4")
+            && !strcmp(v.move_list[10].san, "Bd6")
+            && !strcmp(v.move_list[23].san, "Qxd3"));
+    uci_line_parse(line, 1024, &b, &depth, &multipv, &cp, &v);
     assert(depth == 20 && multipv == 1 && cp == 54
             && !strcmp(v.move_list[1].san, "e4")
             && !strcmp(v.move_list[10].san, "Bd6")
