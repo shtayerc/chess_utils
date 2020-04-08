@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.4
+chess_utils v0.2.5
 
 Copyright (c) 2020 David Murko
 
@@ -420,6 +420,9 @@ void pgn_write_variation(FILE *f, Variation *v, char *line, int i);
 
 //output PGN for given Notation
 void pgn_write_file(FILE *f, Notation *n);
+
+//replace game at given index in file with given filename
+void pgn_replace_game(const char *filename, Notation *n, int index);
 
 //
 //UCI FUNCTIONS
@@ -2234,6 +2237,53 @@ pgn_write_file(FILE *f, Notation *n)
     fprintf(f, "\n");
     pgn_write_variation(f, n->line_main, line, -1);
     fprintf(f, "%s %s\n\n", line, result);
+}
+
+void
+pgn_replace_game(const char *filename, Notation *n, int index)
+{
+    int i;
+    long before_len, after_len, filesize;
+    char *before_str, *after_str;
+
+    //append mode does not fail if file does not exist
+    FILE *f = fopen(filename, "a+");
+
+    //get file size
+    fseek(f, 0L, SEEK_END);
+    filesize = ftell(f);
+    rewind(f);
+
+    //read games till given index
+    for(i = 0; i < index; i++){
+        pgn_read_next(f);
+    }
+
+    //get string before given index
+    before_len = ftell(f);
+    rewind(f);
+    before_str = (char*)malloc(sizeof(char) * before_len);
+    fread(before_str, sizeof(char), before_len, f);
+
+    //skip game with given index
+    pgn_read_next(f);
+
+    //get string after given index
+    after_len = filesize - ftell(f);
+    after_str = (char*)malloc(sizeof(char) * after_len);
+    fread(after_str, sizeof(char), after_len, f);
+
+    fclose(f);
+    f = fopen(filename, "w");
+
+    //write replaced file
+    fwrite(before_str, sizeof(char), before_len, f);
+    pgn_write_file(f, n);
+    fwrite(after_str, sizeof(char), after_len, f);
+
+    fclose(f);
+    free(before_str);
+    free(after_str);
 }
 
 void

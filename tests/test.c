@@ -818,6 +818,20 @@ test_pgn_write_file()
 }
 
 void
+test_pgn_replace_game()
+{
+    Notation n;
+    Board b;
+    board_fen_import(&b, FEN_DEFAULT);
+    notation_init(&n, &b);
+    FILE *f = fopen("files/equal_variations.pgn", "r");
+    pgn_read_file(f, &n, 0);
+    fclose(f);
+    pgn_replace_game("tmp_test_03.pgn", &n, 1);
+    notation_free(&n);
+}
+
+void
 test_uci_line_parse()
 {
     Variation v;
@@ -937,6 +951,7 @@ int main(){
     //PGN FUNCTIONS
     test_pgn_read_file();
     test_pgn_write_file();
+    test_pgn_replace_game();
 
     //UCI FUNCTIONS
     test_uci_line_parse();

@@ -1,0 +1,103 @@
+[Event "World Rapid 2019"]
+[Site "Moscow RUS"]
+[Date "2019.12.26"]
+[Round "1.1"]
+[White "Carlsen,M"]
+[Black "Utegaliyev,A"]
+[Result "1-0"]
+[WhiteTitle "GM"]
+[WhiteElo "2872"]
+[BlackElo "2502"]
+[ECO "B01"]
+[Opening "Scandinavian"]
+[Variation "Pytel-Wade variation"]
+[WhiteFideId "1503014"]
+[BlackFideId "13702467"]
+[EventDate "2019.12.26"]
+[EventType "rapid"]
+
+1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd6 4. d4 c6 5. Nf3 Nf6 6. Ne5 Nbd7 7. Nc4 Qc7 8.
+a4 a5 9. Qf3 Nb6 10. Bf4 Qd8 11. Be5 Nbd5 12. Nxd5 Nxd5 13. c3 Nf6 14. Bd3 Be6
+15. O-O Bxc4 16. Bxc4 e6 17. Qg3 g6 18. f4 Bg7 19. f5 exf5 20. Bc7 Qc8 21. Qd6
+Ne4 22. Rae1 Qd7 23. Rxe4+ fxe4 24. Bxf7+ Qxf7 25. Rxf7 Kxf7 26. Qd7+ 1-0
+
+[Event "World Rapid 2019"]
+[Site "Moscow RUS"]
+[Date "2019.12.26"]
+[Round "1.2"]
+[White "Castellanos Rodriguez,R"]
+[Black "Vachier Lagrave,M"]
+[Result "1/2-1/2"]
+[WhiteTitle "IM"]
+[BlackTitle "GM"]
+[WhiteElo "2474"]
+[BlackElo "2780"]
+[ECO "B51"]
+[Opening "Sicilian"]
+[Variation "Canal-Sokolsky (Nimzovich-Rossolimo, Moscow) attack"]
+[WhiteFideId "3404650"]
+[BlackFideId "623539"]
+[EventDate "2019.12.26"]
+[EventType "rapid"]
+
+1. e4 c5 2. Nf3 d6 3. Bb5+ Nd7 4. c3 Nf6 5. Bd3 g6 6. Bc2 b5 7. d4 cxd4 8. cxd4
+Bb7 9. Nbd2 Bg7 10. O-O O-O 11. Re1 Rc8 12. Bd3 a6 13. a4 b4 14. Nb3 a5 15. h3
+e5 16. d5 Nh5 17. Bg5 Bf6 18. Bh6 Re8 19. Bb5 Re7 20. Rc1 Nb8 21. Qd2 Rxc1 22.
+Rxc1 Rc7 23. Rxc7 Qxc7 24. Qc1 Bd8 25. Qxc7 Bxc7 26. Nfd2 f5 27. g4 Nf6 28. f3
+Ba6 29. Bxa6 Nxa6 30. Be3 Kf7 31. Kf1 Nd7 32. Nc4 fxe4 33. fxe4 Nf6 34. Nbd2 Nd7
+35. Nb3 Nf6 36. Nbd2 Nd7 37. Nb3 1/2-1/2
+
+[Event "World Rapid 2019"]
+[Site "Moscow RUS"]
+[Date "2019.12.26"]
+[Round "1.3"]
+[White "Nakamura,Hi"]
+[Black "Sychev,K"]
+[Result "1-0"]
+[WhiteTitle "GM"]
+[BlackTitle "GM"]
+[WhiteElo "2736"]
+[BlackElo "2563"]
+[ECO "C70"]
+[Opening "Ruy Lopez"]
+[Variation "Taimanov (chase/wing/accelerated counterthrust) variation"]
+[WhiteFideId "2016192"]
+[BlackFideId "4114060"]
+[EventDate "2019.12.26"]
+[EventType "rapid"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Na5 6. O-O d6 7. d3 Nf6 8. Nbd2
+Be7 9. Re1 O-O 10. Nf1 Nxb3 11. axb3 c5 12. Ng3 h6 13. h3 Be6 14. c3 Qc7 15. Nh4
+Rfe8 16. Nhf5 Bf8 17. c4 Kh8 18. f4 Nh7 19. fxe5 dxe5 20. Ne3 b4 21. Rf1 Qd8 22.
+Nd5 a5 23. Be3 Ra6 24. Qd2 Qd7 25. Nf5 f6 26. Qf2 Rc8 27. Qg3 Bf7 28. Kh2 Be8
+29. Qf2 Bf7 30. g4 Kg8 31. h4 Rcc6 32. Rg1 Qd8 33. Rg3 Be8 34. Rag1 Bf7 35. Qf3
+Be8 36. R1g2 Bf7 37. Kg1 Be8 38. Rf2 Bg6 39. Kh2 Re6 40. Rfg2 Be8 41. Kg1 Rec6
+42. g5 fxg5 43. hxg5 Nxg5 44. Rxg5 hxg5 45. Bxg5 Qd7 46. Nfe7+ Bxe7 47. Nxe7+
+Kh7 48. Qf8 1-0
+
+[Event "World Rapid 2019"]
+[Site "Moscow RUS"]
+[Date "2019.12.26"]
+[Round "1.4"]
+[White "Tari,A"]
+[Black "Korobov,A"]
+[Result "1/2-1/2"]
+[WhiteTitle "GM"]
+[BlackTitle "GM"]
+[WhiteElo "2634"]
+[BlackElo "2668"]
+[ECO "B51"]
+[Opening "Sicilian"]
+[Variation "Canal-Sokolsky (Nimzovich-Rossolimo, Moscow) attack"]
+[WhiteFideId "1510045"]
+[BlackFideId "14105730"]
+[EventDate "2019.12.26"]
+[EventType "rapid"]
+
+1. e4 c5 2. Nf3 d6 3. Bb5+ Nd7 4. O-O a6 5. Bd3 Ngf6 6. Re1 b5 7. c3 Bb7 8. a4
+c4 9. Bc2 e6 10. d4 cxd3 11. Qxd3 Nc5 12. Qe2 bxa4 13. Be3 Nfd7 14. Bd4 Qc7 15.
+Nfd2 e5 16. Bxc5 Nxc5 17. Bxa4+ Nxa4 18. Rxa4 Be7 19. c4 O-O 20. Nc3 Qd7 21.
+Rea1 Rfb8 22. Nf1 Bd8 23. Nd5 Bxd5 24. cxd5 Bb6 25. Rxa6 Rxa6 26. Rxa6 g6 27.
+Ne3 Bxe3 28. Qxe3 Rxb2 29. h3 Rb8 30. Qa3 Rd8 31. Rc6 Kg7 32. Qc3 Qe7 33. Rc7
+Qf6 34. Qf3 Qxf3 35. gxf3 g5 1/2-1/2
+
