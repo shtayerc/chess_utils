@@ -1,2 +1,4 @@
 tests/test
-tests/tmp_test.pgn
+tests/tmp_test_01.pgn
+tests/tmp_test_02.pgn
+tests/new_game.pgn
