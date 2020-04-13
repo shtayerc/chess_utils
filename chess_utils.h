@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.5
+chess_utils v0.2.6
 
 Copyright (c) 2020 David Murko
 
@@ -2031,7 +2031,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
             }
         }else{ //parse moves
             tmp = strtok_r(buffer, " ", &saveptr);
-            while(tmp != NULL && strcmp(tmp, result)){
+            while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
 
                 variation_start = 0;
                 variation_end = 0;

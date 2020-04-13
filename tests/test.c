@@ -786,6 +786,12 @@ test_pgn_read_file()
     notation_free(&n);
 
     notation_init(&n, &b);
+    f = fopen("files/result_in_comment.pgn", "r");
+    ok = pgn_read_file(f, &n, 0);
+    assert(ok);
+    notation_free(&n);
+
+    notation_init(&n, &b);
     f = fopen("files/large.pgn", "r");
     ok = pgn_read_file(f, &n, 2); //pgn_read_next is called here
     assert(ok);
