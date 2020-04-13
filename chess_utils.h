@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.6
+chess_utils v0.2.7
 
 Copyright (c) 2020 David Murko
 
@@ -62,11 +62,11 @@ typedef enum {
     none = -1
 } Square;
 
-typedef enum { Rank_8, Rank_7, Rank_6, Rank_5, Rank_4, Rank_3, Rank_2, Rank_1 }
-Rank;
+typedef enum { Rank_8, Rank_7, Rank_6, Rank_5, Rank_4, Rank_3, Rank_2, Rank_1,
+    Rank_none = -1 } Rank;
 
-typedef enum { File_a, File_b, File_c, File_d, File_e, File_f, File_g, File_h }
-File;
+typedef enum { File_a, File_b, File_c, File_d, File_e, File_f, File_g, File_h,
+    File_none = -1 } File;
 
 typedef enum { Black, White, NoColor = -1 } Color;
 
@@ -1216,12 +1216,12 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
     *src = none;
     *prom_piece = Empty;
     Color color = b->turn;
-    File file_hint = (File)0;
-    Rank rank_hint = (Rank)0;
+    File file_hint = File_none;
+    Rank rank_hint = Rank_none;
     int file_index = 1;
     int rank_index = 2;
     int last = strlen(san)-1;
-    unsigned int rank, file;
+    int rank, file;
 
     switch(san[0]){
     case 'B':
@@ -1297,8 +1297,10 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
     }
 
     if(*src == none){
-        for(rank = 0 + rank_hint; rank <= (rank_hint ?: 7); rank++){
-            for(file = 0 + file_hint; file <= (file_hint ?: 7); file++){
+        for(rank = (rank_hint == Rank_none ? 0 : rank_hint); rank <=
+                (rank_hint == Rank_none ? 7 : rank_hint); rank++){
+            for(file = (file_hint == File_none ? 0 : file_hint); file <=
+                    (file_hint == File_none ? 7 : file_hint); file++){
                 *src = filerank2square((File)file, (Rank)rank);
                 if(b->position[*src] == piece){
                     status = board_move_status(b, *src, *dst, *prom_piece);

@@ -747,6 +747,16 @@ test_pgn_read_file()
     int ok;
 
     notation_init(&n, &b);
+    f = fopen("files/piece_hint.pgn", "r");
+    ok = pgn_read_file(f, &n, 0);
+    notation_move_index_set(&n, 46);
+    board_fen_export(&notation_move_get(&n)->board, fen);
+    same = !strcmp(fen, "r2q2k1/pp4pb/2pB1p1p/3n3P/P5P1/1B1P2Q1/1P2rP2/4R1K1 w - - 0 24");
+    fclose(f);
+    assert(ok && same);
+    notation_free(&n);
+
+    notation_init(&n, &b);
     f = fopen("files/complex.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     fclose(f);
