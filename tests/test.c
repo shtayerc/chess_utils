@@ -660,30 +660,30 @@ test_variation_functions()
 void
 test_variation_movenumber_export()
 {
-    //Board b;
-    //Notation n;
-    //Variation *v;
-    //FILE *f;
-    //char num[MOVENUM_LEN];
-    //notation_init(&n, &b);
-    //f = fopen("files/complex.pgn", "r");
-    //assert(pgn_read_file(f, &n, 0));
-    //fclose(f);
-    //variation_movenumber_export(n.line_main, 1, 0, num, MOVENUM_LEN);
-    //assert(!strcmp(num, "1."));
-    //variation_movenumber_export(n.line_main, 81, 0, num, MOVENUM_LEN);
-    //assert(!strcmp(num, "41."));
-    //variation_movenumber_export(n.line_main, 82, 0, num, MOVENUM_LEN);
-    //assert(!strcmp(num, ""));
-    //v = n.line_main->move_list[81].variation;
-    //variation_movenumber_export(v, 1, 81, num, MOVENUM_LEN);
-    //assert(!strcmp(num, "41..."));
-    //variation_movenumber_export(v, 2, 81, num, MOVENUM_LEN);
-    //assert(!strcmp(num, "42."));
-    //v = n.line_main->move_list[27].variation->move_list[3].variation;
-    //variation_movenumber_export(v, 1, 27+3, num, MOVENUM_LEN);
-    //assert(!strcmp("16.", num));
-    //notation_free(&n);
+    Board b;
+    Notation n;
+    Variation *v;
+    FILE *f;
+    char num[MOVENUM_LEN];
+    notation_init(&n, &b);
+    f = fopen("files/complex.pgn", "r");
+    assert(pgn_read_file(f, &n, 0));
+    fclose(f);
+    variation_movenumber_export(n.line_main, 1, 0, num, MOVENUM_LEN);
+    assert(!strcmp(num, "1."));
+    variation_movenumber_export(n.line_main, 81, 0, num, MOVENUM_LEN);
+    assert(!strcmp(num, "41."));
+    variation_movenumber_export(n.line_main, 82, 0, num, MOVENUM_LEN);
+    assert(!strcmp(num, ""));
+    v = n.line_main->move_list[81].variation_list[0];
+    variation_movenumber_export(v, 1, 81, num, MOVENUM_LEN);
+    assert(!strcmp(num, "41..."));
+    variation_movenumber_export(v, 2, 81, num, MOVENUM_LEN);
+    assert(!strcmp(num, "42."));
+    v = n.line_main->move_list[27].variation_list[0]->move_list[3].variation_list[0];
+    variation_movenumber_export(v, 1, 27+3, num, MOVENUM_LEN);
+    assert(!strcmp("16.", num));
+    notation_free(&n);
 }
 
 void
