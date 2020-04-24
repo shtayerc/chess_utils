@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.8
+chess_utils v0.2.9
 
 Copyright (c) 2020 David Murko
 
@@ -442,6 +442,7 @@ void pgn_replace_game(const char *filename, Notation *n, int index);
 //
 
 //UCI moves from engine output are added to / replaced in given variation
+//parameters b, v can be NULL
 void uci_line_parse(const char *str, int len, Board *b, int *depth,
         int *multipv, int *cp, Variation *v);
 
@@ -2396,14 +2397,17 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
     Square src, dst;
     Piece prom_piece;
     Status status;
-    Board tmp_b = *b;
+    Board tmp_b;
 
-    move_init(&v->move_list[0]);
-    v->move_list[0].src = none;
-    v->move_list[0].dst = none;
-    v->move_list[0].prom_piece = Empty;
-    v->move_list[0].board = tmp_b;
-    v->move_list[0].san[0] = '\0';
+    if(v != NULL && b != NULL){
+        tmp_b = *b;
+        move_init(&v->move_list[0]);
+        v->move_list[0].src = none;
+        v->move_list[0].dst = none;
+        v->move_list[0].prom_piece = Empty;
+        v->move_list[0].board = tmp_b;
+        v->move_list[0].san[0] = '\0';
+    }
 
     snprintf(buffer, len, str);
     last = strtok_r(buffer, " ", &saveptr);
@@ -2420,7 +2424,7 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
             *cp = strtol(tmp, NULL, 10);
         if(!strcmp(last, "pv"))
             moves = 1;
-        if(moves){
+        if(moves && v != NULL && b != NULL){
             status = board_move_uci_status(&tmp_b, tmp, &src, &dst,
                     &prom_piece);
             board_move_san_export(&tmp_b, src, dst, prom_piece, san, SAN_LEN,
