@@ -763,7 +763,13 @@ test_pgn_read_file()
     board_fen_export(&(n.line_main->move_list[n.line_main->move_count-1].board), fen);
     same = !strcmp(fen, "8/7p/4Pkp1/p1b2p2/1p6/1B2P1PP/4KP2/8 w - - 0 51");
     assert(same && ok);
+    Notation *clone = notation_clone(&n);
     notation_free(&n);
+    f = fopen("test.pgn", "w");
+    pgn_write_file(f, clone);
+    fclose(f);
+    notation_free(clone);
+    free(clone);
 
     notation_init(&n, &b);
     f = fopen("files/FEN.pgn", "r");
@@ -812,6 +818,7 @@ void
 test_pgn_write_file()
 {
     Notation n;
+    Notation *clone;
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     notation_init(&n, &b);
@@ -821,7 +828,19 @@ test_pgn_write_file()
     pgn_write_file(of, &n);
     fclose(f);
     fclose(of);
+    n.line_current = n.line_current->move_list[27].variation_list[0];
+    n.line_current = n.line_current->move_list[3].variation_list[0];
+    clone = notation_clone(&n);
     notation_free(&n);
+    of = fopen("tmp_test_04.pgn", "w");
+    pgn_write_file(of, clone);
+    fclose(of);
+    notation_variation_delete(clone);
+    of = fopen("tmp_test_05.pgn", "w");
+    pgn_write_file(of, clone);
+    fclose(of);
+    notation_free(clone);
+    free(clone);
 
     notation_init(&n, &b);
     f = fopen("files/equal_variations.pgn", "r");

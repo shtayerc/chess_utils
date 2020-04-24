@@ -7,12 +7,14 @@ EXAMPLEFILE=new_game.pgn
 TESTFILE_01=tmp_test_01.pgn
 TESTFILE_02=tmp_test_02.pgn
 TESTFILE_03=tmp_test_03.pgn
+TESTFILE_04=tmp_test_04.pgn
+TESTFILE_05=tmp_test_05.pgn
 
 all:
 	$(CC) $(FLAGS) $(FILES) -o $(EXE)
 
 clean:
-	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02) $(TESTFILE_03)
+	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02) $(TESTFILE_03) $(TESTFILE_04) $(TESTFILE_05)
 
 cpp:
 	$(CPP) -Wextra -Wall $(FILES) -o $(EXE)
@@ -25,3 +27,5 @@ check:
 	diff $(TESTFILE_01) files/complex.pgn
 	diff $(TESTFILE_02) files/equal_variations.pgn
 	diff $(TESTFILE_03) files/replace_after.pgn
+	diff $(TESTFILE_04) $(TESTFILE_01)
+	diff $(TESTFILE_05) files/complex_less.pgn

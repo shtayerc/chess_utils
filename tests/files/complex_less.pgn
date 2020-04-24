@@ -1,0 +1,62 @@
+[Event "WchT 8th"]
+[Site "Ningbo"]
+[Date "2011.07.24"]
+[Round "7"]
+[White "Onischuk, Alexander"]
+[Black "Gashimov, Vugar"]
+[Result "1/2-1/2"]
+[ECO "A61"]
+[WhiteElo "2675"]
+[BlackElo "2760"]
+[Annotator "Marin,M"]
+[PlyCount "100"]
+[EventDate "2011.07.17"]
+[EventType "team-tourn"]
+[EventRounds "9"]
+[EventCountry "CHN"]
+[Source "ChessBase"]
+[SourceDate "2011.09.16"]
+[WhiteTeam "US of America"]
+[BlackTeam "Azerbaijan"]
+[WhiteTeamCountry "USA"]
+[BlackTeamCountry "AZE"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 c5 4. d5 d6 5. Nc3 exd5 6. cxd5 a6 7. a4 g6 8. Bf4
+Bg7 9. h3 O-O 10. e3 Re8 ({Personally, I prefer this developing move over
+Gashimov's other specialty} 10... Ne8) 11. Be2 ({For} 11. Nd2 Nbd7 $5 {see
+Eljanov,P (2751)-Gashimov,V (2734)/Astrakhan 2010/CBM 137/[Marin,M] (1/2, 61)}
+) 11... Ne4 {This plan is also possible in the fianchetto system after White
+has weakened his queenside with Bf4 and a2-a4.} 12. Nxe4 ({White does not get
+much by refraining from this exchange.} 12. Qb3 Nd7 13. O-O Ndf6 14. Rfd1 Rb8
+15. Bxa6 Bxh3 $1 16. Bb5 Bd7 17. Bxd7 Qxd7 18. Nb5 Ng4 19. Rf1 h6 20. Rad1 g5
+$15 {Astrotenko,A-Badmatsyrenov,O (2200)/Russia 2007/EXT 2008 (0-1, 49)})
+12... Rxe4 13. Nd2 Rb4 {With the bishop on c1, the rook would be in some
+danger, but the way it is, it displays a high level of activity.} 14. Nc4 Nd7 (
+14... Bxb2 {looks at least risky, although there is no clear refutation:} 15.
+Nxb2 Rxb2 16. h4 Qf6 17. Qc1 Bf5 18. f3 Bc2 19. Kf1 Nd7 $36 {Kappeler,K
+(2204)-Loetscher,R (2390)/Switzerland 2008/EXT 2009 (0-1, 72)}) 15. O-O Nb6
+$146 ({Deviating from an earlier game of his, true from a blitz event:} 15...
+Ne5 16. Bxe5 dxe5 $5 17. a5 Bd7 18. Nb6 Rb8 19. Qc2 Bf8 20. b3 Rxb6 $5 21. axb6
+Qxb6 22. Qc3 Bd6 $44 {Wojtaszek,R (2726)-Gashimov,V (2733)/Warsaw blitz Eu-ch
+2010/CBM 139 Extra (1-0, 63). Despite the missing exchange, Black's position
+looks impossible to crack. He may even become ambitious on the queenside.}) 16.
+Nxd6 $8 {White has to embark this forced operation, otherwise his queenside
+would be doomed all the same.} Rxf4 17. Nxc8 Rb4 ({An equally good alternative
+is} 17... Rxa4 18. Rxa4 Nxa4 19. Qxa4 Rxc8 20. b3 Qd6 $11) 18. Nxb6 Qxb6 19. a5
+Qd6 20. Ra2 Bxb2 $11 {Black has obtained a safe blockade on the dark squares.
+White's structure looks more flexible, but this is not easy to take advantage
+of in practice. First of all, advancing the kingside majority would weaken the
+king's defence. Secondly, the blocking a5-pawn is on a dark square, making it a
+comfortable target for the enemy bishop. In fact, neither side can display too
+much activity and a draw is quite probable. In the game, it will be Black who
+will try to get the upper hand, but without any tangible success.} 21. Qc2 Bg7
+22. Bc4 Re8 23. Rc1 f5 24. g3 Bf6 25. Bf1 Rc8 26. Rb1 Rc7 27. Bc4 Re7 28. Kg2
+Re4 29. Rxb4 {White cannot avoid this exchange forever.} (29. Bd3 Rxb1 30. Bxe4
+(30. Qxb1 $2 Rb4 31. Qc2 Qxd5+ $19) 30... Rb4 31. Bf3 c4 $15) 29... cxb4 30.
+Qd3 Kg7 31. Re2 Bd8 (31... h5 $5) 32. Ra2 Re8 33. Bb3 Bf6 34. Rc2 Bc3 35. Qc4 (
+{White can only get troubles after the thematic exchange sacrifice} 35. Rxc3
+$6 {How is he going to continue?}) 35... Re4 36. Qd3 Re7 37. Re2 Rc7 38. Ra2
+Rc5 39. Rc2 Rc7 40. Re2 Bf6 41. Rc2 Rxc2 (41... Rc3 42. Rxc3 bxc3 43. Qc4 {does
+not offer Black too much, either.}) 42. Qxc2 Bd8 43. Qc8 Qc7 44. Qe6 Qe7 45.
+Kf3 Qxe6 46. dxe6 Kf6 47. Bd5 b6 48. axb6 Bxb6 49. Bb3 Bc5 50. Ke2 a5 1/2-1/2
+

@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.7
+chess_utils v0.2.8
 
 Copyright (c) 2020 David Murko
 
@@ -148,6 +148,9 @@ extern const int piece_offset[][9];
 
 //standard strtok_r replacement
 char *strtok_r(char *str, const char *delim, char **nextp);
+
+//standard strdup replacement
+char *strdup(const char *str);
 
 //append to the end of string - usage is similar to printf functions
 void concate(char *str, int len, const char *fmt, ...);
@@ -314,6 +317,9 @@ void move_init(Move *m);
 //free related Variations recursively and free comment
 void move_free(Move *m);
 
+//copies Move properties and clone Variations from variation_list
+void move_copy(Move *src, Move *dst, Variation *prev);
+
 //returns index of given variation in variation_list if not found returns -1
 int move_variation_find(Move *m, Variation *v);
 
@@ -344,6 +350,13 @@ Move * variation_move_get(Variation *v);
 //index is for move_list, prev_index is index from parent variation
 void variation_movenumber_export(Variation *v, int index, int prev_index,
         char *str, int len);
+
+//returns pointer to equivalent Variation of orig in cloned
+Variation *variation_equivalent_find(Variation *orig, Variation *clone,
+        Variation *v);
+
+//returns pointer to deep copied Variation
+Variation *variation_clone(Variation *v, Variation *prev);
 
 //
 //NOTATION FUNCTIONS
@@ -461,7 +474,7 @@ const int piece_offset[][9] = {
     {-17, -16, -15, 1, 17, 16, 15, -1, 0}
 }; //offset
 
-char*
+char *
 strtok_r(char *str, const char *delim, char **nextp)
 {
     char *ret;
@@ -480,6 +493,16 @@ strtok_r(char *str, const char *delim, char **nextp)
 
     *nextp = str;
     return ret;
+}
+
+char *
+strdup(const char *str)
+{
+    int size = strlen(str)+1;
+    char *dup = (char*)malloc(sizeof(char)*size);
+    if(dup)
+        memcpy(dup, str, size);
+    return dup;
 }
 
 void
@@ -1634,6 +1657,30 @@ move_free(Move *m)
     }
 }
 
+void
+move_copy(Move *src, Move *dst, Variation *prev)
+{
+    int i;
+    dst->src = src->src;
+    dst->dst = src->dst;
+    dst->prom_piece = src->prom_piece;
+    dst->board = src->board;
+    snprintf(dst->san, SAN_LEN, src->san);
+    dst->comment = NULL;
+    if(src->comment != NULL)
+        dst->comment = strdup(src->comment);
+    dst->nag_move = src->nag_move;
+    dst->nag_position = src->nag_position;
+    dst->variation_count = src->variation_count;
+    dst->variation_list = NULL;
+    if(src->variation_count)
+        dst->variation_list = (Variation**)malloc(sizeof(Variation*)
+                * src->variation_count);
+    for(i = 0; i < src->variation_count; i++){
+        dst->variation_list[i] = variation_clone(src->variation_list[i], prev);
+    }
+}
+
 int
 move_variation_find(Move *m, Variation *v)
 {
@@ -1718,6 +1765,42 @@ variation_movenumber_export(Variation *v, int index, int prev_index, char *num,
     //add 3 dots when first move is from black
     else if(index == 1)
         snprintf(num, len, "%d...", movenumber);
+}
+
+Variation *
+variation_equivalent_find(Variation *orig, Variation *clone, Variation *v)
+{
+    int i, j;
+    Variation *tmp;
+    if(orig == v)
+        return clone;
+    for(i = 0; i < orig->move_count; i++){
+        for(j = 0; j < orig->move_list[i].variation_count; j++){
+            if(orig->move_list[i].variation_list[j] == v)
+                return clone->move_list[i].variation_list[j];
+            tmp = variation_equivalent_find(
+                    orig->move_list[i].variation_list[j],
+                    clone->move_list[i].variation_list[j], v);
+            if(tmp != NULL)
+                return tmp;
+        }
+    }
+    return NULL;
+}
+
+Variation *
+variation_clone(Variation *v, Variation *prev)
+{
+    int i;
+    Variation *clone = (Variation*)malloc(sizeof(Variation));
+    clone->move_list = (Move*)malloc(sizeof(Move)*v->move_count);
+    clone->move_current = v->move_current;
+    clone->move_count = v->move_count;
+    for(i = 0; i < v->move_count; i++){
+        move_copy(&v->move_list[i], &clone->move_list[i], clone);
+    }
+    clone->prev = prev;
+    return clone;
 }
 
 void
@@ -1807,6 +1890,19 @@ notation_free(Notation *n)
     variation_free(n->line_main);
     free(n->tag_list);
     free(n->line_main);
+}
+
+Notation *
+notation_clone(Notation *n)
+{
+    Notation *clone = (Notation*)malloc(sizeof(Notation));
+    clone->line_main = variation_clone(n->line_main, NULL);
+    clone->line_current = variation_equivalent_find(n->line_main,
+            clone->line_main, n->line_current);
+    clone->tag_count = n->tag_count;
+    clone->tag_list = (Tag*)malloc(clone->tag_count*sizeof(Tag));
+    memcpy(clone->tag_list, n->tag_list, n->tag_count*sizeof(Tag));
+    return clone;
 }
 
 int
