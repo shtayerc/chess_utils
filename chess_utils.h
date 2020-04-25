@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.9
+chess_utils v0.2.10
 
 Copyright (c) 2020 David Murko
 
@@ -2427,18 +2427,20 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
         if(moves && v != NULL && b != NULL){
             status = board_move_uci_status(&tmp_b, tmp, &src, &dst,
                     &prom_piece);
-            board_move_san_export(&tmp_b, src, dst, prom_piece, san, SAN_LEN,
-                    status);
-            board_move_do(&tmp_b, src, dst, prom_piece, status);
-            if(i >= v->move_count){
-                variation_move_add(v, src, dst, prom_piece, &tmp_b, san);
-            }else{
-                move_init(&v->move_list[i]);
-                v->move_list[i].src = src;
-                v->move_list[i].dst = dst;
-                v->move_list[i].prom_piece = prom_piece;
-                v->move_list[i].board = tmp_b;
-                snprintf(v->move_list[i].san, SAN_LEN, san);
+            if(status != Invalid){
+                board_move_san_export(&tmp_b, src, dst, prom_piece, san,
+                        SAN_LEN, status);
+                board_move_do(&tmp_b, src, dst, prom_piece, status);
+                if(i >= v->move_count){
+                    variation_move_add(v, src, dst, prom_piece, &tmp_b, san);
+                }else{
+                    move_init(&v->move_list[i]);
+                    v->move_list[i].src = src;
+                    v->move_list[i].dst = dst;
+                    v->move_list[i].prom_piece = prom_piece;
+                    v->move_list[i].board = tmp_b;
+                    snprintf(v->move_list[i].san, SAN_LEN, san);
+                }
             }
             i++;
         }

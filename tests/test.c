@@ -881,6 +881,9 @@ test_uci_line_parse()
             && !strcmp(v.move_list[23].san, "Qxd3"));
     uci_line_parse(line, 1024, NULL, &depth, &multipv, &cp, NULL);
     assert(depth == 20 && multipv == 1 && cp == 54);
+
+    line = "depth 10 pv de";
+    uci_line_parse(line, 1024, &b, &depth, &multipv, &cp, &v);
     variation_free(&v);
 }
 
