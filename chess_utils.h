@@ -386,6 +386,9 @@ void notation_init(Notation *n, Board *b);
 //free given Notation and related Variations recursively
 void notation_free(Notation *n);
 
+//returns pointer to deep copied Notation
+Notation * notation_clone(Notation *n);
+
 //returns 1 if current move in current line is last
 int notation_move_is_last(Notation *n);
 
