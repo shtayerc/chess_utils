@@ -1,5 +1,3 @@
 tests/test
-tests/tmp_test_01.pgn
-tests/tmp_test_02.pgn
-tests/tmp_test_03.pgn
+tests/tmp_test_*
 tests/new_game.pgn
