@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.10
+chess_utils v0.2.11
 
 Copyright (c) 2020 David Murko
 
@@ -391,6 +391,10 @@ Notation * notation_clone(Notation *n);
 
 //returns 1 if current move in current line is last
 int notation_move_is_last(Notation *n);
+
+//returns 1 if given move already exists after current or in variation_list
+int notation_move_is_present(Notation *n, Square src, Square dst,
+        Piece prom_piece);
 
 //returns 1 if current line is main line
 int notation_line_is_main(Notation *n);
@@ -1916,6 +1920,25 @@ notation_move_is_last(Notation *n)
 }
 
 int
+notation_move_is_present(Notation *n, Square src, Square dst, Piece prom_piece)
+{
+    int i;
+    Move *m;
+
+    if(!notation_move_is_last(n)){
+        m = &n->line_current->move_list[n->line_current->move_current+1];
+        if(m->src == src && m->dst == dst && m->prom_piece == prom_piece)
+            return 1;
+    }
+    for(i = 0; i < notation_move_get(n)->variation_count; i++){
+        m = variation_move_get(notation_move_get(n)->variation_list[i]);
+        if(m->src == src && m->dst == dst && m->prom_piece == prom_piece)
+            return 1;
+    }
+    return 0;
+}
+
+int
 notation_line_is_main(Notation *n)
 {
     return n->line_current == n->line_main;
@@ -2022,6 +2045,7 @@ notation_variation_promote(Notation *n)
     tmp_v->move_list = (Move*)realloc(tmp_v->move_list, sizeof(Move)
             * tmp_v->move_count);
     tmp_v->prev = parent;
+    tmp_v->move_current = 1;
 
     //remove variations from ex parent variation
     parent->move_list[i].variation_list[l] = tmp_v;

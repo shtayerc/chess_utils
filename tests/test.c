@@ -731,6 +731,8 @@ test_notation_functions()
     assert(notation_move_is_last(&n));
     notation_variation_promote(&n);
     notation_move_index_set(&n, 1);
+    assert(notation_move_is_present(&n, c7, c5, Empty));
+    assert(notation_move_is_present(&n, e7, e5, Empty));
     n.line_current = notation_move_get(&n)->variation_list[0];
     notation_variation_delete(&n);
     notation_free(&n);
