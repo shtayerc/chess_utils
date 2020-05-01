@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.11
+chess_utils v0.2.12
 
 Copyright (c) 2020 David Murko
 
@@ -2238,7 +2238,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
                     }
                 }
 
-                if(variation_end){
+                while(variation_end--){
                     v->move_current = 1;
                     v = v->prev;
                     b = v->move_list[v->move_current].board;
