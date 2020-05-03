@@ -43,8 +43,6 @@ extern "C" {
 #define MOVENUM_LEN 10
 #define PGN_LINE_LEN 80
 #define SQUARE_LEN 3
-#define UCI_LEN 7
-#define LENGTH(arr) (sizeof(arr) / sizeof(arr[0]))
 
 //
 //ENUMS
