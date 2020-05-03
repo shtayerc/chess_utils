@@ -713,10 +713,13 @@ test_notation_functions()
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     Notation n;
+    char *comment = (char*)malloc(sizeof(char) * (strlen("Test") + 1));
+    snprintf(comment, strlen("Test") + 1, "Test");
     notation_init(&n, &b);
     board_move_do(&b, e2, e4, Empty, Valid);
     variation_move_add(n.line_current, e2, e4, Empty, &b, "e4");
     assert(notation_move_index_get(&n) == 1);
+    notation_move_get(&n)->comment = comment;
     board_move_do(&b, e7, e5, Empty, Valid);
     variation_move_add(n.line_current, e7, e5, Empty, &b, "e5");
     board_move_do(&b, g1, f3, Empty, Valid);

@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.12
+chess_utils v0.2.13
 
 Copyright (c) 2020 David Murko
 
@@ -2058,6 +2058,9 @@ notation_variation_promote(Notation *n)
     for(j = 0; j + i < parent->move_count; j++){
         tmp_v->move_list[j] = parent->move_list[j+i];
     }
+
+    //prevent commment duplication on 0 move
+    parent->move_list[i].comment = NULL;
 
     //resize parent variation and add moves from ex sub variation
     parent->move_list = (Move*)realloc(parent->move_list,
