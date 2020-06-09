@@ -1,5 +1,5 @@
 /*
-chess_utils v0.2.13
+chess_utils v0.3.1
 
 Copyright (c) 2020 David Murko
 
@@ -29,6 +29,7 @@ SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+#include <ctype.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,6 +44,7 @@ extern "C" {
 #define MOVENUM_LEN 10
 #define PGN_LINE_LEN 80
 #define SQUARE_LEN 3
+#define GAMETITLE_LEN 4096
 
 //
 //ENUMS
@@ -128,6 +130,16 @@ typedef struct {
     int tag_count;
 } Notation;
 
+typedef struct {
+    char title[GAMETITLE_LEN];
+    int index;
+} GameRow;
+
+typedef struct {
+    GameRow * list;
+    int count;
+} GameList;
+
 //
 //GLOBAL VARIABLES
 //
@@ -149,6 +161,9 @@ char *strtok_r(char *str, const char *delim, char **nextp);
 
 //standard strdup replacement
 char *strdup(const char *str);
+
+//case insensitive check if substring exists
+int isubstr(const char *haystack, const char *needle);
 
 //append to the end of string - usage is similar to printf functions
 void concate(char *str, int len, const char *fmt, ...);
@@ -360,8 +375,12 @@ Variation *variation_clone(Variation *v, Variation *prev);
 //NOTATION FUNCTIONS
 //
 
-//7 required tags are created (Event, Site, Date, Round, White, Black, Result)
+//initialize tag_list and create 7 required tags (Event, Site, Date, Round,
+//White, Black, Result)
 void notation_tag_init(Notation *n);
+
+//free tag_list if not empty
+void notation_tag_free(Notation *n);
 
 //return index of n->tag_list for given key
 int notation_tag_index(Notation *n, const char *key);
@@ -420,8 +439,8 @@ void notation_variation_promote(Notation *n);
 //PGN FUNCTIONS
 //
 
-//move file position to next game
-void pgn_read_next(FILE *f);
+//move file position to next game, set tags to 1 if position is before tags
+void pgn_read_next(FILE *f, int tags);
 
 //returns 1 if PGN in given FILE at given index is valid, also Notation is set
 int pgn_read_file(FILE *f, Notation *n, int index);
@@ -450,6 +469,26 @@ void pgn_replace_game(const char *filename, Notation *n, int index);
 //parameters b, v can be NULL
 void uci_line_parse(const char *str, int len, Board *b, int *depth,
         int *multipv, int *cp, Variation *v);
+
+//
+//GAME LIST FUNCTIONS
+//
+
+//initialize empty GameList
+void game_list_init(GameList * gl);
+
+//free given GameList if not empty
+void game_list_free(GameList *gl);
+
+//append GameRow to GameList
+void game_list_add(GameList *gl, GameRow *gr);
+
+//read GameRows from pgn file
+void game_list_read_pgn(GameList *gl, FILE *f);
+
+//returns GameList with GameRows containing case insensitive str
+GameList * game_list_search_str(GameList *gl, const char *str);
+
 
 #ifdef __cplusplus
 }
@@ -512,6 +551,27 @@ strdup(const char *str)
     if(dup)
         memcpy(dup, str, size);
     return dup;
+}
+
+int
+isubstr(const char *haystack, const char *needle)
+{
+    unsigned int i, j;
+    j = 0;
+    for(i = 0; i < strlen(haystack);){
+        if(tolower(haystack[i]) == tolower(needle[j])){
+            if(j == strlen(needle)-1)
+                return 1;
+            i++;
+            j++;
+        }else{
+            j = 0;
+            //find next first character of needle string
+            while(++i < strlen(haystack)
+                    && tolower(haystack[i]) != tolower(needle[j]));
+        }
+    }
+    return 0;
 }
 
 void
@@ -1815,6 +1875,8 @@ variation_clone(Variation *v, Variation *prev)
 void
 notation_tag_init(Notation *n)
 {
+    n->tag_list = (Tag*)malloc(sizeof(Tag));
+    n->tag_count = 0;
     notation_tag_set(n, "Event", "");
     notation_tag_set(n, "Site", "");
     notation_tag_set(n, "Date", "");
@@ -1822,6 +1884,13 @@ notation_tag_init(Notation *n)
     notation_tag_set(n, "White", "");
     notation_tag_set(n, "Black", "");
     notation_tag_set(n, "Result", "*");
+}
+
+void
+notation_tag_free(Notation *n)
+{
+    if(n->tag_count > 0)
+        free(n->tag_list);
 }
 
 int
@@ -1888,8 +1957,6 @@ notation_init(Notation *n, Board *b)
     n->line_main = (Variation*)malloc(sizeof(Variation));
     n->line_current = n->line_main;
     variation_init(n->line_main, b);
-    n->tag_list = (Tag*)malloc(sizeof(Tag));
-    n->tag_count = 0;
     notation_tag_init(n);
 }
 
@@ -1897,7 +1964,7 @@ void
 notation_free(Notation *n)
 {
     variation_free(n->line_main);
-    free(n->tag_list);
+    notation_tag_free(n);
     free(n->line_main);
 }
 
@@ -2086,11 +2153,10 @@ notation_variation_promote(Notation *n)
 }
 
 void
-pgn_read_next(FILE *f)
+pgn_read_next(FILE *f, int tags)
 {
     char *tmp, *saveptr;
     char buffer[BUFFER_LEN];
-    int tags = 1;
     char result[10] = "*";
     Tag tag;
     while(fgets(buffer, BUFFER_LEN, f)){
@@ -2145,7 +2211,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
     v = n->line_main;
 
     for(i = 0; i < index; i++){
-        pgn_read_next(f);
+        pgn_read_next(f, 1);
     }
 
     while(fgets(buffer, BUFFER_LEN, f)){
@@ -2386,7 +2452,7 @@ pgn_replace_game(const char *filename, Notation *n, int index)
 
     //read games till given index
     for(i = 0; i < index; i++){
-        pgn_read_next(f);
+        pgn_read_next(f, 1);
     }
 
     //get string before given index
@@ -2396,7 +2462,7 @@ pgn_replace_game(const char *filename, Notation *n, int index)
     fread(before_str, sizeof(char), before_len, f);
 
     //skip game with given index
-    pgn_read_next(f);
+    pgn_read_next(f, 1);
 
     //get string after given index
     after_len = filesize - ftell(f);
@@ -2479,6 +2545,82 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
         last = tmp;
         tmp = strtok_r(NULL, " ", &saveptr);
     }
+}
+
+void
+game_list_init(GameList *gl)
+{
+    gl->list = NULL;
+    gl->count = 0;
+}
+
+void
+game_list_free(GameList *gl)
+{
+    if(gl->list == NULL || gl->count == 0)
+        return;
+    free(gl->list);
+}
+
+void
+game_list_add(GameList *gl, GameRow *gr)
+{
+    gl->count++;
+    gl->list = (GameRow*)realloc(gl->list, sizeof(GameRow)*gl->count);
+    gl->list[gl->count-1] = *gr;
+}
+
+void
+game_list_read_pgn(GameList *gl, FILE *f)
+{
+    char buffer[BUFFER_LEN];
+    int index = 0;
+    Tag tag;
+    GameRow gr;
+    Notation n;
+    notation_tag_init(&n);
+    game_list_init(gl);
+
+    while(fgets(buffer, BUFFER_LEN, f)){
+        trimendl(buffer);
+        if(tag_extract(buffer, &tag)){
+            notation_tag_set(&n, tag.key, tag.value);
+        }else{
+            snprintf(gr.title, GAMETITLE_LEN, "%s-%s/%s[%s]/%s (%s)",
+                    notation_tag_get(&n, "White")->value,
+                    notation_tag_get(&n, "Black")->value,
+                    notation_tag_get(&n, "Event")->value,
+                    notation_tag_get(&n, "Round")->value,
+                    notation_tag_get(&n, "Date")->value,
+                    notation_tag_get(&n, "Result")->value);
+            gr.index = index;
+            game_list_add(gl, &gr);
+            pgn_read_next(f, 0);
+
+            //reset tags
+            notation_tag_set(&n, "White", "");
+            notation_tag_set(&n, "Black", "");
+            notation_tag_set(&n, "Event", "");
+            notation_tag_set(&n, "Round", "");
+            notation_tag_set(&n, "Date", "");
+            notation_tag_set(&n, "Result", "*");
+        }
+    }
+    notation_tag_free(&n);
+}
+
+GameList *
+game_list_search_str(GameList *gl, const char *str)
+{
+    GameList * new_gl = (GameList*)malloc(sizeof(GameList));
+    game_list_init(new_gl);
+    int i;
+    for(i = 0; i < gl->count; i++){
+        if(isubstr(gl->list[i].title, str)){
+            game_list_add(new_gl, &gl->list[i]);
+        }
+    }
+    return new_gl;
 }
 
 #endif // CHESS_UTILS_IMPLEMENTATION
