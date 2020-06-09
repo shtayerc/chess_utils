@@ -208,6 +208,7 @@ test_move_offset_find()
 void
 test_move_uci_export()
 {
+    int UCI_LEN = 6;
     char uci[UCI_LEN];
     move_uci_export(e2, e4, Empty, uci, UCI_LEN);
     assert(!strcmp("e2e4", uci));
