@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.1
+chess_utils v0.3.2
 
 Copyright (c) 2020 David Murko
 
@@ -1301,7 +1301,7 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
         Piece *prom_piece)
 {
     char san_str[SAN_LEN];
-    snprintf(san_str, SAN_LEN, san);
+    snprintf(san_str, SAN_LEN, "%s", san);
     trimmove(san_str);
     Piece piece;
     Status status;
@@ -1596,7 +1596,7 @@ board_fen_import(Board *b, const char *FEN_str)
     Rank rank = (Rank)0;
     int file = 0;
     Square en_passant;
-    snprintf(fen, FEN_LEN, FEN_str);
+    snprintf(fen, FEN_LEN, "%s", FEN_str);
     char *p = strtok_r(fen, " ", &saveptr);
     for(i = 0; i < strlen(p); i++){
         if(p[i] >= '1' && p[i] <= '8'){
@@ -1734,7 +1734,7 @@ move_copy(Move *src, Move *dst, Variation *prev)
     dst->dst = src->dst;
     dst->prom_piece = src->prom_piece;
     dst->board = src->board;
-    snprintf(dst->san, SAN_LEN, src->san);
+    snprintf(dst->san, SAN_LEN, "%s", src->san);
     dst->comment = NULL;
     if(src->comment != NULL)
         dst->comment = strdup(src->comment);
@@ -1798,7 +1798,7 @@ variation_move_add(Variation *v, Square src, Square dst, Piece prom_piece,
     v->move_list[v->move_current].dst = dst;
     v->move_list[v->move_current].prom_piece = prom_piece;
     v->move_list[v->move_current].board = *b;
-    snprintf(v->move_list[v->move_current].san, SAN_LEN, san);
+    snprintf(v->move_list[v->move_current].san, SAN_LEN, "%s", san);
 }
 
 void
@@ -1943,11 +1943,11 @@ notation_tag_set(Notation *n, const char *key, const char *value)
     Tag tag;
     int index = notation_tag_index(n, key);
     if(index == -1){
-        snprintf(tag.key, TAG_LEN, key);
-        snprintf(tag.value, TAG_LEN, value);
+        snprintf(tag.key, TAG_LEN, "%s", key);
+        snprintf(tag.value, TAG_LEN, "%s", value);
         notation_tag_add(n, &tag);
     }else{
-        snprintf(n->tag_list[index].value, TAG_LEN, value);
+        snprintf(n->tag_list[index].value, TAG_LEN, "%s", value);
     }
 }
 
@@ -2047,7 +2047,7 @@ notation_variation_add(Notation *n, Square src, Square dst, Piece prom_piece,
     new_v->move_list[0].dst = dst;
     new_v->move_list[0].prom_piece = prom_piece;
     new_v->prev = v;
-    snprintf(new_v->move_list[0].san, SAN_LEN, san);
+    snprintf(new_v->move_list[0].san, SAN_LEN, "%s", san);
     variation_move_add(new_v, src, dst, prom_piece, b, san);
     n->line_current = new_v;
 }
@@ -2164,7 +2164,7 @@ pgn_read_next(FILE *f, int tags)
         if(tags){
             if(tag_extract(buffer, &tag)){
                 if(!strcmp(tag.key, "Result"))
-                    snprintf(result, 10, tag.value);
+                    snprintf(result, 10, "%s", tag.value);
             }
         }else{
            tmp = strtok_r(buffer, " ", &saveptr);
@@ -2205,7 +2205,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
     Variation *v, *new_v;
     Move *m;
 
-    snprintf(fen, FEN_LEN, FEN_DEFAULT);
+    snprintf(fen, FEN_LEN, "%s", FEN_DEFAULT);
     comment[0] = '\0';
     board_fen_import(&b, FEN_DEFAULT);
     v = n->line_main;
@@ -2221,9 +2221,9 @@ pgn_read_file(FILE *f, Notation *n, int index)
             if(tag_extract(buffer, &tag)){
                 notation_tag_set(n, tag.key, tag.value);
                 if(!strcmp(tag.key, "Result"))
-                    snprintf(result, 10, tag.value);
+                    snprintf(result, 10, "%s", tag.value);
                 if(!strcmp(tag.key, "FEN"))
-                    snprintf(fen, FEN_LEN, tag.value);
+                    snprintf(fen, FEN_LEN, "%s", tag.value);
             }
         }else{ //parse moves
             tmp = strtok_r(buffer, " ", &saveptr);
@@ -2268,7 +2268,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
 
                 //parse NAG numbers
                 if(nags == 1){
-                    snprintf(word, WORD_LEN, tmp);
+                    snprintf(word, WORD_LEN, "%s", tmp);
                     charremove(word, 0);
                     nag = strtol(word, NULL, 10);
                     if(nag < 10)
@@ -2281,7 +2281,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
                 //parse SAN moves
                 if(comments == 0 && anglebrackets == 0
                         && charcount(tmp, '.') == 0 && nags == 0){
-                    snprintf(word, WORD_LEN, tmp);
+                    snprintf(word, WORD_LEN, "%s", tmp);
                     trimmove(word);
                     if(str_is_move(word)){
 
@@ -2304,7 +2304,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
                         v->move_list[v->move_current].comment = (char*)malloc(
                                 sizeof(char)*COMMENT_LEN);
                         snprintf(v->move_list[v->move_current].comment,
-                                strlen(comment) + 1, comment);
+                                strlen(comment) + 1, "%s", comment);
                     }
                 }
 
@@ -2361,7 +2361,7 @@ pgn_write_comment(FILE *f, char *line, const char *str)
     char *saveptr;
     char comment[COMMENT_LEN];
 
-    snprintf(comment, COMMENT_LEN, str);
+    snprintf(comment, COMMENT_LEN, "%s", str);
     word = strtok_r(comment, " ", &saveptr);
     pgn_write_concate(f, line, strlen(word) + 1, "{%s", word);
     while((word = strtok_r(NULL, " ", &saveptr)) != NULL){
@@ -2427,7 +2427,7 @@ pgn_write_file(FILE *f, Notation *n)
     for(i = 0; i < n->tag_count; i++){
         fprintf(f, "[%s \"%s\"]\n", n->tag_list[i].key, n->tag_list[i].value);
         if(!strcmp(n->tag_list[i].key, "Result"))
-            snprintf(result, 10, n->tag_list[i].value);
+            snprintf(result, 10, "%s", n->tag_list[i].value);
     }
 
     fprintf(f, "\n");
@@ -2506,7 +2506,7 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
         v->move_list[0].san[0] = '\0';
     }
 
-    snprintf(buffer, len, str);
+    snprintf(buffer, len, "%s", str);
     last = strtok_r(buffer, " ", &saveptr);
     if(last == NULL)
         return;
@@ -2536,7 +2536,7 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
                     v->move_list[i].dst = dst;
                     v->move_list[i].prom_piece = prom_piece;
                     v->move_list[i].board = tmp_b;
-                    snprintf(v->move_list[i].san, SAN_LEN, san);
+                    snprintf(v->move_list[i].san, SAN_LEN, "%s", san);
                 }
             }
             i++;

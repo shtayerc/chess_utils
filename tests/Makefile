@@ -1,7 +1,7 @@
 CC=cc
 CPP=g++
 FILES=test.c
-FLAGS=-g -std=c99 -Wextra -Wall
+FLAGS=-g -Wextra -Wall -Wformat-security -Wno-format-truncation
 EXE=test
 EXAMPLEFILE=new_game.pgn
 TESTFILE_01=tmp_test_01.pgn
@@ -11,13 +11,13 @@ TESTFILE_04=tmp_test_04.pgn
 TESTFILE_05=tmp_test_05.pgn
 
 all:
-	$(CC) $(FLAGS) $(FILES) -o $(EXE)
+	$(CC) $(FLAGS) -std=c99 $(FILES) -o $(EXE)
 
 clean:
 	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02) $(TESTFILE_03) $(TESTFILE_04) $(TESTFILE_05)
 
 cpp:
-	$(CPP) -Wextra -Wall $(FILES) -o $(EXE)
+	$(CPP) $(FLAGS) $(FILES) -o $(EXE)
 
 check: cpp
 check: all
