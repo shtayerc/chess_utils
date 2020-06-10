@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.4
+chess_utils v0.3.5
 
 Copyright (c) 2020 David Murko
 
@@ -256,6 +256,9 @@ int board_is_stalemate(Board *b);
 
 //returns 1 if player on turn is out of legal moves
 int board_is_out_of_moves(Board *b);
+
+//returns 1 if b1 and b2 are equal
+int board_is_equal(Board *b1, Board *b2);
 
 //returns 1 if dst is different color and there are no pieces blocking path
 int board_move_pattern_knight_is_valid(Board *b, Square src, Square dst,
@@ -958,6 +961,38 @@ board_is_out_of_moves(Board *b)
                     }
                 }
             }
+        }
+    }
+    return 1;
+}
+
+int
+board_is_equal(Board *b1, Board *b2)
+{
+    if(b1->turn != b2->turn)
+        return 0;
+    if(b1->move_number != b2->move_number)
+        return 0;
+    if(b1->half_move != b2->half_move)
+        return 0;
+    if(b1->kings[0] != b2->kings[0] || b1->kings[1] != b2->kings[1])
+        return 0;
+    if(b1->en_passant != b2->en_passant)
+        return 0;
+    if(b1->castling[0][0] != b2->castling[0][0]
+            || b1->castling[0][1] != b2->castling[0][1]
+            || b1->castling[1][0] != b2->castling[1][0]
+            || b1->castling[1][1] != b2->castling[1][1])
+        return 0;
+    int i;
+    int j = 0;
+    for(i = 0; i <= h1; i++){
+        if(b1->position[i] != b2->position[i])
+            return 0;
+        //skip right 8x8
+        if(++j == 8){
+            j = 0;
+            i += 9;
         }
     }
     return 1;

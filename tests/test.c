@@ -319,6 +319,21 @@ test_board_is_out_of_moves()
 }
 
 void
+test_board_is_equal()
+{
+    Board b1, b2;
+    board_fen_import(&b1, FEN_DEFAULT);
+    board_fen_import(&b2, FEN_DEFAULT);
+    assert(board_is_equal(&b1, &b2));
+
+    board_fen_import(&b2, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w Kq - 0 1");
+    assert(!board_is_equal(&b1, &b2));
+
+    board_fen_import(&b2, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w KQkq - 0 1");
+    assert(!board_is_equal(&b1, &b2));
+}
+
+void
 test_board_move_pattern_knight_is_valid()
 {
     Board b;
@@ -982,6 +997,7 @@ int main(){
     test_board_is_checkmate();
     test_board_is_stalemate();
     test_board_is_out_of_moves();
+    test_board_is_equal();
     test_board_move_pattern_knight_is_valid();
     test_board_move_pattern_bishop_is_valid();
     test_board_move_pattern_rook_is_valid();
