@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.3
+chess_utils v0.3.4
 
 Copyright (c) 2020 David Murko
 
@@ -486,9 +486,8 @@ void game_list_add(GameList *gl, GameRow *gr);
 //read GameRows from pgn file
 void game_list_read_pgn(GameList *gl, FILE *f);
 
-//returns GameList with GameRows containing case insensitive str
-GameList * game_list_search_str(GameList *gl, const char *str);
-
+//fill GameList new_gl with GameRows containing case insensitive str
+void game_list_search_str(GameList *gl, GameList *new_gl, const char *str);
 
 #ifdef __cplusplus
 }
@@ -2609,10 +2608,9 @@ game_list_read_pgn(GameList *gl, FILE *f)
     notation_tag_free(&n);
 }
 
-GameList *
-game_list_search_str(GameList *gl, const char *str)
+void
+game_list_search_str(GameList *gl, GameList *new_gl, const char *str)
 {
-    GameList * new_gl = (GameList*)malloc(sizeof(GameList));
     game_list_init(new_gl);
     int i;
     for(i = 0; i < gl->count; i++){
@@ -2620,7 +2618,6 @@ game_list_search_str(GameList *gl, const char *str)
             game_list_add(new_gl, &gl->list[i]);
         }
     }
-    return new_gl;
 }
 
 #endif // CHESS_UTILS_IMPLEMENTATION
