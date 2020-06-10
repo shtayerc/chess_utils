@@ -936,6 +936,7 @@ test_game_list_functions()
     fclose(f);
     assert(!strcmp(gl.list[0].title, "Carlsen,M-Utegaliyev,A/World Rapid 2019[1.1]/2019.12.26 (1-0)"));
     assert(!strcmp(gl.list[1].title, "Castellanos Rodriguez,R-Vachier Lagrave,M/World Rapid 2019[1.2]/2019.12.26 (1/2-1/2)"));
+    assert(gl.list[1].index == 1);
     new_gl = game_list_search_str(&gl, "Carlsen");
     assert(new_gl->count == 1);
     game_list_free(new_gl);

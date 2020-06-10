@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.2
+chess_utils v0.3.3
 
 Copyright (c) 2020 David Murko
 
@@ -2593,7 +2593,7 @@ game_list_read_pgn(GameList *gl, FILE *f)
                     notation_tag_get(&n, "Round")->value,
                     notation_tag_get(&n, "Date")->value,
                     notation_tag_get(&n, "Result")->value);
-            gr.index = index;
+            gr.index = index++;
             game_list_add(gl, &gr);
             pgn_read_next(f, 0);
 
