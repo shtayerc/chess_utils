@@ -958,7 +958,23 @@ test_game_list_functions()
     game_list_search_str(&gl, &new_gl, "world RAPID");
     assert(new_gl.count == 6);
     game_list_free(&new_gl);
+
+    Board b;
+    board_fen_import(&b, "rnb1kbnr/pp2pppp/2pq4/8/3P4/2N5/PPP2PPP/R1BQKBNR w KQkq - 0 5");
+
+    f = fopen("files/medium.pgn", "r");
+    game_list_search_board(&gl, &new_gl, f, &b);
+    fclose(f);
+    game_list_free(&new_gl);
+    assert(new_gl.count == 1);
+
+    board_fen_import(&b, "r1bqkbnr/pp1npppp/3p4/1Bp5/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 4");
+    f = fopen("files/medium.pgn", "r");
+    game_list_search_board(&gl, &new_gl, f, &b);
+    fclose(f);
     game_list_free(&gl);
+    assert(new_gl.count == 2);
+    game_list_free(&new_gl);
 }
 
 int main(){

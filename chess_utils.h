@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.5
+chess_utils v0.3.6
 
 Copyright (c) 2020 David Murko
 
@@ -491,6 +491,9 @@ void game_list_read_pgn(GameList *gl, FILE *f);
 
 //fill GameList new_gl with GameRows containing case insensitive str
 void game_list_search_str(GameList *gl, GameList *new_gl, const char *str);
+
+//fill GameList new_gl with GameRows containing given Board
+void game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b);
 
 #ifdef __cplusplus
 }
@@ -2652,6 +2655,146 @@ game_list_search_str(GameList *gl, GameList *new_gl, const char *str)
         if(isubstr(gl->list[i].title, str)){
             game_list_add(new_gl, &gl->list[i]);
         }
+    }
+}
+
+void
+game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
+{
+    char buffer[BUFFER_LEN];
+    char fen[FEN_LEN];
+    char word[WORD_LEN];
+    char san[SAN_LEN];
+    char result[10] = "*";
+    char *tmp;
+    char *saveptr;
+    int i, comment_start, comment_end, variation_start, variation_end, skip;
+    int tags = 1;
+    int comments = 0;
+    int anglebrackets = 0; //pgn standard
+    int nags = 0;
+    Tag tag;
+    Status status;
+    Square src, dst;
+    Piece prom_piece;
+    Board b_tmp, b_start;
+    Variation *v, *new_v;
+    Move *m;
+    Notation n;
+
+    board_fen_import(&b_start, FEN_DEFAULT);
+    game_list_init(new_gl);
+
+    for(i = 0; i < gl->count; i++){
+        while(i < gl->list[i].index){
+            pgn_read_next(f, 1);
+            i++;
+        }
+        snprintf(fen, FEN_LEN, "%s", FEN_DEFAULT);
+        b_tmp = b_start;
+        notation_init(&n, &b_tmp);
+        v = n.line_main;
+        skip = 0;
+        tags = 1;
+        while(fgets(buffer, BUFFER_LEN, f)){
+            trimendl(buffer);
+            if(tags){ //parse tags
+                if(tag_extract(buffer, &tag)){
+                    if(!strcmp(tag.key, "Result"))
+                        snprintf(result, 10, "%s", tag.value);
+                    if(!strcmp(tag.key, "FEN"))
+                        snprintf(fen, FEN_LEN, "%s", tag.value);
+                }
+            }else{ //parse moves
+                if(b_tmp.move_number > b->move_number)
+                    skip = 1;
+                tmp = strtok_r(buffer, " ", &saveptr);
+                while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
+
+                    variation_start = 0;
+                    variation_end = 0;
+                    comment_start = charcount(tmp, '{');
+                    comment_end = charcount(tmp, '}');
+
+                    comments += comment_start;
+
+                    if(comments == 0){
+                        variation_start = charcount(tmp, '(');
+                        variation_end = charcount(tmp, ')');
+                        anglebrackets += charcount(tmp, '<');
+                        nags = charcount(tmp, '$');
+                    }
+
+                    if(comment_start){
+                        variation_start = charcount_before(tmp, '(', '{');
+                    }
+
+                    if(comment_end){
+                        variation_end = charcount_after(tmp, ')', '}');
+                    }
+
+                    if(variation_start && !skip){
+                        m = &v->move_list[v->move_current-1];
+                        b_tmp = m->board;
+                        m->variation_count++;
+                        m->variation_list = (Variation**)realloc(m->variation_list,
+                                sizeof(Variation*) * m->variation_count);
+                        new_v = (Variation*)malloc(sizeof(Variation));
+                        variation_init(new_v, &b_tmp);
+                        m->variation_list[m->variation_count-1] = new_v;
+                        new_v->prev = v;
+                        v = new_v;
+                    }
+
+                    //parse SAN moves
+                    if(comments == 0 && anglebrackets == 0
+                            && charcount(tmp, '.') == 0 && nags == 0 && !skip){
+                        snprintf(word, WORD_LEN, "%s", tmp);
+                        trimmove(word);
+                        if(str_is_move(word)){
+                            if(board_is_equal(b, &b_tmp)){
+                                game_list_add(new_gl, &gl->list[i]);
+                                skip = 1;
+                            }
+
+                            status = board_move_san_status(&b_tmp, word, &src,
+                                    &dst, &prom_piece);
+                            if(status == Invalid){
+                                skip = 1;
+                            }
+                            board_move_san_export(&b_tmp, src, dst, prom_piece,
+                                    san, SAN_LEN, status);
+                            board_move_do(&b_tmp, src, dst, prom_piece, status);
+                            variation_move_add(v, src, dst, prom_piece, &b_tmp,
+                                    san);
+                        }
+                    }
+
+                    while(variation_end--){
+                        v->move_current = 1;
+                        v = v->prev;
+                        b_tmp = v->move_list[v->move_current].board;
+                    }
+
+                    comments -= comment_end;
+                    if(comments == 0){
+                        anglebrackets -= charcount(tmp, '>');
+                    }
+                    tmp = strtok_r(NULL, " ", &saveptr);
+                }
+            }
+            //if empty line
+            if(strlen(buffer) == 0){
+                if(tags){
+                    board_fen_import(&b_tmp, fen);
+                    tags = 0;
+                    word[0] = '\0';
+                }else{
+                    break;
+                }
+            }
+        }
+        notation_free(&n);
     }
 }
 
