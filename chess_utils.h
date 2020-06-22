@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.6
+chess_utils v0.3.7
 
 Copyright (c) 2020 David Murko
 
@@ -2668,7 +2668,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
     char result[10] = "*";
     char *tmp;
     char *saveptr;
-    int i, comment_start, comment_end, variation_start, variation_end, skip;
+    int i, j, comment_start, comment_end, variation_start, variation_end, skip;
     int tags = 1;
     int comments = 0;
     int anglebrackets = 0; //pgn standard
@@ -2681,6 +2681,8 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
     Variation *v, *new_v;
     Move *m;
     Notation n;
+    Square pawn_start[] = {a2, b2, c2, d2, e2, f2, g2, h2, a7, b7, c7, d7, e7,
+        f7, g7, h7};
 
     board_fen_import(&b_start, FEN_DEFAULT);
     game_list_init(new_gl);
@@ -2708,6 +2710,16 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
             }else{ //parse moves
                 if(b_tmp.move_number > b->move_number)
                     skip = 1;
+                for(j = 0; j < 16 && !skip; j++){
+                    if(b->position[pawn_start[j]] == BlackPawn ||
+                            b->position[pawn_start[j]] == WhitePawn){
+                        if(b-> position[pawn_start[j]]
+                                != b_tmp.position[pawn_start[j]]){
+                            skip = 1;
+                            break;
+                        }
+                    }
+                }
                 tmp = strtok_r(buffer, " ", &saveptr);
                 while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
 
