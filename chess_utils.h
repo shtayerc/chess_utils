@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.7
+chess_utils v0.3.8
 
 Copyright (c) 2020 David Murko
 
@@ -2782,7 +2782,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                         }
                     }
 
-                    while(variation_end--){
+                    while(variation_end-- && !skip){
                         v->move_current = 1;
                         v = v->prev;
                         b_tmp = v->move_list[v->move_current].board;

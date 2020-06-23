@@ -948,7 +948,6 @@ test_game_list_functions()
     GameList new_gl;
     FILE *f = fopen("files/medium.pgn", "r");
     game_list_read_pgn(&gl, f);
-    fclose(f);
     assert(!strcmp(gl.list[0].title, "Carlsen,M-Utegaliyev,A/World Rapid 2019[1.1]/2019.12.26 (1-0)"));
     assert(!strcmp(gl.list[1].title, "Castellanos Rodriguez,R-Vachier Lagrave,M/World Rapid 2019[1.2]/2019.12.26 (1/2-1/2)"));
     assert(gl.list[1].index == 1);
@@ -962,18 +961,27 @@ test_game_list_functions()
     Board b;
     board_fen_import(&b, "rnb1kbnr/pp2pppp/2pq4/8/3P4/2N5/PPP2PPP/R1BQKBNR w KQkq - 0 5");
 
-    f = fopen("files/medium.pgn", "r");
+    fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    fclose(f);
     game_list_free(&new_gl);
     assert(new_gl.count == 1);
 
     board_fen_import(&b, "r1bqkbnr/pp1npppp/3p4/1Bp5/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 4");
-    f = fopen("files/medium.pgn", "r");
+    fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
     fclose(f);
     game_list_free(&gl);
     assert(new_gl.count == 2);
+    game_list_free(&new_gl);
+
+    board_fen_import(&b, "rnbqr1k1/1p3pbp/p2p2p1/2pP4/P3nB2/2N1PN1P/1P2BPP1/R2QK2R w KQ - 3 12");
+    f = fopen("files/complex.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    fclose(f);
+    game_list_free(&gl);
+    assert(new_gl.count == 1);
     game_list_free(&new_gl);
 }
 
