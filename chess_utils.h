@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.8
+chess_utils v0.3.9
 
 Copyright (c) 2020 David Murko
 
@@ -2668,7 +2668,8 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
     char result[10] = "*";
     char *tmp;
     char *saveptr;
-    int i, j, comment_start, comment_end, variation_start, variation_end, skip;
+    int i, j, comment_start, comment_end, variation_start, variation_end, skip,
+        skip_var;
     int tags = 1;
     int comments = 0;
     int anglebrackets = 0; //pgn standard
@@ -2697,6 +2698,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
         notation_init(&n, &b_tmp);
         v = n.line_main;
         skip = 0;
+        skip_var = 0;
         tags = 1;
         while(fgets(buffer, BUFFER_LEN, f)){
             trimendl(buffer);
@@ -2708,8 +2710,6 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                         snprintf(fen, FEN_LEN, "%s", tag.value);
                 }
             }else{ //parse moves
-                if(b_tmp.move_number > b->move_number)
-                    skip = 1;
                 for(j = 0; j < 16 && !skip; j++){
                     if(b->position[pawn_start[j]] == BlackPawn ||
                             b->position[pawn_start[j]] == WhitePawn){
@@ -2723,6 +2723,13 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                 tmp = strtok_r(buffer, " ", &saveptr);
                 while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
 
+                    if(b_tmp.move_number > b->move_number){
+                        if(v == n.line_main){
+                            skip = 1;
+                        }else{
+                            skip_var = 1;
+                        }
+                    }
                     variation_start = 0;
                     variation_end = 0;
                     comment_start = charcount(tmp, '{');
@@ -2760,7 +2767,8 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
 
                     //parse SAN moves
                     if(comments == 0 && anglebrackets == 0
-                            && charcount(tmp, '.') == 0 && nags == 0 && !skip){
+                            && charcount(tmp, '.') == 0 && nags == 0 && !skip
+                            && !skip_var){
                         snprintf(word, WORD_LEN, "%s", tmp);
                         trimmove(word);
                         if(str_is_move(word)){
@@ -2783,6 +2791,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                     }
 
                     while(variation_end-- && !skip){
+                        skip_var = 0;
                         v->move_current = 1;
                         v = v->prev;
                         b_tmp = v->move_list[v->move_current].board;

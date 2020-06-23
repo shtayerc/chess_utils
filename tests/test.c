@@ -979,10 +979,16 @@ test_game_list_functions()
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    fclose(f);
-    game_list_free(&gl);
     assert(new_gl.count == 1);
     game_list_free(&new_gl);
+
+    board_fen_import(&b, "rnbq2k1/1p3pbp/p2p2p1/2pP4/Pr3B2/4P2P/1P1NBPP1/R2QK2R w KQ - 2 14");
+    fseek(f, 0 , SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    assert(new_gl.count == 1);
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
 }
 
 int main(){
