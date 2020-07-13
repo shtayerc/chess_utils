@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.9
+chess_utils v0.3.10
 
 Copyright (c) 2020 David Murko
 
@@ -2229,7 +2229,6 @@ pgn_read_file(FILE *f, Notation *n, int index)
     char *tmp;
     char *saveptr;
     int i, comment_start, comment_end, variation_start, variation_end;
-    int tags = 1;
     int comments = 0;
     int anglebrackets = 0; //pgn standard
     int nags = 0;
@@ -2254,18 +2253,21 @@ pgn_read_file(FILE *f, Notation *n, int index)
     while(fgets(buffer, BUFFER_LEN, f)){
 
         trimendl(buffer);
-        if(tags){ //parse tags
-            if(tag_extract(buffer, &tag)){
-                notation_tag_set(n, tag.key, tag.value);
-                if(!strcmp(tag.key, "Result"))
-                    snprintf(result, 10, "%s", tag.value);
-                if(!strcmp(tag.key, "FEN"))
-                    snprintf(fen, FEN_LEN, "%s", tag.value);
-            }
-        }else{ //parse moves
-            tmp = strtok_r(buffer, " ", &saveptr);
-            while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
+        if(strlen(buffer) == 0)//skip empty lines
+            continue;
 
+        if(tag_extract(buffer, &tag)){
+            notation_tag_set(n, tag.key, tag.value);
+            if(!strcmp(tag.key, "Result"))
+                snprintf(result, 10, "%s", tag.value);
+            if(!strcmp(tag.key, "FEN")){
+                snprintf(fen, FEN_LEN, "%s", tag.value);
+                board_fen_import(&b, fen);
+            }
+        }else{
+            //skip lines starting with %
+            tmp = buffer[0] != '%' ? strtok_r(buffer, " ", &saveptr) : NULL;
+            while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
                 variation_start = 0;
                 variation_end = 0;
                 comment_start = charcount(tmp, '{');
@@ -2357,16 +2359,8 @@ pgn_read_file(FILE *f, Notation *n, int index)
                 }
                 tmp = strtok_r(NULL, " ", &saveptr);
             }
-        }
-        //if empty line
-        if(strlen(buffer) == 0){
-            if(tags){
-                board_fen_import(&b, fen);
-                tags = 0;
-                word[0] = '\0';
-            }else{
+            if(tmp != NULL && (comments == 0 && !strcmp(tmp, result)))
                 break;
-            }
         }
     }
     v->move_current = 0;

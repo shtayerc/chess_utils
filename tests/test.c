@@ -833,6 +833,12 @@ test_pgn_read_file()
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
+
+    notation_init(&n, &b);
+    f = fopen("files/percent.pgn", "r");
+    ok = pgn_read_file(f, &n, 0);
+    assert(ok);
+    notation_free(&n);
 }
 
 void
