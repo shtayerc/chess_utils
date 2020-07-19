@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.10
+chess_utils v0.3.11
 
 Copyright (c) 2020 David Murko
 
@@ -2221,7 +2221,6 @@ int
 pgn_read_file(FILE *f, Notation *n, int index)
 {
     char buffer[BUFFER_LEN];
-    char fen[FEN_LEN];
     char word[WORD_LEN];
     char comment[COMMENT_LEN];
     char san[SAN_LEN];
@@ -2241,7 +2240,6 @@ pgn_read_file(FILE *f, Notation *n, int index)
     Variation *v, *new_v;
     Move *m;
 
-    snprintf(fen, FEN_LEN, "%s", FEN_DEFAULT);
     comment[0] = '\0';
     board_fen_import(&b, FEN_DEFAULT);
     v = n->line_main;
@@ -2260,10 +2258,8 @@ pgn_read_file(FILE *f, Notation *n, int index)
             notation_tag_set(n, tag.key, tag.value);
             if(!strcmp(tag.key, "Result"))
                 snprintf(result, 10, "%s", tag.value);
-            if(!strcmp(tag.key, "FEN")){
-                snprintf(fen, FEN_LEN, "%s", tag.value);
-                board_fen_import(&b, fen);
-            }
+            if(!strcmp(tag.key, "FEN"))
+                board_fen_import(&b, tag.value);
         }else{
             //skip lines starting with %
             tmp = buffer[0] != '%' ? strtok_r(buffer, " ", &saveptr) : NULL;
