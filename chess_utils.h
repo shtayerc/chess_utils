@@ -224,7 +224,7 @@ int move_offset_find(Square src, Square dst, OffsetIndex offset_index);
 
 //UCI string is set for given move
 void move_uci_export(Square src, Square dst, Piece prom_piece, char *uci,
-    int len); //e2,e4,Empty -> "e2e4"
+        int len); //e2,e4,Empty -> "e2e4"
 
 //
 //BOARD FUNCTIONS
@@ -1226,7 +1226,7 @@ board_move_is_check(Board *b, Square src, Square dst, Piece prom_piece,
     Board tmp = *b;
     board_move_do(&tmp, src, dst, prom_piece, status);
     return board_square_is_attacked(&tmp, tmp.kings[color], (color == White
-                    ? Black : White));
+                ? Black : White));
 }
 
 int
@@ -2204,9 +2204,9 @@ pgn_read_next(FILE *f, int tags)
                     snprintf(result, 10, "%s", tag.value);
             }
         }else{
-           tmp = strtok_r(buffer, " ", &saveptr);
-           while(tmp != NULL && strcmp(tmp, result))
-               tmp = strtok_r(NULL, " ", &saveptr);
+            tmp = strtok_r(buffer, " ", &saveptr);
+            while(tmp != NULL && strcmp(tmp, result))
+                tmp = strtok_r(NULL, " ", &saveptr);
         }
         if(strlen(buffer) == 0){
             if(tags)
@@ -2422,7 +2422,7 @@ pgn_write_variation(FILE *f, Variation *v, char *line, int i){
 
         if(j > 1 && v->move_list[j-2].variation_count > 0
                 && m->board.turn == White)
-                pgn_write_concate(f, line, 9, "%d...", (j / 2) + (i / 2));
+            pgn_write_concate(f, line, 9, "%d...", (j / 2) + (i / 2));
 
         pgn_write_concate(f, line, strlen(m->san) + 1, "%s", m->san);
         if(m->nag_move)
