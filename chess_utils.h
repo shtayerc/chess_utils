@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.11
+chess_utils v0.3.12
 
 Copyright (c) 2020 David Murko
 
@@ -2655,15 +2655,15 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
     char fen[FEN_LEN];
     char word[WORD_LEN];
     char san[SAN_LEN];
-    char result[10] = "*";
+    char result[10];
     char *tmp;
     char *saveptr;
     int i, j, comment_start, comment_end, variation_start, variation_end, skip,
         skip_var;
-    int tags = 1;
-    int comments = 0;
-    int anglebrackets = 0; //pgn standard
-    int nags = 0;
+    int tags;
+    int comments;
+    int anglebrackets; //pgn standard
+    int nags;
     Tag tag;
     Status status;
     Square src, dst;
@@ -2687,9 +2687,13 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
         b_tmp = b_start;
         notation_init(&n, &b_tmp);
         v = n.line_main;
+        snprintf(result, 10, "*");
         skip = 0;
         skip_var = 0;
         tags = 1;
+        comments = 0;
+        anglebrackets = 0;
+        nags = 0;
         while(fgets(buffer, BUFFER_LEN, f)){
             trimendl(buffer);
             if(tags){ //parse tags
