@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.12
+chess_utils v0.3.13
 
 Copyright (c) 2020 David Murko
 
@@ -2766,11 +2766,6 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                         snprintf(word, WORD_LEN, "%s", tmp);
                         trimmove(word);
                         if(str_is_move(word)){
-                            if(board_is_equal(b, &b_tmp)){
-                                game_list_add(new_gl, &gl->list[i]);
-                                skip = 1;
-                            }
-
                             status = board_move_san_status(&b_tmp, word, &src,
                                     &dst, &prom_piece);
                             if(status == Invalid){
@@ -2779,6 +2774,10 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                             board_move_san_export(&b_tmp, src, dst, prom_piece,
                                     san, SAN_LEN, status);
                             board_move_do(&b_tmp, src, dst, prom_piece, status);
+                            if(board_is_equal(b, &b_tmp)){
+                                game_list_add(new_gl, &gl->list[i]);
+                                skip = 1;
+                            }
                             variation_move_add(v, src, dst, prom_piece, &b_tmp,
                                     san);
                         }
@@ -2802,6 +2801,10 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
             if(strlen(buffer) == 0){
                 if(tags){
                     board_fen_import(&b_tmp, fen);
+                    if(board_is_equal(b, &b_tmp)){
+                        game_list_add(new_gl, &gl->list[i]);
+                        skip = 1;
+                    }
                     tags = 0;
                     word[0] = '\0';
                 }else{

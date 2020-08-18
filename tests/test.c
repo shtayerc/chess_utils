@@ -995,6 +995,16 @@ test_game_list_functions()
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
+
+    board_fen_import(&b, "7k/4R1p1/1P1B1p1p/7P/3p2r1/3bP3/7K/8 b - - 1 37");
+    f = fopen("files/piece_hint.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    assert(new_gl.count == 1);
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
 }
 
 int main(){
