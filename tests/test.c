@@ -1009,6 +1009,15 @@ test_game_list_functions()
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
+
+    board_fen_import(&b, "r1bqkb1r/pp3p1p/2p3p1/2npP3/5P2/2NB4/PPP3PP/R1BQ1RK1 w kq - 0 10");
+    f = fopen("files/search_board.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
 }
 
 int main(){

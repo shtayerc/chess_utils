@@ -1,0 +1,54 @@
+[Event "Las Palmas"]
+[Site "Las Palmas"]
+[Date "1993.??.??"]
+[Round "1"]
+[White "Adams, Michael"]
+[Black "Khalifman, Alexander"]
+[Result "0-1"]
+[ECO "B73"]
+[WhiteElo "2630"]
+[BlackElo "2630"]
+[Annotator "Boensch,U"]
+[PlyCount "92"]
+[EventDate "1993.06.??"]
+[EventType "tourn"]
+[EventRounds "9"]
+[EventCountry "ESP"]
+[EventCategory "16"]
+[SourceTitle "CBM 036"]
+[Source "ChessBase"]
+[SourceDate "1993.10.01"]
+[SourceVersion "1"]
+[SourceVersionDate "1993.10.01"]
+[SourceQuality "1"]
+
+1. e4 {Khalifman Anand} c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. Be2
+Bg7 7. O-O O-O 8. Be3 Nc6 9. Kh1 (9. Nb3 {Khalifman}) (9. Qd2 {Khalifman}) 9...
+d5 (9... Bd7 {Khalifman} 10. f4 $14) 10. Nxc6 $146 (10. exd5 Nxd5 (10... Nb4
+11. Bc4 $6 (11. Qd2 Nbxd5 12. Nxd5 Nxd5 13. Bh6 $10) 11... Nbxd5 12. Nxd5 Nxd5
+13. Bxd5 Qxd5 14. c3 Bd7 15. Qf3 Qxf3 16. Nxf3 $15 {Mandarin,V-Inkiov,V Cannes
+op 1992 0-1 40}) 11. Nxd5 Qxd5 (11... Nxd4 12. Bxd4 Qxd5 13. Bxg7 Qxd1 14.
+Raxd1 Kxg7 15. Bf3 Bf5 $10 {Proehl,H-Hausrath,D GER-chj Steinsfurt (06) 1992 1/
+2 24}) 12. Bf3 Qa5 13. Nxc6 bxc6 14. c3 (14. Bxc6 Rb8 $15 {-ECO}) 14... Rb8 15.
+b4 Qa3 16. Bxc6 Ba6 17. b5 Bxb5 18. Bxb5 Rxb5 19. Qd7 $10 {Barreno,H-Husari,S
+Novi Sad olm 1990}) 10... bxc6 11. e5 Ne4 $1 (11... Nd7 12. f4 $14 {/\ Na4} (
+12. f4 {Khalifman} Rb8 13. Na4 $14)) (11... Ne8 {Khalifman} 12. f4 f6 13. exf6
+$13) 12. Nxe4 (12. f4 {Khalifman} Nxc3 13. bxc3 Qa5 $15) 12... dxe4 13. Qxd8 (
+13. Bd4 Qc7 $17) 13... Rxd8 14. Rfd1 Be6 15. Bd4 f5 (15... Rd7 {Anand} 16. a4
+Rad8 (16... f5 {Khalifman} 17. exf6 $14) 17. c3 {and the doubling of rooks
+doesn't really help} (17. Bxa7)) 16. a4 $2 (16. exf6 Bxf6 17. c3 $10 (17. Bxf6
+{Khalifman} exf6 $10)) 16... Kf7 17. a5 Rxd4 $3 18. Rxd4 Rb8 $1 (18... Bxe5 19.
+Rb4 $10) 19. f4 $6 (19. Rb1 Bxe5 20. Ra4 (20. Rdd1 $2 Ba2 21. Ra1 Rxb2 $19 (
+21... Rxb2 $4 {Anand Fails to} 22. Rxa2 $1) (21... Be6 {is at least a draw}))
+20... Rxb2 (20... Rd8 $5 {Khalifman}) 21. Rxb2 Bxb2 22. Rb4 Bc3 23. Rb7 Bxa5
+24. Rxa7 $14) (19. Bc4 {Khalifman} Bxe5 20. Bxe6+ Kxe6 21. Rc4 Kd5 $19) 19...
+exf3 20. Bxf3 Bxe5 $17 21. Rd3 (21. Rd2 {Khalifman} Rxb2 22. Bxc6 Bc3 $17)
+21... Rxb2 22. Re1 Bd6 23. Bxc6 Rxc2 24. Bd5 Bxd5 25. Rxd5 Ra2 26. g3 (26. Rb1
+{Anand} h5 (26... Bb4 $1) 27. g3 $140 h4 $17) 26... Bb4 27. Rb1 Rxa5 $19 (27...
+Bxa5 {Anand} 28. Rb7 Bc3 (28... Bb6 29. Re5 $1) 29. Rdd7 Bf6 30. Rxa7) 28. Rd7
+(28. Rxa5 {Anand} Bxa5 $19) 28... Ke6 29. Rd8 Bd6 30. Rh8 h5 31. Rf8 Re5 32.
+Rb2 a5 33. Ra2 Bb4 34. Kg2 Kd5 35. Rc2 a4 36. Rg8 Re6 37. Rd8+ Bd6 38. Rd2+ Kc6
+39. Ra8 a3 40. Kf3 Re4 41. Rg8 Rb4 42. Rc8+ (42. Rxg6 Rb3+ 43. Ke2 Rb2 44. Rg8
+Kb7 $19 (44... Bb4 $19 {Khalifman})) 42... Kb5 43. Rd5+ Kb6 44. Ra8 Rb3+ 45.
+Ke2 Rb2+ 46. Rd2 Bb4 0-1
+

@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.14
+chess_utils v0.3.15
 
 Copyright (c) 2020 David Murko
 
@@ -2704,16 +2704,6 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                         snprintf(fen, FEN_LEN, "%s", tag.value);
                 }
             }else{ //parse moves
-                for(j = 0; j < 16 && !skip; j++){
-                    if(b->position[pawn_start[j]] == BlackPawn ||
-                            b->position[pawn_start[j]] == WhitePawn){
-                        if(b-> position[pawn_start[j]]
-                                != b_tmp.position[pawn_start[j]]){
-                            skip = 1;
-                            break;
-                        }
-                    }
-                }
                 tmp = strtok_r(buffer, " ", &saveptr);
                 while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
 
@@ -2747,16 +2737,20 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                     }
 
                     if(variation_start && !skip){
-                        m = &v->move_list[v->move_current-1];
-                        b_tmp = m->board;
-                        m->variation_count++;
-                        m->variation_list = (Variation**)realloc(m->variation_list,
-                                sizeof(Variation*) * m->variation_count);
-                        new_v = (Variation*)malloc(sizeof(Variation));
-                        variation_init(new_v, &b_tmp);
-                        m->variation_list[m->variation_count-1] = new_v;
-                        new_v->prev = v;
-                        v = new_v;
+                        if(!skip_var){
+                            m = &v->move_list[v->move_current-1];
+                            b_tmp = m->board;
+                            m->variation_count++;
+                            m->variation_list = (Variation**)realloc(m->variation_list,
+                                    sizeof(Variation*) * m->variation_count);
+                            new_v = (Variation*)malloc(sizeof(Variation));
+                            variation_init(new_v, &b_tmp);
+                            m->variation_list[m->variation_count-1] = new_v;
+                            new_v->prev = v;
+                            v = new_v;
+                        }else{
+                            skip_var++;
+                        }
                     }
 
                     //parse SAN moves
@@ -2778,16 +2772,32 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                                 game_list_add(new_gl, &gl->list[i]);
                                 skip = 1;
                             }
+                            for(j = 0; j < 16 && !skip; j++){
+                                if(b->position[pawn_start[j]] == BlackPawn ||
+                                        b->position[pawn_start[j]] == WhitePawn){
+                                    if(b->position[pawn_start[j]]
+                                            != b_tmp.position[pawn_start[j]]){
+                                        if(v == n.line_main){
+                                            skip = 1;
+                                        }else{
+                                            skip_var = 1;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
                             variation_move_add(v, src, dst, prom_piece, &b_tmp,
                                     san);
                         }
                     }
 
                     while(variation_end-- && !skip){
-                        skip_var = 0;
-                        v->move_current = 1;
-                        v = v->prev;
-                        b_tmp = v->move_list[v->move_current].board;
+                        if(--skip_var <= 0){
+                            skip_var = 0;
+                            v->move_current = 1;
+                            v = v->prev;
+                            b_tmp = v->move_list[v->move_current].board;
+                        }
                     }
 
                     comments -= comment_end;
