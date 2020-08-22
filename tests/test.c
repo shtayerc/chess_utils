@@ -572,6 +572,10 @@ test_board_move_san_status()
 
     snprintf(san, SAN_LEN, "Ne2");
     assert(board_move_san_status(&b, san, &src, &dst, &prom_piece) == Invalid);
+
+    board_fen_import(&b, "r1bq1rk1/pp2ppbp/2n2np1/3P4/3N4/2N1B3/PPP1BPPP/R2Q1R1K b - - 0 1");
+    snprintf(san, SAN_LEN, "Nbd5");
+    assert(board_move_san_status(&b, san, &src, &dst, &prom_piece) == Invalid);
 }
 
 void

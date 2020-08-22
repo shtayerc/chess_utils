@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.13
+chess_utils v0.3.14
 
 Copyright (c) 2020 David Murko
 
@@ -1341,7 +1341,7 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
     snprintf(san_str, SAN_LEN, "%s", san);
     trimmove(san_str);
     Piece piece;
-    Status status;
+    Status status = Invalid;
     *src = none;
     *prom_piece = Empty;
     Color color = b->turn;
