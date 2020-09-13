@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.15
+chess_utils v0.3.16
 
 Copyright (c) 2020 David Murko
 
@@ -2350,7 +2350,7 @@ pgn_read_file(FILE *f, Notation *n, int index)
                 }
 
                 comments -= comment_end;
-                if(comments == 0){
+                if(comments == 0 && comment_start - comment_end != 0){
                     anglebrackets -= charcount(tmp, '>');
                 }
                 tmp = strtok_r(NULL, " ", &saveptr);
@@ -2801,7 +2801,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                     }
 
                     comments -= comment_end;
-                    if(comments == 0){
+                    if(comments == 0 && comment_start - comment_end != 0){
                         anglebrackets -= charcount(tmp, '>');
                     }
                     tmp = strtok_r(NULL, " ", &saveptr);

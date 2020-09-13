@@ -1,0 +1,116 @@
+[Event "Groningen op"]
+[Site "Groningen"]
+[Date "1999.12.29"]
+[Round "10"]
+[White "Najer, Evgeniy"]
+[Black "Tiviakov, Sergei"]
+[Result "1/2-1/2"]
+[ECO "B23"]
+[WhiteElo "2562"]
+[BlackElo "2611"]
+[Annotator "Tiviakov"]
+[PlyCount "67"]
+[EventDate "1999.12.19"]
+[EventType "swiss"]
+[EventRounds "11"]
+[EventCountry "NED"]
+[SourceTitle "EXT 2002"]
+[Source "ChessBase"]
+[SourceDate "2001.11.25"]
+[SourceVersion "1"]
+[SourceVersionDate "2001.11.25"]
+[SourceQuality "1"]
+
+{[%mdl 8] [This exciting and unusual game took place in the penultimate round
+of the tournament when both the author and his opponent had been in the lead
+with 7 points out of 9.]} 1. e4 c5 2. Nc3 Nc6 3. Bb5 Nd4 {[After 3...g6 4.Bxc6
+White has a long-lasting advantage due to the Black's damaged pawns' structure.
+]} 4. Bc4 (4. Ba4 $5 {is interesting and requires further practical tests.})
+4... g6 5. Nf3 Bg7 6. Nxd4 $5 {[This move came as a complete surprise for me.
+Evgeny has played Nf3:d4 only after the inclusion of the moves 6.0-0 Bg7
+before.]} cxd4 7. Qf3 $5 {[Now Black faces serious problems, he has to be very
+careful not to find himself in a lost position.]} Nh6 $8 {[The only move.]} (
+7... e6 $2 {is bad after} 8. Nb5 Be5 ({both} 8... d6 9. Qa3 $5 Be5 10. d3 d5
+11. f4 $16 {(Bangiev) and}) (8... Qb6 9. Qf4 $16 {are hopeless for Black.}) 9.
+Qd3 (9. c3 {is possible as well. After} dxc3 10. d4 ({White is only slightly
+better after} 10. dxc3 a6 11. Nd4 Qc7 12. Bb3 $14 {in Konieczka,F-Kern,J/
+Bundesliga 1990}) 10... a6 11. dxe5 axb5 12. Bb3 cxb2 13. Bxb2 Qa5+ 14. Bc3 b4
+15. Bb2 Qb5 16. O-O-O b6 17. Qe3 $16 {White according to Bangiev has an upper
+hand.}) 9... Qb6 10. c3 dxc3 11. dxc3 a6 12. Be3 $16) (7... Nf6 $2 {loses the
+pawn d4 after} 8. Nb5 O-O (8... e5 9. Nd6+ $18 {and}) (8... Qb6 9. e5 $18 {
+both lose immediately.}) 9. Nxd4 {Black here is unable to get the compensation
+for the pawn. For example,} d5 $1 10. exd5 e6 11. O-O exd5 12. Bb3 Re8 13. d3
+Bg4 14. Qg3 Qd7 15. h3 Bh5 16. Be3 $16) 8. Ne2 (8. d3 O-O ({After} 8... dxc3 $6
+9. Bxh6 Bf6 ({or} 9... O-O 10. Bxg7 Kxg7 11. bxc3 Qa5 12. d4 (12. Kd2 $5 {
+is interesting.}) 12... b5 13. Bd5 Rb8 14. O-O $16 {and White keeps the extra
+pawn.}) 10. b3 $16 {White advantage is unquestionable (Bangiev).}) 9. Ne2 {
+leads us to the same position arising after 8.Ne2 0-0 9.d3} ({After} 9. Nb5 Qb6
+$132 {Black has counter-play (Bangiev).})) 8... O-O (8... e6 {is an
+alternative, although weaker than the text, since later on Black has to play
+Nh6-g8-e7 in order to bring the knight into play. After} 9. d3 (9. Qd3 O-O 10.
+Nxd4 d5 11. exd5 exd5 12. Bb3 Re8+ $36 {allows Black to develop a strong
+initiative.}) 9... b5 (9... Ng8 $5 {deserves attention.}) 10. Bb3 {,} Ng8 $5 {
+was necessary (Bangiev).} (10... Qb6 $6 {cost Black a pawn after} 11. Bxh6 Bxh6
+12. Qf6 O-O 13. Qxd4 Qa5+ 14. c3 $16 {in Bangiev,A-Lagunow,A/Germany 1998/
+GER-chT2})) 9. d3 (9. Qd3 $6 e6 {is a transposition of moves with the
+variation 8...e6 9.Qd3 0-0.}) ({But} 9. h3 $5 {, preventing Black from
+bringing Nh6 into play}) ({or} 9. Bb3 $5 {both deserve serious attention.}) {
+[#]} 9... Ng4 $1 $146 {[Clear improvement. Black brings his awkwardly placed
+into play.]} ({After} 9... Qb6 10. Qg3 (10. h3 $5 {followed by g4, deserves
+attention.}) 10... d6 (10... Ng4 $5 {is better, than 10...d6.}) 11. h4 Qb4+ 12.
+Bd2 Qxb2 13. Rc1 Ng4 14. h5 Bd7 15. hxg6 hxg6 16. f3 Ne5 17. Qh4 Rfc8 18. Qh7+
+Kf8 19. Bh6 {White won in Branding,V-Haensel,T/Oberhof 1999.}) ({Also after} 
+9... Qa5+ 10. Bd2 Qb6 11. Bb3 $14 ({or} 11. O-O-O $14)) ({or} 9... d6 10. h3 {
+Black gets no chances to improve the position of the knight h6.}) 10. Bb3 ({
+Accepting the sacrifice by} 10. Qxg4 d5 {White allows Black to develop the
+initiative, at least enough to compensate the loss of pawn. E.g.} 11. Qg3 ({or
+} 11. Qf3 dxc4 12. dxc4 f5 (12... Be6 13. Qd3 Rc8 (13... Qc7 {is met by} 14. b3
+{.}) 14. b3 b5 15. cxb5 Rxc2 $44 {with compensation, deserves attention as
+well.}) 13. Ng3 (13. exf5 Bxf5 {><c2}) (13. O-O fxe4 14. Qxe4 Bf5 {><c2} 15.
+Qxb7 Bxc2 16. Nf4 Bf5) 13... Qc7 (13... Be6 14. Qd3 Rc8 15. b3 b5 16. c5) 14.
+Qd3 (14. Qe2 $2 Be6 $17 {is bad for White.}) 14... fxe4 15. Nxe4 Bf5 $44 16.
+O-O Rac8 (16... Bxe4 17. Qxe4 Qxc4 $13) 17. b3 (17. c5 Bxe4 18. Qxe4 Qxc5 {><c2
+}) 17... b5 $36 {with initiative.}) 11... dxc4 12. dxc4 f5 (12... Be6 13. Qd3 {
+leads us to the position after 11.Qf3 dc 12.dc Be6 13.Qd3.}) 13. e5 (13. exf5
+$6 Bxf5 {ץc2}) 13... Qa5+ 14. Bd2 Qxe5 15. Qxe5 Bxe5 16. f4 $11 {with an
+equal ending.}) ({After} 10. Bxf7+ $6 Rxf7 11. Qxg4 Qc7 {White is unable to
+defend both of the pawns c2 and f2.}) (10. Qg3 {can be met by} Nf6 $5 {,
+preparing d7-d5, and if} 11. Bb3 {, then} d5 12. e5 Nh5 {can follow.}) 10... d6
+11. O-O ({After} 11. h4 {Black must stop the advance of the h pawn by the
+means of} h5 $1 $13 {with unclear position.}) 11... a5 ({Black tries to weaken
+the White pawns' structure on the queen's side, since} 11... Ne5 12. Qg3 Nd7
+13. f4 Nc5 14. f5 Nxb3 15. cxb3 $14 {gives White a plus.} (15. axb3 $5 {
+is also possible.})) 12. a4 (12. a3 a4 {weakens the pawn c2.}) 12... Ne5 13.
+Qg3 Nd7 14. Qh4 ({After} 14. f4 Nc5 15. Bc4 (15. Ba2 {is strongly met with} e6
+$1 {preparing f7-f5 and keeping the eye on the pawn a4.} ({After} 15... Be6 $6
+16. f5 Bxa2 17. Rxa2 $36 {White has a strong initiative.}) {Now} 16. f5 $6 {
+is impossible because of} exf5 17. exf5 Bxf5 18. Rxf5 gxf5 19. Bg5 ({or} 19.
+Bh6 Qf6 $15 {and if} 20. Bg5 $140 {, then} Qe5) 19... Qe8 $15 {and if} 20. Bf6
+$140 $2 {, then} Qe3+) 15... Be6 16. Bxe6 fxe6 $11 {the position is equal.})
+14... Nc5 15. Bg5 ({Both} 15. Bc4 Be6 $11) ({and} 15. Bd5 e6 (15... Be6 $5) 16.
+Qxd8 Rxd8 $11 {are equal.}) 15... Re8 $8 {[The only move.]} 16. Bd5 {[Stronger
+than} (16. Bc4 Be6 $11 {with equal chances.}) 16... Be6 17. b3 {[A useful move,
+defending the pawn a4. Other moves are weaker. E.g.} (17. Bh6 $6 Bxd5 18. Bxg7
+(18. exd5 e5) 18... Kxg7 19. exd5 e5) (17. Nf4 Bxd5 18. Nxd5 f6 {and 19...e6.
+In comparison with the text, here Black wins 2 tempi.}) (17. f4 Bxd5 18. exd5
+f5) (17. Bxe6 Nxe6 18. Bh6 Bf6 {/\Rac8}) 17... Qd7 18. Nf4 (18. Rae1 {can be
+met by} Bxd5 $5 19. exd5 e5 20. dxe6 Nxe6 ({White is slightly better after} 
+20... Qxe6 21. f3 $14 {.}) 21. Bf6 Bxf6 22. Qxf6 Qd8 $11 {followed by Rac8,
+with equal position.}) 18... Bxd5 19. Nxd5 f6 20. Bd2 $1 {[Black bishop g7 is
+bad, that's why White must refrain from exchanging it and must not play} (20.
+Bh6 {, which will be answered by} Qd8 21. Bxg7 Kxg7 {, followed by e6.}) 20...
+Qd8 $1 21. Qg3 e6 (21... Rc8 22. h4 e6 23. Nf4 {leads the game to the same
+position as 21...e6.}) 22. Nf4 Rc8 $1 ({After} 22... d5 23. f3 $1 $14 {White
+is better.} ({Not} 23. exd5 e5 24. Ne6 Nxe6 25. dxe6 Rxe6 $11 {with equality.})
+) 23. h4 {[In order not to find himself in a much worse position after 24.h5
+g5 25.Ne2 e5 26.Qf3, followed by Ng3-f5, Black must do something. Despite
+being short of time, Black finds a series of moves, solving all his problems.]}
+Na6 $1 24. Rac1 Nb4 $1 25. c4 ({After} 25. Bxb4 $6 axb4 {White gets a
+permanent weakness on c2. And if} 26. h5 {now, then} ({or} 26. Ne2 f5) 26... g5
+27. Ne2 f5 {is possible.}) 25... dxc3 (25... e5 26. Nd5 Nxd5 27. exd5 $14 {
+unnecessarily gives White an advantage.}) 26. Rxc3 (26. Bxc3 $4 Na2 {loses an
+exchange.}) 26... Rxc3 27. Bxc3 e5 $1 28. Ne2 Nc6 $11 {[The position now is
+completely equal.]} 29. h5 Kf7 30. Kh2 ({Or} 30. Qf3 Qb6 31. Rb1 $11) 30... Qb6
+$138 31. Rb1 Qc5 32. Qf3 Re7 33. g3 Rd7 34. Kg2 {[And the draw was agreed here.
+]} 1/2-1/2
+
