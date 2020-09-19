@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.16
+chess_utils v0.3.17
 
 Copyright (c) 2020 David Murko
 
@@ -36,7 +36,7 @@ extern "C" {
 #endif
 
 #define TAG_LEN 512
-#define SAN_LEN 8
+#define SAN_LEN 10
 #define FEN_LEN 512
 #define BUFFER_LEN 1024
 #define WORD_LEN 256
@@ -2224,7 +2224,8 @@ pgn_read_file(FILE *f, Notation *n, int index)
     char word[WORD_LEN];
     char comment[COMMENT_LEN];
     char san[SAN_LEN];
-    char result[10] = "*";
+    char result[10];
+    snprintf(result, 10, "*");
     char *tmp;
     char *saveptr;
     int i, comment_start, comment_end, variation_start, variation_end;

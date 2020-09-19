@@ -850,6 +850,12 @@ test_pgn_read_file()
     assert(ok);
     assert(n.line_main->move_count == 68);
     notation_free(&n);
+
+    notation_init(&n, &b);
+    f = fopen("files/result_overwrite.pgn", "r");
+    ok = pgn_read_file(f, &n, 0);
+    assert(ok);
+    notation_free(&n);
 }
 
 void
