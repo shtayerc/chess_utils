@@ -9,12 +9,13 @@ TESTFILE_02=tmp_test_02.pgn
 TESTFILE_03=tmp_test_03.pgn
 TESTFILE_04=tmp_test_04.pgn
 TESTFILE_05=tmp_test_05.pgn
+TESTFILE_06=tmp_test_06.pgn
 
 all:
 	$(CC) $(FLAGS) -std=c99 $(FILES) -o $(EXE)
 
 clean:
-	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02) $(TESTFILE_03) $(TESTFILE_04) $(TESTFILE_05)
+	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02) $(TESTFILE_03) $(TESTFILE_04) $(TESTFILE_05) $(TESTFILE_06)
 
 cpp:
 	$(CPP) $(FLAGS) $(FILES) -o $(EXE)
@@ -29,3 +30,4 @@ check:
 	diff $(TESTFILE_03) files/replace_after.pgn
 	diff $(TESTFILE_04) $(TESTFILE_01)
 	diff $(TESTFILE_05) files/complex_less.pgn
+	diff $(TESTFILE_06) files/escaped_doublequote.pgn

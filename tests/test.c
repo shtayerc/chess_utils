@@ -132,6 +132,17 @@ test_tag_extract()
 }
 
 void
+test_tag_escape_value()
+{
+    char str[100];
+    tag_escape_value("Quote \"", str, 100);
+    assert(!strcmp(str, "Quote \\\""));
+
+    tag_escape_value("\"\"\"", str, 5);
+    assert(strlen(str) == 0);
+}
+
+void
 test_filerank2square()
 {
     Square sq;
@@ -894,6 +905,15 @@ test_pgn_write_file()
     fclose(f);
     fclose(of);
     notation_free(&n);
+
+    notation_init(&n, &b);
+    f = fopen("files/escaped_doublequote.pgn", "r");
+    of = fopen("tmp_test_06.pgn", "w");
+    pgn_read_file(f, &n, 0);
+    pgn_write_file(of, &n);
+    fclose(f);
+    fclose(of);
+    notation_free(&n);
 }
 
 void
@@ -1031,6 +1051,13 @@ test_game_list_functions()
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
+
+    f = fopen("files/escaped_doublequote.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    assert(!strcmp(gl.list[0].title, "-/Quote \"[]/2020.09.19 (*)"));
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
 }
 
 int main(){
@@ -1047,6 +1074,7 @@ int main(){
     test_str_is_move();
     test_str_is_square();
     test_tag_extract();
+    test_tag_escape_value();
 
     //BOARD UTILS
     test_filerank2square();

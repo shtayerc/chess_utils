@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.17
+chess_utils v0.3.18
 
 Copyright (c) 2020 David Murko
 
@@ -197,6 +197,10 @@ int str_is_square(const char *str);
 
 //returns 1 if string is valid tag, given Tag struct is set
 int tag_extract(const char *str, Tag *tag);
+
+//Escape double quotes in str with backslash. If length of escaped string is
+//too short, then escaped is set to empty string.
+void tag_escape_value(const char *str, char *escaped, int len);
 
 //
 //BOARD UTILS
@@ -721,6 +725,9 @@ tag_extract(const char *str, Tag *tag)
 
     i++;
     for(j = 0; str[i] != '"'; j++){
+        //handle escaped double quote
+        if(str[i+1] != '\0' && str[i] == '\\' && str[i+1] == '"')
+            i++;
         tag->value[j] = str[i++];
     }
     tag->value[j] = '\0';
@@ -729,6 +736,23 @@ tag_extract(const char *str, Tag *tag)
     if(str[i] != '"' || str[i+1] != ']')
         return 0;
     return 1;
+}
+
+void
+tag_escape_value(const char *str, char *escaped, int len)
+{
+    int j;
+    int i = 0;
+    if((charcount(str, '"') + (int)strlen(str)) > len){
+        escaped[0] = '\0';
+        return;
+    }
+    for(j = 0; str[j] != '\0'; j++){
+        if(str[j] == '"')
+            escaped[i++] = '\\';
+        escaped[i++] = str[j];
+    }
+    escaped[i] = '\0';
 }
 
 Square
@@ -2450,10 +2474,12 @@ pgn_write_file(FILE *f, Notation *n)
     int i;
     char line[PGN_LINE_LEN];
     char result[10];
+    char escaped[TAG_LEN];
     line[0] = '\0';
 
     for(i = 0; i < n->tag_count; i++){
-        fprintf(f, "[%s \"%s\"]\n", n->tag_list[i].key, n->tag_list[i].value);
+        tag_escape_value(n->tag_list[i].value, escaped, TAG_LEN);
+        fprintf(f, "[%s \"%s\"]\n", n->tag_list[i].key, escaped);
         if(!strcmp(n->tag_list[i].key, "Result"))
             snprintf(result, 10, "%s", n->tag_list[i].value);
     }
