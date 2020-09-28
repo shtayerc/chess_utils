@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.18
+chess_utils v0.3.19
 
 Copyright (c) 2020 David Murko
 
@@ -2734,13 +2734,6 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                 tmp = strtok_r(buffer, " ", &saveptr);
                 while(tmp != NULL && !(comments == 0 && !strcmp(tmp, result))){
 
-                    if(b_tmp.move_number > b->move_number){
-                        if(v == n.line_main){
-                            skip = 1;
-                        }else{
-                            skip_var = 1;
-                        }
-                    }
                     variation_start = 0;
                     variation_end = 0;
                     comment_start = charcount(tmp, '{');
@@ -2787,6 +2780,13 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                         snprintf(word, WORD_LEN, "%s", tmp);
                         trimmove(word);
                         if(str_is_move(word)){
+                            if(b_tmp.move_number > b->move_number){
+                                if(v == n.line_main){
+                                    skip = 1;
+                                }else{
+                                    skip_var++;
+                                }
+                            }
                             status = board_move_san_status(&b_tmp, word, &src,
                                     &dst, &prom_piece);
                             if(status == Invalid){
