@@ -52,3 +52,378 @@ Rb2 a5 33. Ra2 Bb4 34. Kg2 Kd5 35. Rc2 a4 36. Rg8 Re6 37. Rd8+ Bd6 38. Rd2+ Kc6
 Kb7 $19 (44... Bb4 $19 {Khalifman})) 42... Kb5 43. Rd5+ Kb6 44. Ra8 Rb3+ 45.
 Ke2 Rb2+ 46. Rd2 Bb4 0-1
 
+[Event "World Championship"]
+[Site "Brissago"]
+[Date "2004.10.16"]
+[Round "13"]
+[White "Leko, Peter"]
+[Black "Kramnik, Vladimir"]
+[Result "1/2-1/2"]
+[ECO "A73"]
+[WhiteElo "2741"]
+[BlackElo "2770"]
+[Annotator "Kapengut"]
+[PlyCount "129"]
+[EventDate "2004.09.25"]
+[EventType "match"]
+[EventRounds "14"]
+[EventCountry "SUI"]
+[SourceTitle "CBM 103"]
+[Source "ChessBase"]
+[SourceDate "2004.11.11"]
+[SourceVersion "1"]
+[SourceVersionDate "2004.11.11"]
+[SourceQuality "1"]
+
+1. d4 {Hazai} Nf6 2. c4 e6 3. Nf3 c5 {Hazai: 'Kramnik doesn't want to leave
+the decision for the last game. The Benoni is a rare guest in top-level chess,
+but it may lead to a sharp tactical battle.'} 4. d5 d6 5. Nc3 exd5 6. cxd5 g6
+7. Nd2 {Leko never played the Modern Benoni with White before. I bet the idea
+of his playing 7.Nd2 belonged to his coach Arshak Petrosian who used this
+system long ago. I couldn't recollect this opening occurred at the World
+Championship Matches after Botvinnik-Tal. By the way, twenty years ago, the
+then World Champion Anatoly Karpov invited me to assist him in preparing the
+Modern Benoni against Garry Kasparov, but his young opponent didn't risk
+playing it.} Bg7 8. e4 O-O 9. Be2 Na6 {Very often Black played immediately 9...
+Ne8 with the idea f7-f5. After the last move, Kramnik didn't define his own
+plan keeping the illusion about choosing the main line of the seventies after
+10.0-0 Nc7 11.a4 Re8.} 10. O-O Ne8 {Hazai: '/\ f5 eliminating White's central
+P, after which it is not easy to find a clear-cut plan for White, there is no
+breakthrough by e4-e5.'} 11. Nc4 Nac7 ({The immediate} 11... f5 $5 {was
+possible.}) 12. a4 f5 {'!' Hazai. This position was popular in the 80-90 years.
+However, in last time it was played rare enough. The author of this comments
+saw as his basic task to make the current condition of it clearly for readers
+of CBM. Hazai: 'The champion's choice of opening was very clever.'} ({Black
+would trade the dangerous knight after} 12... b6 {but Kramnik choose a more
+aggressive continuation.}) 13. exf5 $5 {Hazai: 'Kramnik has never played
+Benoni with Black, but for Leko the entire opening structure is new since he
+adopted 1.d4 right for the Wch match.'} (13. f3 Qe7 14. Bf4 g5 15. Bg3 f4 16.
+Bf2 b6 17. Re1 Ba6 18. e5 Bxc4 19. exd6 Nxd6 20. Bxc4 Qd7 21. Ba2 Rae8 22. Qd3
+Kh8 23. Rxe8 Rxe8 24. Rd1 $132 {Kramnik,V-Ivanchuk,V/Belgrade 1995}) ({Hazai:
+The positional P sacrifice} 13. Bf4 {has been played before and this position
+has been reached by transposition  Hazai: 'gave more chances for an advantage,
+but it also looks riskier.'} g5 $5 (13... fxe4 14. Qd2 Qf6 (14... Bf5 {(Hazai)
+provoking the following "weakening move"} 15. g4 Bc8 (15... e3 16. fxe3 Bxc3
+17. bxc3 Be4 18. Bh6 Ng7 19. Bd3 Bxd5 20. e4 $14) 16. Nxe4 Qe7 17. Ncxd6 Bd4 (
+17... Rxf4 18. Qxf4 Nxd6 19. Nxd6 Nxd5 20. Bc4 Be6 21. Qg3 Rd8 22. Ne4 Bxb2 23.
+Rae1 $14) (17... Bxb2 18. Rab1 $14) 18. Bg3 Nxd6 19. Nxd6 Nxd5 20. Bc4 Be6 21.
+Rae1 $16 {and the opening of the position clearly favours White.}) 15. Bg5 Qf7
+(15... Qf5 {Hazai} 16. f3 $1 Bd4+ 17. Be3 Bxc3 18. bxc3 Qxd5 19. fxe4 Rxf1+ 20.
+Rxf1 $14) (15... Qd4 {Hazai} 16. Qc2 Nxd5 17. Be3 $16) 16. Rad1 {'?!' Hazai.
+Hazai: 'as we will see this weakens >< a4!'} (16. f3 $1 {(Hazai) White wants
+to open up the position for his better developed pieces.} exf3 17. Rxf3 Bd4+
+18. Be3 $14) 16... Bf5 17. g4 (17. f3 $5 {Hazai} exf3 18. Rxf3 Qd7 19. Rdf1 Nf6
+) 17... Bd7 18. Nxe4 Bxa4 19. Ncxd6 Nxd6 20. Nxd6 Qd7 21. Ra1 Qxd6 (21... b6 $5
+{[%cal Ga4b3]}) 22. Rxa4 Bd4 $15 {Gyimesi,Z-Chatalbashev,B/Bled SLO 2002} (
+22... Be5 $17 {(Hazai) Gyimesi-Chatalbashev, Bled op 2002})) 14. Bd2 Bd4 (14...
+f4 15. Bg4 $16) 15. exf5 (15. Kh1 f4 16. Bg4 Nf6 17. Bxc8 Rxc8 18. Qf3 Nd7 {
+Hazai: '(F.Portisch-Szalanczy, Zalakaros op 1992)'} 19. g3 (19. Ne2 {Hazai} Ne5
+20. Nxe5 Bxe5 21. Bc3 $16 {Finally Black has blockaded the vital e5 square,
+but his position is still worse.}) 19... Ne5 20. Nxe5 Bxe5 21. Qh5 Kh8 22. Rg1
+$14 {Portisch,F-Szalanczy,E/Zalakaros op 1992}) 15... Bxf5 16. Qc1 h6 (16... g4
+17. Bh6 $14) 17. Ne3 Ng7 (17... Bg6 18. Bg4 $14) 18. Ra3 $1 $14 Qf6 19. Nxf5
+Nxf5 20. Kh1 Rae8 21. Bh5 Ne3 22. Bxe3 Rxe3 (22... Bxe3 $2 23. Qc2 $1 Re7 24.
+Ne4 $16) 23. Rb3 b6 24. a5 b5 (24... bxa5 25. Rb7 Re7 26. Rxa7 $14) 25. Be2 Re5
+26. Nxb5 (26. Bxb5 g4 27. Bd7 $14) 26... Rxe2 27. Nxc7 Rxf2 (27... Bxf2 28. Ne6
+) 28. Rf3 Rxf3 29. Rxf3 Qe7 $15 {Farago,I-Szalanczy,E/Wien 1990}) 13... Rxf5 {
+Hazai: 'Attacking >< d5 with all of his pieces.'} (13... gxf5 $6 14. Bf4 Rb8
+15. Ra3 a6 16. a5 Nb5 17. Nxb5 axb5 18. Nb6 b4 19. Rg3 Kh8 20. b3 Nf6 21. Bd3
+Ng4 22. Nxc8 Rxc8 23. Bxf5 $1 $18 {Schneider,A-Higatsberger,M/Budapest
+Statisztika 1991}) (13... Bxf5 14. Bf4 $1 {[#]} (14. Bf3 Na6 15. Ne4 Bxe4 16.
+Bxe4 Qh4 17. f4 Bd4+ 18. Kh1 Ng7 19. g3 Qf6 20. Bd2 Rae8 21. Qc2 $6 (21. Qf3)
+21... Nb4 22. Bxb4 cxb4 23. Rae1 Re7 24. Bg2 Rfe8 $11 {Bagirov,R-Kotsur,P/Abu
+Dhabi UAE 2001}) (14. Ra3 Na6 (14... Qh4 $5) 15. g4 Bc8 16. Ne4 b6 17. Rf3 Nac7
+18. Rxf8+ Bxf8 19. Bf4 (19. g5 $5 $14) 19... Bb7 20. Bf3 Bxd5 21. Ncxd6 Bxd6
+22. Nxd6 Bxf3 23. Qxf3 Nxd6 24. Rd1 Nce8 25. Bxd6 Nxd6 26. Rxd6 Qxd6 27. Qxa8+
+$11 {Kopecky,B-Krisko,D/CSR-ch23 corr 1989}) (14. Ne3 Bd7 15. Bd2 (15. Qc2 $6
+Na6 16. Bxa6 bxa6 17. Nc4 Rb8 18. Bd2 Bf5 19. Ne4 Qh4 20. f3 Bd4+ 21. Kh1 Nf6
+$5 22. Ncxd6 Be5 23. g3 Bxg3 {Blasovszky,I-Szalanczy,E/Budapest 1993} 24. Bg5
+$5 Qxg5 25. Nxg5 Bxc2 26. hxg3 Nxd5 $15) (15. Bg4 $6 Nf6 16. Bxd7 Qxd7 17. Qd3
+Rae8 18. Bd2 Nh5 19. g3 Rf3 20. Kg2 Nf4+ $1 21. gxf4 Qh3+ 22. Kh1 Re5 $1 $19 {
+Kudrashov,A-Pavlenko,O /1972}) 15... b6 16. Rb1 Qh4 17. g3 Qe7 18. Bf3 Bh3 19.
+Bg2 Bxg2 20. Kxg2 Nf6 21. Qc2 Qd7 22. Qd3 Rae8 $15 {Tasic,B-Vaisman,V/FRA-chT
+1995}) (14. Be3 Na6 $5 (14... Bd7 15. Qd2 b5 16. axb5 Nxb5 17. Nxb5 Bxb5 18.
+Na5 Qb6 19. Ra2 Bxe2 20. Qxe2 Nc7 21. Nc4 Qb5 22. Qg4 $5 (22. Ra5 Qd7 $11)
+22... Qb4 $5 (22... h5 $6 {[%csl Rg6]} 23. Qe4 Rae8 24. Qd3 Rf5 25. Ra5 Qb4 26.
+Bd2 Qb8 27. Nxd6 Rxd5 28. Qxg6 Re6 29. Qf7+ $18 {Dlugy,M-Gurevich,D/USA-ch
+Estes Park 1987}) (22... Bd4 $6 {[%csl Rc4]} 23. Rc1 Bxe3 24. fxe3 Rf6 25. e4
+Raf8 26. Raa1 $14) 23. Rfa1 (23. h3 Kh8 24. Nxd6 Nxd5 $132) 23... Rae8 24. Ra4
+Qb3 25. Qd1 $5 (25. Nxd6 $140 Rxe3 $5 26. fxe3 Qxe3+ 27. Kh1 Bxb2 $44) 25...
+Rb8 $132) (14... Qe7 $5 15. Qd2 (15. Qb3) 15... Qf7 (15... b6 $5 16. Rae1 Rb8
+17. Bf3 Qd7 18. Bg5 {1/2-1/2 Halasz,T-Palkovi,J/Hungary 1993}) (15... Rd8 16.
+Rad1 Nf6 17. Bg5 Rfe8 18. Rfe1 Qf8 19. Bd3 $14 Bxd3 20. Qxd3 Ng4 21. Qf3 Rxe1+
+22. Rxe1 Re8 23. Qxf8+ Kxf8 24. Rxe8+ Nxe8 25. Ne4 Bd4 26. b3 b6 27. h3 Ne5 28.
+Ncxd6 $16 {Lukacs,P-Szalanczy,E/Budapest 1990}) 16. Rad1 (16. Rfd1 Rd8 17. Nb5
+$14) 16... Rd8 17. Rfe1 (17. Bg5 Bf6 18. Bh6 Bg7 19. Bg5 Bf6 20. Bh6 Bg7 21.
+Bg5 {1/2-1/2 Ftacnik,L-Romanishin,O/Szirak 1986}) (17. g4 $5 Bxc3 $140 18. bxc3
+Be4 19. Bh6 Ng7 20. Ne3 Bf3 21. c4 $16) 17... a6 18. Nb6 $5 (18. a5 Nb5 19.
+Nxb5 axb5 20. Na3 b4 21. Nc4 Nc7 $11) 18... Nf6 19. Bg5 $1 Na8 (19... Rfe8 20.
+f3 Qf8 21. g4 $1 $16) 20. Nc4 Nc7 21. Qf4 $14 Qd7 (21... h6 $5 22. Bxh6 $140 $6
+Nfxd5 $13 {AK}) 22. Ne3 (22. Nb6 {>=} Qf7 23. Rc1 {/\ b4+/-}) 22... Rde8 $8 23.
+Nxf5 (23. g4 $2 Rxe3 $1 $13) 23... gxf5 24. Bd3 Ng4 $1 25. Rxe8 Nxe8 26. h3 Ne5
+27. Bc2 Nc7 $14 {Damljanovic,B-Magerramov,E/Palma de Mallorca 1989[Damljanovic,
+B]}) 15. Qd2 Nb4 16. g4 $5 Bc8 $8 (16... Bd7 $2 17. Nxd6 $1 Nxd6 18. Bxc5 $16)
+17. f3 (17. a5 $1 Rb8 18. Nb5 a6 19. Nbxd6 $1 Nxd6 20. Bxc5 $16) 17... b6 $1
+18. Bg5 Qd7 19. a5 $6 (19. Ne3 $14) 19... b5 $1 20. Nxb5 $1 (20. Ne3 a6 $17)
+20... Qxb5 21. Nb6 $1 Qxe2 22. Qxe2 axb6 23. axb6 Rb8 24. Ra7 $1 Rxb6 $5 (24...
+Nxd5 $2 25. Qc4 Be6 26. Re7 $1 $18) (24... Be5 25. f4 Bd4+ 26. Kg2 $13) (24...
+Bb7 $1 25. Qe6+ (25. Be7 $1 Rf7 $15) 25... Kh8 26. Rxb7 $5 Rxb7 27. Be7 Rg8 $17
+(27... Rxe7 $2 28. Qxe7 Nxd5 29. Qxf8+ $1 $18)) 25. Be7 Nxd5 $8 (25... Rf7 26.
+Bd8 $1 $18) 26. Qc4 $1 (26. Bxf8 Kxf8 27. Qc4 Nec7 $5 $13) 26... Be6 27. Bxf8 {
+Ftacnik,L-Rogers,I/Thessaloniki (ol) 1984} Kxf8 $1 28. Re1 Rb4 29. Qa2 Rxb2 30.
+Qa4 $1 (30. Qc4 Bd4+ 31. Kh1 Nf4 $1 $17) 30... Rb4 31. Qc6 Rb6 32. Qa8 Bd4+ 33.
+Kh1 c4 $5 $44 {Rogers,J}) 14... Bd3 $5 (14... Bxc3 15. bxc3 Be4 16. Bg3 Bxd5
+17. Qd2 {->׻}) (14... Be4 15. Qd2 Bxc3 16. bxc3 Bxd5 17. Bh6 $44) (14... Qd7
+$5 {/\ Rd8,Qf7}) (14... Bd7 15. Bg3 (15. Bxd6 Nxd6 16. Nxd6 Bxa4 $11) 15... b5
+16. Nxd6 b4 17. Nce4 Bxb2 18. Nxc5 Bxa1 19. Qxa1 $40) (14... Bd4 $5 15. Bg3 (
+15. Ne3 Bc2 16. Nxc2 Rxf4 17. g3 Bxc3 $5 18. gxf4 Bxb2 19. Rb1 Qf6 $44 {/+/=})
+15... Qf6 16. Qd2 a6 (16... Rd8 $142 17. Rae1 a6 $132) 17. Nb6 Rb8 18. Rae1 (
+18. a5 $5 Be5 $8 19. Bxe5 Qxe5 {/\Qd4} 20. Rad1 $36) 18... Na8 (18... Be5 $5
+19. Bxe5 $140 Qxe5 20. Bxa6 $2 Qd4 $19) 19. Nc4 Nac7 (19... b5 20. Na5 b4 21.
+Nd1 $16) 20. Bf3 $1 $16 b5 21. Na5 b4 (21... bxa4 22. Nxa4 Bxb2 23. Nc6 $40)
+22. Nd1 {/\Nc6} (22. Ne4 $5 Bxe4 23. Rxe4 Bxb2 (23... Nxd5 $2 24. Rxd4 $18) 24.
+Nc6 Ra8 25. Bh4 Qc3 26. Qg5 $40) 22... Bd7 $8 23. Nc6 (23. b3 $5 $16 {/\Re2,
+Ne3-c4}) 23... Bxc6 24. dxc6 Rd8 (24... c4 $2 25. Re4 $18) (24... d5 25. Ne3
+$16) 25. Ne3 (25. Bg4 $4 h5 $19 {[%csl Rg3] Plachetka,J-Horvath,C/Stary
+Smokovec 1991}) 25... d5 (25... Bxb2 26. Nd5 Nxd5 27. Qxd5+ $40 {/\Re6}) 26.
+Ng4 Qxc6 27. Re7 Rd7 $8 28. Be5 $3 {/\Nh6#} Rxf3 $8 29. Rxd7 Qxd7 30. Nh6+ $1
+Kf8 31. Bxd4 $1 cxd4 32. gxf3 $16 {Stohl,I}) (14... g5 $5 15. Bg3 Bd4 16. Ne3
+$1 Bg6 (16... Bxe3 17. fxe3 Qe7 18. Qd2 h6 19. Bd3 $16) 17. Bd3 Bxd3 (17...
+Bxe3 18. Bxg6 $5 (18. fxe3 Rxf1+ 19. Qxf1) 18... Bxf2+ 19. Rxf2 hxg6 20. Qd3) (
+17... Qf6 18. Nc2 (18. Ne4 Qe7 $1) (18. Qd2 $5 {/\ Nc2}) 18... Bxc3 19. bxc3
+Qxc3 20. Bxg6 hxg6 21. Ne3 $44) 18. Qxd3 Ng7 (18... Nf6 19. Nf5 $16) 19. Ne4
+Nce8 20. Nc2 $1 Bf6 (20... Bxb2 21. Rab1 Bf6 22. Rxb7 $16) (20... h5 21. Nxd4
+cxd4 22. f4 $1 $16) 21. Rae1 {/\b4} Nh5 (21... Nf5 22. Nxc5 dxc5 (22... Nxg3
+23. Ne6 $18) 23. Qxf5 Bxb2 24. Qe6+ Rf7 25. d6 $16) 22. Nxf6+ Rxf6 (22... Qxf6
+23. b4 {/\ Re6}) 23. Re4 Neg7 24. b4 b6 25. Rfe1 Qf8 (25... Qd7 $2 26. Re7 Qxa4
+27. Ra1 $18) 26. Qd2 h6 (26... Nf4 27. h4 h6 28. Ne3 Ngh5 29. Ng4 $16) 27. Ne3
+Nf5 (27... Re8 28. Ng4 Rg6 $16) 28. Nxf5 (28. Ng4 Rg6 $5) 28... Rxf5 29. Re7
+Nxg3 (29... Nf4 30. Bxf4 Rxf4 31. R1e6 $18) 30. hxg3 Rf7 31. R7e6 Rf6 32. Rxf6
+Qxf6 33. Re6 $16 {Ftacnik,L-Kindermann,S/Altensteig 1987 [Ftacnik,L]}) 15. Bg3
+$1 Bxc4 16. Bxc4 Nf6 {[%cal Gf6h5,Gh5g3,Gh5f4] /\Nh5} (16... Bd4 $6 17. Ne2 $16
+) 17. Be2 $1 {[%csl Rd6,Re6] 1/2-1/2 Bischoff,K-Kotsur,P/Hamburg 2001} (17. Qb3
+Nh5 18. Qxb7 Rb8 19. Qxa7 Nxg3 (19... Rxb2 20. Nb5 Nxb5 21. Bxb5 Bd4 22. Kh1
+Qf6 $132) 20. hxg3 Rxb2 21. Rac1 Rf7 22. Qa5 Qf8 23. Ne2 Be5 24. Qe1 Qh6 25.
+Rb1 $14 {Sznapik-Vaisman,V/Sandomierz 1976}) (17. Qd3 $6 Nh5 18. Rae1 Kh8 19.
+b3 $6 (19. Ne4 $5 Nxg3 20. Qxg3 Be5 21. Qb3 b6 22. g3 {/\ f4,Ng5 >< e6}) 19...
+a6 20. Ne4 (20. Re2 $5 {/\ Rfe1}) 20... Nxg3 21. Qxg3 b5 22. axb5 axb5 23. Bd3
+Nxd5 24. Qxd6 Nc3 25. Qg3 (25. Qxd8 Rfxd8 26. Nxc3 Rxd3 27. Nxb5 Rxb3 28. Nd6
+$15) 25... Nxe4 (25... c4 26. bxc4 Ra3 27. Ng5 $1 {/\ 28.Ne6,/\ 28.Qh4 h6 29.
+Nf7} (27. Qd6 Qxd6 28. Nxd6 b4 29. c5 Na4 30. Bc4 Nxc5 31. Nf7+ $11)) 26. Rxe4
+c4 27. bxc4 (27. Bc2 $2 c3 $17 {Novikov,I-Romanishin,O/Lvov 1987}) 27... Ra3
+28. Rd1 Bd4 29. Rf4 $1 bxc4 30. Rxf8+ Qxf8 31. Qh4 Rxd3 32. Rxd3 Bxf2+ 33. Qxf2
+Qxf2+ 34. Kxf2 cxd3 35. Ke3 $11 {Novikov,I}) 17... Re8 {[%cal Gf6e4] /\Ne4<=>}
+(17... Qd7 $6 18. Rb1 Rad8 19. b4 Na6 20. Nb5 $1 cxb4 21. Nxd6 $16 Qc7 22. Rc1
+Qe7 23. Re1 Rxd6 24. Bxa6 Qd8 (24... Rxd5 25. Rxe7 Rxd1+ 26. Rxd1 bxa6 27. Rxa7
+$18) 25. Bxd6 Qxd6 26. Bc4 $18 {Dlugy,M-Gurevich,M/Philadelphia 1988}) (17...
+Kh8 $6 18. Qb3 (18. Rb1 Qd7 19. b4 Nh5 $6 20. Bxh5 gxh5 21. bxc5 $1 Bxc3 22.
+Rxb7 Qc8 23. Qb3 Bg7 24. Bxd6 $18 {Novikov,I-Kozlov,V/Naberezhnie Chelni 1988})
+18... Rb8 19. Rfe1 Re8 20. Bf3 Qd7 21. Rxe8+ Nfxe8 22. h3 $1 b6 (22... b5 $140
+$2 23. Bg4 $16) 23. Bg4 $14 {Kaplun,L-Izhnin,A/Kherson 1990}) (17... a6 18. Qd2
+(18. Bf3 Re8 19. Qb3 (19. Qd2 Qd7 20. Qf4 Re5 $1 21. Qc4 Ree8 $11 {Baburin,
+A-Borovicky/USSR 1988}) 19... Rb8 20. a5 Qe7 (20... Qd7 $6 21. Qb6 $16) 21. Qb6
+Bf8 22. Bh4 (22. h3 Na8 $14) 22... Na8 23. Qb3 Qg7 24. Rfe1 g5 25. Bg3 g4 26.
+Rxe8 Nxe8 27. Be4 b5 28. Bf5 Nac7 29. Re1 $16 {Schmidt,T-Sirota,A/EU-ch GT299
+corr 1988}) 18... Rb8 19. Bf3 b5 20. axb5 axb5 21. b4 (21. Rfe1) 21... cxb4 22.
+Ne2 Nh5 $1 $132 23. Bxh5 (23. Nd4 Nxg3 24. hxg3 Qf6 25. Nc6 Ra8 26. Rxa8 Rxa8
+27. Nxb4 Qc3 $17) 23... Bxa1 24. Rxa1 gxh5 25. Qxb4 Qf6 26. Rd1 Ra8 27. h4 (27.
+h3 $1 $13) (27. Qxd6 $2 Ra1 $1 28. Nc1 Qxd6 29. Bxd6 Rc8 $1 30. Be5 Rb1 31. d6
+Ne6 $19) 27... Ra2 28. Nc3 (28. Qxd6 Qxd6 29. Bxd6 Rxe2 30. Bxc7 Rfxf2 31. d6
+Rxg2+ 32. Kh1 Rd2 $19) 28... Rxf2 29. Qxd6 (29. Bxf2 $2 Qxf2+ 30. Kh2 Rf4 $19)
+29... Rf1+ 30. Rxf1 Qxf1+ 31. Kh2 Ne8 32. Qe6+ Qf7 $44 {Vilela,J-Vera,R/
+Matanzas (m4) 1989/[Vera,R]}) 18. Qd3 (18. Qc2 $5 {[%cal Ga1b1,Gb2b4] /\Rab1,b4
+}) 18... a6 19. Rab1 (19. Rad1 b5 $1 20. axb5 axb5 21. Nxb5 Nxb5 22. Qxb5 Ne4
+23. Bf4 Bd4 $15) 19... b5 $1 20. axb5 axb5 21. Nxb5 Nxb5 22. Qxb5 Ne4 23. Bf4
+$6 (23. Qd3 Nxg3 $44) 23... Bd4 $1 $36 24. Bg4 Nxf2 $1 25. Be6+ Kh8 26. g3 (26.
+Rxf2 $2 Bxf2+ 27. Kxf2 Rf8 28. Kg3 Rxf4 $1 $19 {Karpman,V-Moskalenko,V/USSR
+1988}) 26... Rf8 27. Qe2 Nh3+ 28. Kg2 Nxf4+ 29. Rxf4 Rxf4 30. gxf4 Qf6 $17 {
+Moskalenko,V}) 14. Bg4 {Hazai: 'It is not clear that chasing away the
+vulnerable R is really important.'} (14. a5 {Hazai} Bxc3 15. bxc3 Nxd5 (15...
+Rxd5 16. Qb3) 16. Bg4 Nxc3 17. Qc2 Nb5 18. Bxf5 Bxf5 $44 {with a nice
+compensation for the sacrificed exchange.}) (14. Bf3 {(Hazai) now an in the
+next move came into consideration.} Qh4 15. Ne4 Rxd5 16. Qxd5+ Nxd5 17. Bg5 $13
+) 14... Rf8 $146 {Hazai: 'This is the first new move from theoretical point of
+view.'} (14... Rf7 15. Bf3 b6 {Hazai: '/\ Bb7 >< d5'} 16. Ne4 h6 17. Re1 Bb7
+18. Ng3 Nf6 {Hazai: 'The last passive piece joints the attack against >< d5.'}
+19. Qd3 (19. Ne3 {Hazai: 'Now both white knights look passive.'} Qf8 20. Qd3
+Nd7 $1 21. Qxg6 {'?' Hazai. Hazai: 'founders on'} Ne5 22. Qh5 Rxf3 $1 {'-/+!'
+Hazai. Hazai: 'Socha-Yudasin, Gdynia 1987'} 23. Nef5 Rxf5 (23... Rxg3 $5 24.
+hxg3 Kh7 $15) 24. Nxf5 Kh7 25. Ra3 Qe8 26. Qd1 (26. Nxg7 $4 Nf3+ $1 $19 {
+Socha,C-Yudasin,L/Gdynia Dreszer-mem 1987}) 26... Qg6 27. Nxg7 Qxg7 28. Rg3 Qf7
+29. Bxh6 $5 $13) 19... Nfxd5 (19... Bxd5 20. Bxd5 Nfxd5 21. Qxg6 $14) 20. Qxg6
+Ne7 21. Qxd6 Bxf3 22. gxf3 Ned5 23. Ra3 {Hazai: '(Stepanov-Maiorov, corr. 2002)
+'} (23. f4 Nb4 24. Qg6 Qd3 25. Re4 Qd1+ 26. Kg2 Nc2 27. Ne3 Nxe3+ 28. fxe3 Qc2+
+29. Kg1 Qd1+ $11) 23... Nb4 (23... b5 $1 24. Qxd8+ Rxd8 25. axb5 Nxb5 $15) 24.
+Qg6 Qf6 25. Qxf6 $6 Rxf6 26. Re7 Rd8 27. Bxh6 $6 (27. Bd2 Rf7 28. Rxf7 Kxf7 29.
+Bxb4 Rd1+ 30. Kg2 cxb4 31. Rb3 Nd5 32. Nf5 $14) 27... Bxh6 28. Rxc7 Rd1+ 29.
+Kg2 Nd5 $44 {Stepanov,K-Maiorov,O/corr 2002/[Stepanov,K]}) 15. Bxc8 {Hazai:
+'This is not forced at all.'} (15. Bf3 $5 {(Hazai) is similar to the previous
+note.}) (15. Ne4 {Hazai} Bxg4 16. Qxg4 Nf6 {and Black can get rid of his
+passive N.}) 15... Rxc8 16. Qb3 (16. Na5 {(Hazai) leads nowhere after} Rb8) (
+16. Ne4 {Hazai} Qh4 17. f3 Rf5 $13) 16... b6 (16... Bxc3 {Hazai} 17. bxc3 Nxd5
+18. Bh6 Rf7 19. Rad1 {and White opens up the position with a great effect.})
+17. Nb5 $6 {Opening the a-file and relieving some pressure on d5 Leko created
+many pawn islands and Black got a chance to use it.} (17. Bd2 Qh4 18. Rae1 (18.
+Rad1 $6 Rf5 19. h3 Rd8 20. Ne2 Rb8 21. Bc3 b5 $5) 18... Qh5 19. Re3 Bxc3 $5 20.
+Rxc3 Rf7 21. Re1 Nxd5 (21... Rd8 22. Rh3 Qxd5 23. Rd3 Qf5 24. Rf3 Qd7 25. Bg5
+Rb8 26. Rxf7 Qxf7 27. Re7 Qd5 $44) 22. Rh3 Qf5 23. Rf3 Qd7 24. Rxf7 Qxf7 25.
+Qd3 (25. Rxe8+ $6 Rxe8 26. Nxd6 Re1+ $1 27. Bxe1 Qe6 $15) 25... Ndc7 26. Bg5 d5
+27. Ne5 Qf5 28. Qxf5 gxf5 29. Nc6 Ra8 $44) 17... Nxb5 (17... Ra8 {Hazai} 18. a5
+) 18. axb5 {[%csl Ra7,Rb5,Rd5,Rd6] Leko had gotten two sets of minor pieces
+off the board and his Nc4 was an admirable beast with a target on d6. Leko
+also got the a-file to work with, but the weak b5 pawn needed constant
+protection. Hazai: 'White can organize his counterplay on the semi-opened a
+<->.'} Rc7 19. Bd2 {Hazai: '/\ Bc3 because White has to eliminate the strong
+fianchettoed B. However he has to reckon with the manoeuvre Ng7-f5.'} Rcf7 20.
+Bc3 Qd7 (20... Bh6 $5 21. Rae1 Ng7 22. Re4 (22. Bxg7 $140 $6 Bxg7 23. Qg3 {
+[%csl Rd6]} Bd4 $5 $36 {[%csl Rf2][%cal Gd4g1,Gf8f2]}) 22... Nf5 23. Qa4 Qa8 {
+[%csl Rd5]} 24. Rd1 Nd4 {[%csl Rd5,Rd6,Rf2]} 25. Bxd4 cxd4 26. Nxd6 Rd7 27. Nc4
+Qxd5 $132) (20... Qh4 $5 {Hazai} 21. f3 (21. Bxg7 Nxg7 {/\ Nf5-d4}) (21. g3 Qe4
+) 21... Bd4+ 22. Kh1 Qg5 23. Bxd4 cxd4) 21. f3 {'!' Hazai.} (21. Qa4 Rf4 22.
+Bd2 Rd4 23. Bc3 Rg4 {[%cal Gg4g2]} (23... Rxd5 $140 $6 24. Qa2 $1) 24. f3 Bd4+
+25. Bxd4 Rxd4 26. Rfd1 Nc7 27. Rxd4 cxd4 28. Qd1 Qxb5 29. Qxd4 Qb4 $132) 21...
+g5 $5 {Black went to work pressing his advantage on the kingside. Kramnik
+played for a win here and came very close to achieving it. Hazai: 'Kramnik
+grabs the |^ on the >> threatening with g5-g4.'} (21... Nf6 {Hazai} 22. Bxf6 (
+22. Rfe1 Nxd5 23. Rad1 Nxc3 24. bxc3 d5 25. Ne5 Bxe5 26. Rxe5 c4 27. Qb4)) 22.
+Ne3 {Hazai: 'The N is not well-placed here.'} (22. h3 Rf4 23. Ra4 Bxc3 24. bxc3
+Nc7 25. Rxa7 Qxb5 26. Rb1 Qxc4 27. Qxc4 Rxc4 28. Rxc7 Rb8 29. Rb3 b5 30. Rd7 b4
+31. cxb4 cxb4 $14) 22... Rf4 {Covering d4 and g4.} (22... Re7 $6 23. Rfe1 Nf6
+24. g4 Rfe8 25. Nf5 Rxe1+ 26. Rxe1 Rxe1+ 27. Bxe1 Qe8 (27... Nh5 28. Bc3 $16) (
+27... Ne8 28. Bc3 $16) 28. Qd1 h5 29. h3 $16) 23. Rfe1 (23. Ra4 $6 {Hazai} a5
+$1 {and Black solves his problem of weak a P at once.}) 23... h5 $5 (23... Bd4
+{Hazai} 24. Bxd4 Rxd4) 24. Qc2 (24. Qa2 $5 {Hazai} Qxb5 (24... R4f7 25. Qb1 $3
+$16) 25. Qxa7 g4) 24... Qf7 {Covering g6 and increasing the kingside pressure.
+Hazai: 'Black cannot allow the penetration Qg6.'} (24... Qxb5 $140 $2 25. Rxa7
+$18) (24... g4 $6 {(Hazai) immediately is strongly met by} 25. fxg4 hxg4 26.
+Qg6) 25. h3 (25. Ra3 Bd4 26. Bxd4 cxd4 27. Nc4 g4 28. Nd2 Ng7 29. Rea1 (29. Qd3
+Nf5 30. Re4 Rxe4 31. Qxe4 Ne3 $11) 29... Qxd5 30. Rxa7 d3 31. Qc6 R4f5 32. b3
+Qc5+ $132) 25... Bd4 26. Bxd4 {[#]} Rxd4 (26... cxd4 $5 {It was an interested
+point, which had the advantage of keeping the pieces on the board, although it
+seemed as an interesting drawing line.} 27. Nc4 g4 28. Re6 $5 (28. fxg4 hxg4
+29. Qd3 (29. hxg4 {Hazai} d3 $1 30. Qxd3 Rxc4 31. Qxc4 Qf2+ 32. Kh2 Qh4+ $11 {
+and draw by perpetual checks.}) 29... Ng7 30. hxg4 Qxd5 31. Re7 Rxg4 32. Ne3
+Rf2 $1 33. Nxd5 Rgxg2+ $11) 28... gxf3 29. Rg6+ (29. Nxd6 Nxd6 30. Rg6+ Kh8 31.
+Rh6+ $11) 29... Ng7 30. Nxd6 f2+ 31. Kf1 Qe7 32. Rh6 R4f5 $5 33. Qe4 $1 Qxe4
+34. Nxe4 d3 35. Rg6 Kh8 $5 (35... Rxd5 36. Rxa7 (36. Nf6+ $6 Kf7 $1) 36... Rf7
+37. Nf6+ Rxf6 38. Rgxg7+ Kf8 39. Rgd7 Rxd7 40. Rxd7 Rf5 41. Rxd3 Kg7 42. b3
+Rxb5 43. Kxf2 $16) 36. Rd1 (36. Rxa7 $6 Re8 $15) 36... Rf4 37. Ng5 Nf5 38. Rxd3
+Rd4 39. Rh6+ Kg8 40. Rg6+ $11) 27. Nf5 $5 {Getting the pieces off the board
+left White with an equal endgame. The threats against d4 and h6 forced the
+exchanges. Hazai: 'Leko wants to liquidate to a R _|_, which usually gives
+excellent drawing chances for the defender.'} (27. b3 {Hazai} Ng7 28. Qc3 {
+/\ Nc2}) 27... Qxf5 28. Qxf5 Rxf5 29. Rxe8+ Kf7 {Black's rooks looked the more
+menacing, but with so many pawn targets in the black camp there should be many
+ways for White to draw.} 30. Rb8 (30. Re2 Rfxd5 31. Rxa7+ Kf6 32. Ra6 Rd2 33.
+Kf2 Rxe2+ 34. Kxe2 Rd4 35. Rxb6 Ke5 36. Rb8 Rb4 37. Kd3 Kf4 38. b6 Kg3 39. b7
+Kxg2 40. f4 $1 g4 41. hxg4 h4 42. Rh8 $11) 30... Rdxd5 {This allowed an
+immedate drawing continuation thanks to the trapped position of the black king.
+} (30... Rd2 $5 {Hazai} 31. Rxa7+ Kf6 32. Rxb6 Rfxd5 {/\ Rxb2, Rdd2}) 31. Rxa7+
+Ke6 32. Re8+ Kf6 {Hazai: '- 30.Rb8'} 33. g4 $2 {It was a curious decision,
+which created a handful of weaknesses. Hazai: 'Many annotators plead guilty
+this move...'} ({After} 33. Rh7 {the black king would be locked up. Hazai:
+'was no doubt easier:'} h4 (33... Kg6 34. Rb7 Rd2 35. b3 Rfd5 36. Rxb6 {
+'=' Hazai. Hazai: 'Shipov'} R2d3 37. Kf2 Rxb3 38. Re6+ Kf5 39. Rexd6 Rxd6 40.
+Rxd6 Rxb5 41. Rd5+ $11) (33... Rde5 $2 34. Rh6+ Kg7 35. Rxe5 Rxe5 36. Rxd6 $14)
+(33... g4 34. Rf8+ Kg6 35. Rxf5 Rxf5 36. hxg4 hxg4 37. fxg4 Rd5 38. Rb7) 34.
+Ree7 {'=' Hazai.} (34. Rhh8 Rd1+ 35. Kh2 (35. Kf2 Rfd5 36. Rhf8+ Kg7 37. Rg8+
+Kh7 $11) 35... Re5 (35... Rfd5 36. Rhf8+ Kg7 37. Rg8+ Kh7 $11) 36. Rhf8+ Kg6
+37. Rg8+ Kh6 $11) (34. g4 $5 Kg6 35. Rb7 Rf7 36. Re6+ Kg7 37. Rxb6 Rxf3 38.
+Rexd6 Rxd6 39. Rxd6 c4 40. Rd5 Kg6 41. b6 Rg3+ 42. Kf2 Rb3 43. Rd6+ Kf7 44. Rc6
+$11) 34... Rd1+ (34... c4 35. Rhf7+ Kg6 36. Rg7+ $11) (34... Rde5 35. Rhf7+ Kg6
+36. Rg7+ $11) 35. Kh2 Re5 36. Rhf7+ Kg6 37. Rg7+ Kh6 38. Rh7+ $11) 33... hxg4
+34. hxg4 Rd1+ {'!' Hazai.} (34... Rfe5 {Hazai} 35. Rf8+ $11) 35. Kf2 Re5 36.
+Rh8 Rd2+ {Hazai: 'repeating moves in order to reach the 40-th move.'} 37. Kg3 (
+37. Kf1 $2 {(Hazai) is too passive.} Ke6 38. Rb7 Rxb2 39. Rxb6 Kd5 40. Rd8 Re6
+41. Rg8 Ke5 42. Rxg5+ Kf4 43. Rf5+ Kg3 $1 $19) 37... Ree2 (37... Ke6 $5 {
+Some annotators thought this move was stronger but White kept chances to draw.}
+38. Rb7 $5 ({} 38. Rh6+ $6 Kd5 39. b3 Rd3 40. Rg7 Rxb3 41. Rgg6 Rxb5 42. Rxd6+
+Kc4 43. Rxb6 Rxb6 44. Rxb6 Kd5 $17) (38. b3 $6 Kd5 39. Rb7 Ree2 40. Rh1 Rd3 41.
+Rh5 (41. Rxb6 Ree3 42. Rf1 Rxb3 43. Rb8 c4 $17) 41... Re5 42. Rxb6 Rxb3 43. Rh7
+c4 44. Rg7 (44. Rf7 Rb4 45. Rd7 Kc5 46. Rbxd6 Rxb5 $17) 44... Rb4 45. Rg6 Kc5
+46. Rgxd6 Rxb5 47. Rbc6+ Kb4 48. f4 Re3+ $17) 38... Ree2 39. Re8+ Kd5 40. Rxe2
+Rxe2 41. b3 Re3 42. Rg7 Rxb3 43. Rxg5+ Kd4 $5 (43... Ke6 44. Rg6+ Ke5 45. Rh6 (
+45. Rg5+ Kf6 46. Rd5 Ke6 47. Rd2 Rxb5 $17) 45... Rxb5 46. f4+ Kd5 47. g5 c4 48.
+Kf2 Rb2+ 49. Ke3 Rb3+ 50. Kf2 Ke4 51. Rxd6 b5 52. g6 Rf3+ 53. Ke2 Rxf4 54. Kd2
+b4 55. Rb6 Rf2+ 56. Ke1 Rg2 57. Rxb4 Kd3 58. Rb6 c3 59. Rd6+ Kc2 60. Kf1 Rg5
+61. Kf2 Kc1 62. Kf3 c2 63. Kf4 Rc5 64. g7 $11) 44. Rg6 d5 $5 45. g5 (45. Rxb6
+c4 46. g5 c3 47. Rc6 Rxb5 48. g6 Kd3 49. f4 $11) 45... Rxb5 46. Rf6 Rb1 47. g6
+Ra1 (47... Ke5 48. Rc6 c4 49. Kf2 Rb2+ 50. Kf1 $11) 48. Rxb6 c4 49. Rc6 c3 50.
+f4 Ke4 51. f5 Kxf5 52. Kf2 $11) 38. Rf8+ Kg6 39. Rg8+ Kf6 40. Rf8+ Ke6 41. Re8+
+Kd5 42. Rxe2 {No more mate and a pair of rooks left the board. The problem was
+that the black king was very active.} Rxe2 43. Rg7 {Hazai: 'is only a
+repetition of moves.'} Re5 (43... Rxb2 $5 44. Rxg5+ Ke6 (44... Kd4 {(Hazai) -
+38.Rf8}) 45. Rg6+ Ke7 46. f4 Rxb5 47. Kf3 (47. f5 c4 $17) 47... c4 48. Rg7+ Kf6
+49. Rb7 Rb1 50. Ke4 b5 51. Kd4 Rd1+ 52. Kc3 Rd3+ 53. Kc2 Rf3 54. f5 d5 55. Rxb5
+Ke5 $17) 44. Rb7 c4 (44... Kc4 45. Rxb6 d5 (45... Rd5 46. Rb8 Kb4 47. Kf2 Rd2+
+48. Ke3 Rxb2 49. f4 $11) 46. f4 Re3+ 47. Kf2 gxf4 48. Rd6 Rg3 49. b6 Rxg4 50.
+b7 Rg8 51. Rb6 Rb8 52. Kf3 d4 53. Kxf4 $11) 45. Rxb6 (45. Kf2 {Hazai} Kc5 $19)
+45... Re2 (45... Re3 $5 {Preventing f4} 46. Rb8 Rb3 47. Rg8 Rxb2 48. Rxg5+ Kd4
+49. Rg6 d5 50. g5 Rxb5 51. Rc6 c3 52. g6 Rb4 53. g7 (53. f4 Rc4 54. g7 c2 55.
+g8=Q c1=Q $13) 53... Rb8 54. Rc7 Rg8 55. Kf4 Kd3 56. Ke5 c2 57. Kf6 Kd2 58. Kf7
+c1=Q 59. Rxc1 Rxg7+ 60. Kxg7 Kxc1 61. f4 $11) 46. f4 $1 {The key move. Hazai:
+'Leko's defence is again on the top! This beautiful, thematic P sacrifice
+creates another dangerous o^ for White.'} Re3+ 47. Kf2 gxf4 48. Rb8 {'!' Hazai.
+} (48. g5 {Hazai} Rg3 $1 (48... Rb3 49. Rb8 {- 48.Rb8}) 49. Rb8 Rxg5 50. b6 Rg3
+$1 (50... Rg7 51. Kf3 Rg3+ 52. Kxf4 Rh3 $3 {losing the tempo deliberately!} (
+52... Rb3 53. b7 Rxb2 54. Ke3 $22 $11) 53. b7 (53. Rc8 Rb3 54. Rb8 Kd4 $19)
+53... Rb3 $22 $19 {and a mutual zugzwang position has arisen!}) 51. Rf8 Rb3 52.
+Rxf4 Kc5 $19 {looks more to the point.}) 48... Rb3 {Hazai: '[#] This is the
+critical position of the entire R _|_.'} (48... Rg3 {Hazai} 49. Rf8 (49. b6
+Rxg4 50. Rf8 {- 49.Rf8}) 49... Rxg4 50. b6 Rg7 (50... Kc6 51. Rc8+ Kxb6 52.
+Rxc4 $11) 51. Rxf4 Kc5 (51... Rb7 52. b3 $1 cxb3 53. Rb4 Kc5 54. Rxb3 Rxb6 55.
+Ra3 $11) 52. Rf3 d5 (52... Kb4 53. Rf5 Rb7 54. Ke3 Rxb6 55. Kd4 $11) 53. b3 $11
+) 49. b6 $2 {[#]} (49. g5 $1 {Hazai: '- 48.Rb8' Hazai: 'would have led to a
+draw, although the variations are very difficult.'} Ke5 (49... Rxb2+ 50. Kf3
+Ke5 {Hazai: 'Now probably both P moves draw.'} 51. b6 (51. g6 {Hazai} Rb3+ 52.
+Kg4 $1 Rg3+ 53. Kh5 c3 (53... Kd5 54. b6 Kc6 55. Rc8+ Kxb6 56. Rxc4 $11) (53...
+f3 54. b6) 54. Re8+ $1 {has to be played immediately in order to drive away
+the K from f5.} (54. b6 c2 55. Re8+ (55. Rc8 c1=Q $3 {This is a phantastic
+motif, Black wants to improve the mating threat.} 56. Rxc1 Kf5 $1 {This is the
+point, now the white K is in trouble.} 57. Kh4 Rxg6 58. Kh3 Rg3+ 59. Kh4 Rb3
+60. Rc6 (60. Rc8 Rxb6 61. Rf8+ Ke4 62. Kg4 d5 63. Rxf4+ Kd3 $19) 60... d5 61.
+Rd6 Ke4 62. Kg4 (62. Re6+ Kf3 63. Rd6 Kg2 64. Rxd5 f3 65. Rg5+ Kf1 66. Rg6 f2
+67. Rf6 Kg2 68. Rg6+ Kh2 69. Rf6 Rb4+ 70. Kh5 Kg3 71. Rg6+ Kh3 72. Rf6 Rb5+ $19
+) 62... Rg3+ 63. Kh4 (63. Kh5 Rg7 64. Rg6 Rf7 65. Kg4 f3 66. b7 Rxb7 67. Re6+
+Kd3 $19) 63... Rg7 $19) 55... Kf5 56. Rf8+ Ke6 $1 57. Re8+ Kd7 58. Re1 Kc6 59.
+Rc1 Rg2 60. Kh6 f3 61. g7 Kxb6 62. Kh7 f2 63. g8=Q Rxg8 64. Kxg8 d5 $19) 54...
+Kd5 (54... Kd4 55. b6 c2 56. Rc8) (54... Kf5 55. Rf8+ Ke4 56. Re8+ Kd3 57. b6
+c2 58. Rc8) 55. Rc8 f3 56. Rxc3 f2 57. Rxg3 f1=Q 58. g7 Qf7+ 59. Kh6 Qg8 60.
+Rf3) 51... c3 52. Re8+ Kf5 53. Rf8+ Kxg5 54. Rxf4 c2 55. Rc4 Kf5 56. Ke3 Ke5
+57. Kd3 Rxb6 58. Rxc2 $11) (49... Rg3 {Hazai} 50. b6 Rxg5 51. Rf8 Rg7 52. Rxf4
+$11 {- 48...Rg3}) (49... Ke4 {Hazai} 50. g6 Rxb2+ 51. Ke1 $11) 50. b6 Rxb2+ 51.
+Kf3 c3 (51... Rb3+ {Hazai} 52. Kg4 f3 (52... c3 53. Re8+ Kd4 54. g6 c2 55. Rc8
+$11) 53. Kg3 c3 54. Rc8 $11) 52. Re8+ Kf5 (52... Kd4 {Hazai} 53. g6) 53. Rf8+
+Kxg5 54. Rxf4 Rxb6 55. Rc4 Rb3 56. Ke4 Kf6 57. Kd5 {'=' Hazai.} Ke7 58. Rc7+
+Kd8 59. Rc6 $11) 49... Ke4 $6 (49... Rxb2+ $1 {must have been considered
+strongly by Kramnik.} 50. Kf3 c3 51. b7 (51. Kxf4 $2 Rxb6 $1 $19) (51. Rc8 $6
+Kd4 52. Rc6 d5 53. g5 c2 54. g6 Rb3+ 55. Kg4 (55. Kxf4 $140 $2 Rc3 $19) 55...
+Rxb6 $1 56. Rxc2 Rxg6+ 57. Kxf4 Rf6+ $19) 51... Kd4 52. Rd8 Rxb7 53. Rxd6+ Kc5
+54. Rd1 Rf7 $1 (54... Kc4 $6 55. Kxf4 c2 56. Rc1 Kd3 57. g5 Rb1 58. Rxc2 $11)
+55. g5 Kc4 56. g6 Rg7 57. Rd6 c2 58. Rc6+ Kb3 $19) 50. Re8+ {[#] Hazai: 'This
+is the next critical point of the _|_.'} (50. g5 $2 Rxb2+ 51. Ke1 c3 $19) 50...
+Kd3 $2 {Hazai: 'Now the K on the third rank allows the Kf3 plan. White will
+give his R for the P, while the g P will make a draw promoted by his own K.'} (
+{missing probably the win after} 50... Kd4 $1 {(Hazai) Now the third rank
+remains opened for the R and the white K is cut off.} 51. Re2 (51. g5 Rxb2+ 52.
+Kf3 Rxb6 53. g6 Rb7 54. Kxf4 (54. Re1 c3 55. Rd1+ Ke5 56. Re1+ Kf5 57. Re4 Rc7
+58. g7 Rxg7 59. Rxf4+ Ke6 60. Rc4 Rh7 61. Kg2 Rf7 62. Rxc3 Ke5 $19) 54... c3
+55. Kf5 c2 56. Rc8 Rb5+ 57. Kf6 Rc5 58. Rxc5 dxc5 59. g7 c1=Q 60. g8=Q Qf4+ {
+and Black will exchange the Q.} 61. Ke7 Qe5+ $19) 51... f3 $1 52. Rd2+ Ke4 $1
+53. Rxd6 Rxb2+ 54. Kg3 c3 $1 55. Rc6 f2 56. Kg2 c2 57. b7 (57. g5 Rb1 58. Kxf2
+c1=Q 59. Rxc1 Rxc1 60. g6 Rc8 $19) 57... Kd3 58. Rd6+ (58. g5 Rxb7 59. Kxf2 Rb1
+60. Kf3 c1=Q 61. Rxc1 Rxc1 62. Kf4 Kd4 63. Kf5 Kd5 64. Kf6 Kd6 65. g6 Rf1+ $19)
+58... Ke2 59. Re6+ Kd1 60. Rd6+ Kc1 61. Rc6 Kb1 $19) 51. Re2 $1 {Hazai: 'Now
+the R manoeuvre saves the game!'} d5 (51... Kd4 {Trying to reestablish the f3
+threat that moment, a tempo behind, didn't seem to work.} 52. b7 Rxb7 53. Kf3
+Rf7 54. g5 d5 55. g6 Rg7 56. Rg2 Ke5 57. Rg5+ Ke6 58. Kxf4 $11) (51... Rxb6 {
+Hazai} 52. Kf3 d5 {- 51...d5}) 52. Kf3 {This position seems to be a draw.} d4
+53. g5 c3 (53... Rxb6 54. Rh2 Rg6 55. Kxf4 Rg8 56. Kf5 Ke3 57. Rh3+ Ke2 58.
+Rh2+ Kf3 (58... Kd1 59. g6 Kc1 60. Rh4 Kxb2 61. Rxd4 c3 62. Rb4+ $11) 59. Rh3+
+Kg2 60. Rh4 Rd8 61. g6 d3 62. Rg4+ Kf2 63. Rf4+ Ke3 64. Re4+ $11) 54. bxc3 dxc3
+55. Rg2 {Hazai: 'This is the point of the R manoeuvre, White creates a so
+called Tarrasch R.'} Rb2 (55... c2 56. Rxc2 Kxc2+ 57. Kxf4 Rxb6 58. Kf5 $11)
+56. b7 Rxb7 57. Kxf4 Rb2 58. Rg1 c2 59. Rc1 Rb1 60. Rxc2 Kxc2 61. g6 Kd3 62.
+Kf5 Rb5+ 63. Kf6 Rb6+ 64. Kf7 Rxg6 65. Kxg6 {Hazai: 'This was a real fighting
+game!'} 1/2-1/2
+

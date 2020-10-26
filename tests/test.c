@@ -879,6 +879,13 @@ test_pgn_read_file()
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
+
+    notation_init(&n, &b);
+    f = fopen("files/search_board.pgn", "r");
+    ok = pgn_read_file(f, &n, 1);
+    fclose(f);
+    assert(ok);
+    notation_free(&n);
 }
 
 void
@@ -1079,6 +1086,15 @@ test_game_list_functions()
 
     board_fen_import(&b, "r1b1kb1r/1p1n1ppp/pq1ppn2/6B1/3NP3/1BN5/PPPQ1PPP/R3K2R b KQkq - 1 9");
     f = fopen("files/skip_error.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
+
+    board_fen_import(&b, "4rrk1/1b4b1/1p2q1pp/2p5/4PPpB/2P1Q3/3N2PP/4RRK1 w - - 0 25");
+    f = fopen("files/search_board.pgn", "r");
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
