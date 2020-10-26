@@ -122,6 +122,18 @@ test_str_is_square()
 }
 
 void
+test_str_is_fen()
+{
+    assert(!str_is_fen(""));
+    assert(str_is_fen(FEN_DEFAULT));
+    assert(str_is_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -"));
+    assert(str_is_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kq -"));
+    assert(!str_is_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kd -"));
+    assert(!str_is_fen("rnbq1bnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQ1BNR w KQkq -"));
+    assert(!str_is_fen("rnbqkbn2/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -"));
+}
+
+void
 test_tag_extract()
 {
     Tag tag;
@@ -1088,6 +1100,7 @@ int main(){
     test_charcount_after();
     test_str_is_move();
     test_str_is_square();
+    test_str_is_fen();
     test_tag_extract();
     test_tag_escape_value();
 

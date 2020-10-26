@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.19
+chess_utils v0.3.20
 
 Copyright (c) 2020 David Murko
 
@@ -194,6 +194,9 @@ int str_is_move(const char *str);
 
 //returns 1 if string is square [a-h][1-8]
 int str_is_square(const char *str);
+
+//returns 1 if string is valid FEN (does not validate checks)
+int str_is_fen(const char *str);
 
 //returns 1 if string is valid tag, given Tag struct is set
 int tag_extract(const char *str, Tag *tag);
@@ -702,6 +705,75 @@ str_is_square(const char *str)
 
     if(strchr("12345678", str[1]) == NULL)
         return 0;
+    return 1;
+}
+
+int str_is_fen(const char *str)
+{
+    if(str == NULL)
+        return 0;
+
+    const char * valid_castling[] = { "KQkq", "KQk", "KQq", "KQ", "Kkq", "Kk",
+          "Kq", "K", "Qkq", "Qk", "Qq", "Q", "kq", "k", "q", "-", NULL };
+    unsigned int i;
+    int pieces, rank;
+    char *board, *turn, *castling, *en_passant, *saveptr, *row;
+    char fen[FEN_LEN];
+    snprintf(fen, FEN_LEN, "%s", str);
+
+    board = strtok_r(fen, " ", &saveptr);
+    if(board == NULL)
+        return 0;
+    turn = strtok_r(NULL, " ", &saveptr);
+    if(turn == NULL || (strcmp(turn, "w") && strcmp(turn, "b")))
+        return 0;
+    castling = strtok_r(NULL, " ", &saveptr);
+    if(castling == NULL){
+        castling = (char*)"-";
+        en_passant = (char*)"-";
+    }else{
+        for(i = 0; valid_castling[i] != NULL; i++){
+            if(!strcmp(castling, valid_castling[i]))
+                break;
+        }
+        if(valid_castling[i] == NULL)
+            return 0;
+
+        en_passant = strtok_r(NULL, " ", &saveptr);
+        if(en_passant == NULL)
+            en_passant = (char*)"-";
+    }
+
+    if(charcount(board, 'K') != 1 || charcount(board, 'k') != 1)
+        return 0;
+
+    if(charcount(board, '/') != 7)
+        return 0;
+
+    rank = 1;
+    row = strtok_r(board, "/", &saveptr);
+    while(row != NULL){
+        pieces = 0;
+        for(i = 0; i < strlen(row); i++){
+            //pawns should not be on first or last rank
+            if((rank == 1 || rank == 8) && (row[i] == 'p' || row[i] == 'P'))
+                return 0;
+
+            if(strchr("12345678bnprkqBNPRKQ", row[i]) == NULL)
+                return 0;
+
+            //sum of empty spaces and pieces should be 8
+            if(row[i] >= '1' && row[i] <= '8')
+                pieces += (int)row[i] - 48;
+            else
+                pieces++;
+        }
+        rank++;
+        if(pieces != 8)
+            return 0;
+        row = strtok_r(NULL, "/", &saveptr);
+    }
+
     return 1;
 }
 
