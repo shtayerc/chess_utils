@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.21
+chess_utils v0.3.22
 
 Copyright (c) 2020 David Murko
 
@@ -2258,6 +2258,13 @@ notation_variation_promote(Notation *n)
     //moves after i are copied to tmp_v
     for(j = 0; j + i < parent->move_count; j++){
         tmp_v->move_list[j] = parent->move_list[j+i];
+    }
+
+    //update prev on sub variations
+    for(j = 0; j < tmp_v->move_count; j++){
+        for(l = 0; l < tmp_v->move_list[j].variation_count; l++){
+            tmp_v->move_list[j].variation_list[l]->prev = tmp_v;
+        }
     }
 
     //prevent commment duplication on 0 move
