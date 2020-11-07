@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.22
+chess_utils v0.3.23
 
 Copyright (c) 2020 David Murko
 
@@ -2260,7 +2260,7 @@ notation_variation_promote(Notation *n)
         tmp_v->move_list[j] = parent->move_list[j+i];
     }
 
-    //update prev on sub variations
+    //update prev on sub variations of ex parent variation
     for(j = 0; j < tmp_v->move_count; j++){
         for(l = 0; l < tmp_v->move_list[j].variation_count; l++){
             tmp_v->move_list[j].variation_list[l]->prev = tmp_v;
@@ -2277,6 +2277,13 @@ notation_variation_promote(Notation *n)
     parent->move_count = i + v->move_count;
     for(j = 1; j < v->move_count; j++){
         parent->move_list[i+j]= v->move_list[j];
+    }
+
+    //update prev on sub variations of new parent variation
+    for(j = i + 1; j < parent->move_count; j++){
+        for(l = 0; l < parent->move_list[j].variation_count; l++){
+            parent->move_list[j].variation_list[l]->prev = parent;
+        }
     }
 
     //put variations back
