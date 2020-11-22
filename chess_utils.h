@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.23
+chess_utils v0.3.24
 
 Copyright (c) 2020 David Murko
 
@@ -501,6 +501,9 @@ void game_list_search_str(GameList *gl, GameList *new_gl, const char *str);
 
 //fill GameList new_gl with GameRows containing given Board
 void game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b);
+
+//compare function for sorting GameList
+int game_list_cmp(const void *a, const void *b);
 
 #ifdef __cplusplus
 }
@@ -2764,6 +2767,12 @@ game_list_search_str(GameList *gl, GameList *new_gl, const char *str)
     }
 }
 
+int
+game_list_cmp(const void *a, const void *b)
+{
+    return (((GameRow*)a)->index > ((GameRow*)b)->index);
+}
+
 void
 game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
 {
@@ -2794,6 +2803,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
     board_fen_import(&b_start, FEN_DEFAULT);
     game_list_init(new_gl);
 
+    qsort(gl->list, gl->count, sizeof(GameRow), game_list_cmp);
     for(i = 0; i < gl->count; i++){
         while(i < gl->list[i].index){
             pgn_read_next(f, 1);
