@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.24
+chess_utils v0.3.25
 
 Copyright (c) 2020 David Murko
 
@@ -365,6 +365,9 @@ void variation_move_next(Variation *v);
 
 //v->move_current is decreased for 1 if higher than 0
 void variation_move_prev(Variation *v);
+
+//returns index of move in prev which is parent of v if not found returns -1
+int variation_index_find(Variation *v, Variation *prev);
 
 //returns current Move in given variation
 Move * variation_move_get(Variation *v);
@@ -1949,6 +1952,17 @@ variation_move_prev(Variation *v)
 {
     if(v->move_current > 0)
         v->move_current--;
+}
+
+int
+variation_index_find(Variation *v, Variation *prev)
+{
+    int i;
+    for(i = 0; i < prev->move_count; i++){
+        if(move_variation_find(&prev->move_list[i], v) != -1)
+            return i;
+    }
+    return -1;
 }
 
 Move *
