@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.25
+chess_utils v0.3.26
 
 Copyright (c) 2020 David Murko
 
@@ -1274,6 +1274,9 @@ board_move_king_status(Board *b, Square src, Square dst, Color color)
         side = QueenSide;
 
     if(side != NoSide){
+        if(board_square_is_attacked(b, src, (color == White ? Black : White)))
+            return Invalid;
+
         for(i = 0; i < 2; i++){
             sq = castle_squares[color][side][i];
             if(b->position[sq] != Empty
@@ -1492,11 +1495,9 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
         if(!strcmp(san_str, CASTLE_STR_SHORT)){
             *src = (color == White) ? e1 : e8;
             *dst = (color == White) ? g1 : g8;
-            status = Castling;
         }else if(!strcmp(san_str, CASTLE_STR_LONG)){
             *src = (color == White) ? e1 : e8;
             *dst = (color == White) ? c1 : c8;
-            status = Castling;
         }
         break;
 
@@ -1542,6 +1543,8 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
                 }
             }
         }
+    }else{
+        status = board_move_status(b, *src, *dst, *prom_piece);
     }
     return status;
 }

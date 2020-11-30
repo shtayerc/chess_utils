@@ -599,6 +599,10 @@ test_board_move_san_status()
     board_fen_import(&b, "r1bq1rk1/pp2ppbp/2n2np1/3P4/3N4/2N1B3/PPP1BPPP/R2Q1R1K b - - 0 1");
     snprintf(san, SAN_LEN, "Nbd5");
     assert(board_move_san_status(&b, san, &src, &dst, &prom_piece) == Invalid);
+
+    board_fen_import(&b, "rn1r2k1/ppp2p1p/6p1/3Nb3/1PB1P3/4BP2/P4PnP/2R1K2R w K - 3 15");
+    snprintf(san, SAN_LEN, "O-O");
+    assert(board_move_san_status(&b, san, &src, &dst, &prom_piece) == Invalid);
 }
 
 void
@@ -624,6 +628,10 @@ test_board_move_do()
     board_fen_export(&b, fen);
     same = !strcmp(fen, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     assert(same);
+
+    board_fen_import(&b, "rn1r2k1/ppp2p1p/6p1/3Nb3/1PB1P3/4BP2/P4PnP/2R1K2R w K - 3 15");
+    status = board_move_status(&b, e1, g1, Empty);
+    assert(status == Invalid);
 }
 
 void
