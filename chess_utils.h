@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.26
+chess_utils v0.3.27
 
 Copyright (c) 2020 David Murko
 
@@ -1586,7 +1586,28 @@ board_move_do(Board *b, Square src, Square dst, Piece prom_piece,
     b->position[dst] = b->position[src];
     b->position[src] = Empty;
 
-    switch (status){
+    switch(dst){
+        case a1:
+            b->castling[White][QueenSide] = 0;
+            break;
+
+        case a8:
+            b->castling[Black][QueenSide] = 0;
+            break;
+
+        case h1:
+            b->castling[White][KingSide] = 0;
+            break;
+
+        case h8:
+            b->castling[Black][KingSide] = 0;
+            break;
+
+        default:
+            break;
+    }
+
+    switch(status){
     case Castling:
         switch(dst){
         case g1:

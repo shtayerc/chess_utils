@@ -632,6 +632,14 @@ test_board_move_do()
     board_fen_import(&b, "rn1r2k1/ppp2p1p/6p1/3Nb3/1PB1P3/4BP2/P4PnP/2R1K2R w K - 3 15");
     status = board_move_status(&b, e1, g1, Empty);
     assert(status == Invalid);
+
+    board_fen_import(&b, "r1b1kbnr/pppp1Npp/8/8/2BnP3/8/PPPP1PqP/RNBQK2R w KQkq - 0 6");
+    status = board_move_status(&b, f7, h8, Empty);
+    assert(status == Valid);
+    board_move_do(&b, f7, h8, Empty, status);
+    board_fen_export(&b, fen);
+    same = !strcmp(fen, "r1b1kbnN/pppp2pp/8/8/2BnP3/8/PPPP1PqP/RNBQK2R b KQq - 0 6");
+    assert(same);
 }
 
 void
