@@ -746,6 +746,25 @@ test_variation_movenumber_export()
 }
 
 void
+test_variation_delete_next_moves()
+{
+    Notation n;
+    Board b;
+    FILE *f, *of;
+
+    notation_init(&n, &b);
+    f = fopen("files/delete_next_moves_before.pgn", "r");
+    of = fopen("tmp_test_07.pgn", "w");
+    pgn_read_file(f, &n, 0);
+    notation_move_index_set(&n, 5);
+    variation_delete_next_moves(n.line_main);
+    pgn_write_file(of, &n);
+    fclose(f);
+    fclose(of);
+    notation_free(&n);
+}
+
+void
 test_notation_tag_functions()
 {
     Tag tag;
@@ -1195,6 +1214,7 @@ int main(){
     //VARIATION FUNCTIONS
     test_variation_functions();
     test_variation_movenumber_export();
+    test_variation_delete_next_moves();
 
     //NOTATION FUNCTIONS
     test_notation_tag_functions();

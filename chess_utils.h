@@ -358,6 +358,9 @@ void variation_init(Variation *v, Board *b);
 //free v->move_list and all related Variations recursively
 void variation_free(Variation *v);
 
+//delete all moves after current move
+void variation_delete_next_moves(Variation *v);
+
 //new Move is added to the end of v->move_list
 void variation_move_add(Variation *v, Square src, Square dst, Piece prom_piece,
         Board *b, const char *san);
@@ -1949,6 +1952,16 @@ variation_free(Variation *v)
         move_free(&v->move_list[i]);
     }
     free(v->move_list);
+}
+
+void
+variation_delete_next_moves(Variation *v)
+{
+    int i;
+    for(i = v->move_current + 1; i < v->move_count; i++){
+        move_free(&v->move_list[i]);
+    }
+    v->move_count = v->move_current + 1;
 }
 
 void

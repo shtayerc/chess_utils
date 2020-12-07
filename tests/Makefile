@@ -10,6 +10,7 @@ TESTFILE_03=tmp_test_03.pgn
 TESTFILE_04=tmp_test_04.pgn
 TESTFILE_05=tmp_test_05.pgn
 TESTFILE_06=tmp_test_06.pgn
+TESTFILE_07=tmp_test_07.pgn
 
 all:
 	$(CC) $(FLAGS) -std=c99 $(FILES) -o $(EXE)
@@ -31,3 +32,4 @@ check:
 	diff $(TESTFILE_04) $(TESTFILE_01)
 	diff $(TESTFILE_05) files/complex_less.pgn
 	diff $(TESTFILE_06) files/escaped_doublequote.pgn
+	diff $(TESTFILE_07) files/delete_next_moves_after.pgn
