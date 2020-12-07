@@ -1,5 +1,5 @@
 /*
-chess_utils v0.3.27
+chess_utils v0.4.0
 
 Copyright (c) 2020 David Murko
 
@@ -80,6 +80,8 @@ typedef enum { Empty, BlackPawn, BlackKnight, BlackBishop, BlackRook,
 typedef enum { QueenSide, KingSide, NoSide } Side;
 
 typedef enum { Invalid, Valid, Castling, EnPassant, Promotion } Status;
+
+typedef enum { Centipawn, Mate, NoType = -1 } UciScoreType;
 
 //
 //STRUCTS
@@ -481,7 +483,7 @@ void pgn_replace_game(const char *filename, Notation *n, int index);
 //UCI moves from engine output are added to / replaced in given variation
 //parameters b, v can be NULL
 void uci_line_parse(const char *str, int len, Board *b, int *depth,
-        int *multipv, int *cp, Variation *v);
+        int *multipv, UciScoreType *type, int *score, Variation *v);
 
 //
 //GAME LIST FUNCTIONS
@@ -2668,8 +2670,9 @@ pgn_replace_game(const char *filename, Notation *n, int index)
 
 void
 uci_line_parse(const char *str, int len, Board *b, int *depth,
-        int *multipv, int *cp, Variation *v)
+        int *multipv, UciScoreType *type, int *score, Variation *v)
 {
+    *type = NoType;
     char buffer[len];
     char san[SAN_LEN];
     char *tmp, *saveptr, *last;
@@ -2701,9 +2704,15 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
             *depth = strtol(tmp, NULL, 10);
         if(!strcmp(last, "multipv"))
             *multipv = strtol(tmp, NULL, 10);
-        if(!strcmp(last, "cp"))
-            *cp = strtol(tmp, NULL, 10);
-        if(!strcmp(last, "pv"))
+        if(!strcmp(last, "cp")){
+            *type = Centipawn;
+            *score = strtol(tmp, NULL, 10);
+        }
+        if(!strcmp(last, "mate")){
+            *type = Mate;
+            *score = strtol(tmp, NULL, 10);
+        }
+        if(!strcmp(last, "pv") && *type != NoType)
             moves = 1;
         if(moves && v != NULL && b != NULL){
             status = board_move_uci_status(&tmp_b, tmp, &src, &dst,
