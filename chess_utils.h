@@ -484,7 +484,8 @@ void pgn_replace_game(const char *filename, Notation *n, int index);
 //
 
 //UCI moves from engine output are added to / replaced in given variation
-//parameters b, v can be NULL
+//parameters b, v can be NULL. v->move_count can be higher than actual move
+//count - extra moves have .san set to emtpy string
 void uci_line_parse(const char *str, int len, Board *b, int *depth,
         int *multipv, UciScoreType *type, int *score, Variation *v);
 
@@ -2750,6 +2751,9 @@ uci_line_parse(const char *str, int len, Board *b, int *depth,
 
         last = tmp;
         tmp = strtok_r(NULL, " ", &saveptr);
+    }
+    while(v != NULL && i < v->move_count){
+        v->move_list[i++].san[0] = '\0';
     }
 }
 

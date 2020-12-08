@@ -1014,10 +1014,14 @@ test_uci_line_parse()
 
     board_fen_import(&b, "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq g3 0 2");
     variation_init(&v, &b);
+    line = "info depth 21 seldepth 34 multipv 2 score cp 316 nodes 2412251 nps 504971 hashfull 842 tbhits 0 time 4777 pv h7h5 g4g5 d8g5 d2d3 g5h4 e1d2 d7d5 d1e1 h4e1 d2e1 b8c6 b1c3 g8f6 c3b5 e8d8 g1h3 f6h7 h3f2 a7a6 b5c3 c6d4 e1d1 c7c6";
+    uci_line_parse(line, 1024, &b, &depth, &multipv, &type, &score, &v);
+    assert(v.move_count == 24);
     line = "info depth 245 seldepth 2 multipv 1 score mate 1 nodes 7351 nps 565461 tbhits 0 time 13 pv d8h4";
     uci_line_parse(line, 1024, &b, &depth, &multipv, &type, &score, &v);
     assert(depth == 245 && multipv == 1 && type == Mate && score == 1
-            && !strcmp(v.move_list[1].san, "Qh4#") && v.move_count == 2);
+            && !strcmp(v.move_list[1].san, "Qh4#")
+            && !strlen(v.move_list[2].san));
     variation_free(&v);
 }
 
