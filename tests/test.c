@@ -347,13 +347,17 @@ test_board_is_equal()
     Board b1, b2;
     board_fen_import(&b1, FEN_DEFAULT);
     board_fen_import(&b2, FEN_DEFAULT);
-    assert(board_is_equal(&b1, &b2));
+    assert(board_is_equal(&b1, &b2, 1));
 
     board_fen_import(&b2, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w Kq - 0 1");
-    assert(!board_is_equal(&b1, &b2));
+    assert(!board_is_equal(&b1, &b2, 1));
 
     board_fen_import(&b2, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w KQkq - 0 1");
-    assert(!board_is_equal(&b1, &b2));
+    assert(!board_is_equal(&b1, &b2, 1));
+
+    board_fen_import(&b1, "rnb1k2r/ppp1bppp/4pn2/q7/3P4/2N2N2/PPPB1PPP/R2QKB1R w KQkq - 2 7");
+    board_fen_import(&b2, "rnb1k2r/ppp1bppp/4pn2/q7/3P4/2N2N2/PPPB1PPP/R2QKB1R w KQkq - 6 7");
+    assert(board_is_equal(&b1, &b1, 0));
 }
 
 void

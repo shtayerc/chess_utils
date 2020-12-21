@@ -1,5 +1,5 @@
 /*
-chess_utils v0.4.0
+chess_utils v0.4.1
 
 Copyright (c) 2020 David Murko
 
@@ -45,6 +45,8 @@ extern "C" {
 #define PGN_LINE_LEN 80
 #define SQUARE_LEN 3
 #define GAMETITLE_LEN 4096
+//max difference of move number between transpositions
+#define MOVENUM_OVERCHECK 6
 
 //
 //ENUMS
@@ -266,8 +268,9 @@ int board_is_stalemate(Board *b);
 //returns 1 if player on turn is out of legal moves
 int board_is_out_of_moves(Board *b);
 
-//returns 1 if b1 and b2 are equal
-int board_is_equal(Board *b1, Board *b2);
+//returns 1 if b1 and b2 are equal, strict decides if move number and half move
+//are compared or not
+int board_is_equal(Board *b1, Board *b2, int strict);
 
 //returns 1 if dst is different color and there are no pieces blocking path
 int board_move_pattern_knight_is_valid(Board *b, Square src, Square dst,
@@ -1078,13 +1081,13 @@ board_is_out_of_moves(Board *b)
 }
 
 int
-board_is_equal(Board *b1, Board *b2)
+board_is_equal(Board *b1, Board *b2, int strict)
 {
     if(b1->turn != b2->turn)
         return 0;
-    if(b1->move_number != b2->move_number)
+    if(b1->move_number != b2->move_number && strict)
         return 0;
-    if(b1->half_move != b2->half_move)
+    if(b1->half_move != b2->half_move && strict)
         return 0;
     if(b1->kings[0] != b2->kings[0] || b1->kings[1] != b2->kings[1])
         return 0;
@@ -2943,7 +2946,8 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                         snprintf(word, WORD_LEN, "%s", tmp);
                         trimmove(word);
                         if(str_is_move(word)){
-                            if(b_tmp.move_number > b->move_number){
+                            if(b_tmp.move_number > b->move_number
+                                    + MOVENUM_OVERCHECK){
                                 if(v == n.line_main){
                                     skip = 1;
                                 }else{
@@ -2958,7 +2962,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                             board_move_san_export(&b_tmp, src, dst, prom_piece,
                                     san, SAN_LEN, status);
                             board_move_do(&b_tmp, src, dst, prom_piece, status);
-                            if(board_is_equal(b, &b_tmp)){
+                            if(board_is_equal(b, &b_tmp, 0)){
                                 game_list_add(new_gl, &gl->list[i]);
                                 skip = 1;
                             }
@@ -3004,7 +3008,7 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
             if(strlen(buffer) == 0){
                 if(tags){
                     board_fen_import(&b_tmp, fen);
-                    if(board_is_equal(b, &b_tmp)){
+                    if(board_is_equal(b, &b_tmp, 0)){
                         game_list_add(new_gl, &gl->list[i]);
                         skip = 1;
                     }
