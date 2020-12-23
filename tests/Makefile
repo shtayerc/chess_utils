@@ -3,6 +3,7 @@ CPP=g++
 FILES=test.c
 FLAGS=-g -Wextra -Wall -Wformat-security -Wno-format-truncation
 EXE=test
+VALGRIND=
 EXAMPLEFILE=new_game.pgn
 TESTFILE_01=tmp_test_01.pgn
 TESTFILE_02=tmp_test_02.pgn
@@ -25,7 +26,7 @@ check: cpp
 check: all
 check:
 	cp files/replace_before.pgn $(TESTFILE_03)
-	valgrind -q --leak-check=full --track-origins=yes ./$(EXE)
+	$(VALGRIND) ./$(EXE)
 	diff $(TESTFILE_01) files/complex.pgn
 	diff $(TESTFILE_02) files/equal_variations.pgn
 	diff $(TESTFILE_03) files/replace_after.pgn
@@ -33,3 +34,6 @@ check:
 	diff $(TESTFILE_05) files/complex_less.pgn
 	diff $(TESTFILE_06) files/escaped_doublequote.pgn
 	diff $(TESTFILE_07) files/delete_next_moves_after.pgn
+
+valgrind: VALGRIND = valgrind -q --leak-check=full --track-origins=yes
+valgrind: check
