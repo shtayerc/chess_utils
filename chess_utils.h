@@ -1,5 +1,5 @@
 /*
-chess_utils v0.4.1
+chess_utils v0.5.0
 
 Copyright (c) 2020 David Murko
 
@@ -356,6 +356,7 @@ int move_variation_find(Move *m, Variation *v);
 //
 
 //initialize variation with 1 Move with given Board
+//if b is NULL then FEN_DEFAULT Board is used
 void variation_init(Variation *v, Board *b);
 
 //free v->move_list and all related Variations recursively
@@ -419,6 +420,7 @@ Tag * notation_tag_get(Notation *n, const char *key);
 void notation_tag_set(Notation *n, const char *key, const char *value);
 
 //initialize notation with 1 Variation with given Board and initialize 7 tags
+//if b is NULL then FEN_DEFAULT Board is used
 void notation_init(Notation *n, Board *b);
 
 //free given Notation and related Variations recursively
@@ -1942,6 +1944,11 @@ variation_init(Variation *v, Board *b)
     v->move_list[0].src = none;
     v->move_list[0].dst = none;
     v->move_list[0].prom_piece = Empty;
+    if(b == NULL){
+        Board board;
+        board_fen_import(&board, FEN_DEFAULT);
+        b = &board;
+    }
     v->move_list[0].board = *b;
     v->move_list[0].san[0] = '\0';
     v->move_count = 1;
@@ -2429,8 +2436,10 @@ pgn_read_file(FILE *f, Notation *n, int index)
             notation_tag_set(n, tag.key, tag.value);
             if(!strcmp(tag.key, "Result"))
                 snprintf(result, 10, "%s", tag.value);
-            if(!strcmp(tag.key, "FEN"))
+            if(!strcmp(tag.key, "FEN")){
                 board_fen_import(&b, tag.value);
+                n->line_main->move_list[0].board = b;
+            }
         }else{
             //skip lines starting with %
             tmp = buffer[0] != '%' ? strtok_r(buffer, " ", &saveptr) : NULL;

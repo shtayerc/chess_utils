@@ -723,12 +723,11 @@ test_variation_functions()
 void
 test_variation_movenumber_export()
 {
-    Board b;
     Notation n;
     Variation *v;
     FILE *f;
     char num[MOVENUM_LEN];
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/complex.pgn", "r");
     assert(pgn_read_file(f, &n, 0));
     fclose(f);
@@ -753,10 +752,9 @@ void
 test_variation_delete_next_moves()
 {
     Notation n;
-    Board b;
     FILE *f, *of;
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/delete_next_moves_before.pgn", "r");
     of = fopen("tmp_test_07.pgn", "w");
     pgn_read_file(f, &n, 0);
@@ -773,9 +771,7 @@ test_notation_tag_functions()
 {
     Tag tag;
     Notation n;
-    Board b;
-    board_fen_import(&b, FEN_DEFAULT);
-    notation_init(&n, &b); //notation_tag_init is called here
+    notation_init(&n, NULL); //notation_tag_init is called here
     notation_tag_set(&n, "White", "Morphy, Paul");
     tag = *notation_tag_get(&n, "White");
     assert(!strcmp(tag.key, "White") && !strcmp(tag.value, "Morphy, Paul"));
@@ -827,13 +823,12 @@ void
 test_pgn_read_file()
 {
     Notation n;
-    Board b;
     FILE *f;
     char fen[FEN_LEN];
     int same;
     int ok;
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/piece_hint.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     notation_move_index_set(&n, 46);
@@ -843,25 +838,31 @@ test_pgn_read_file()
     assert(ok && same);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/complex.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     fclose(f);
     board_fen_export(&(n.line_main->move_list[n.line_main->move_count-1].board), fen);
     same = !strcmp(fen, "8/7p/4Pkp1/p1b2p2/1p6/1B2P1PP/4KP2/8 w - - 0 51");
     assert(same && ok);
+    board_fen_export(&(n.line_main->move_list[0].board), fen);
+    same = !strcmp(fen, FEN_DEFAULT);
+    assert(same && ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/FEN.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     fclose(f);
     board_fen_export(&(n.line_main->move_list[n.line_main->move_count-1].board), fen);
     same = !strcmp(fen, "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PP1/RNBQKB1R w KQkq - 2 3");
     assert(same && ok);
+    board_fen_export(&(n.line_main->move_list[0].board), fen);
+    same = !strcmp(fen, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPP1/RNBQKBNR w KQkq - 0 1");
+    assert(same && ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/anglebracket.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     fclose(f);
@@ -869,57 +870,57 @@ test_pgn_read_file()
     assert(ok);
 
     //Empty file is valid pgn
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/empty.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     fclose(f);
     notation_free(&n);
     assert(ok);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/variation.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/result_in_comment.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/large.pgn", "r");
     ok = pgn_read_file(f, &n, 2); //pgn_read_next is called here
     assert(ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/subvariation_at_end.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/percent.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/very_complex.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     assert(n.line_main->move_count == 68);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/result_overwrite.pgn", "r");
     ok = pgn_read_file(f, &n, 0);
     assert(ok);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/search_board.pgn", "r");
     ok = pgn_read_file(f, &n, 1);
     fclose(f);
@@ -932,9 +933,7 @@ test_pgn_write_file()
 {
     Notation n;
     Notation *clone;
-    Board b;
-    board_fen_import(&b, FEN_DEFAULT);
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     FILE * f = fopen("files/complex.pgn", "r");
     FILE * of = fopen("tmp_test_01.pgn", "w");
     pgn_read_file(f, &n, 0);
@@ -955,7 +954,7 @@ test_pgn_write_file()
     notation_free(clone);
     free(clone);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/equal_variations.pgn", "r");
     of = fopen("tmp_test_02.pgn", "w");
     pgn_read_file(f, &n, 0);
@@ -964,7 +963,7 @@ test_pgn_write_file()
     fclose(of);
     notation_free(&n);
 
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     f = fopen("files/escaped_doublequote.pgn", "r");
     of = fopen("tmp_test_06.pgn", "w");
     pgn_read_file(f, &n, 0);
@@ -978,9 +977,7 @@ void
 test_pgn_replace_game()
 {
     Notation n;
-    Board b;
-    board_fen_import(&b, FEN_DEFAULT);
-    notation_init(&n, &b);
+    notation_init(&n, NULL);
     FILE *f = fopen("files/equal_variations.pgn", "r");
     pgn_read_file(f, &n, 0);
     fclose(f);
