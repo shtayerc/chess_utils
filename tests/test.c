@@ -978,6 +978,27 @@ test_pgn_replace_game()
 }
 
 void
+test_pgn_count_games()
+{
+
+    FILE *f;
+    int count;
+
+    f = fopen("files/large.pgn", "r");
+    count = pgn_count_games(f);
+    fclose(f);
+    assert(count == 7810);
+
+    f = fopen("files/empty.pgn", "r");
+    count = pgn_count_games(f);
+    assert(count == 0);
+
+    f = fopen("files/invalid_tags.pgn", "r");
+    count = pgn_count_games(f);
+    assert(count == -1);
+}
+
+void
 test_uci_line_parse()
 {
     Variation v;
@@ -1228,6 +1249,7 @@ int main(){
     test_pgn_read_file();
     test_pgn_write_file();
     test_pgn_replace_game();
+    test_pgn_count_games();
 
     //UCI FUNCTIONS
     test_uci_line_parse();
