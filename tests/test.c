@@ -788,26 +788,18 @@ test_notation_tag_functions()
 void
 test_notation_functions()
 {
-    Board b;
-    board_fen_import(&b, FEN_DEFAULT);
     Notation n;
     char *comment = (char*)malloc(sizeof(char) * (strlen("Test") + 1));
     snprintf(comment, strlen("Test") + 1, "Test");
-    notation_init(&n, &b);
-    board_move_do(&b, e2, e4, Empty, Valid);
-    variation_move_add(n.line_current, e2, e4, Empty, &b, "e4");
+    notation_init(&n, NULL);
+    notation_move_add(&n, e2, e4, Empty, Valid);
     assert(notation_move_index_get(&n) == 1);
     notation_move_get(&n)->comment = comment;
-    board_move_do(&b, e7, e5, Empty, Valid);
-    variation_move_add(n.line_current, e7, e5, Empty, &b, "e5");
-    board_move_do(&b, g1, f3, Empty, Valid);
-    variation_move_add(n.line_current, g1, f3, Empty, &b, "Nf3");
+    notation_move_add(&n, e7, e5, Empty, Valid);
+    notation_move_add(&n, g1, f3, Empty, Valid);
     notation_move_index_set(&n, 1);
-    b = notation_move_get(&n)->board;
-    board_move_do(&b, c7, c5, Empty, Valid);
-    notation_variation_add(&n, c7, c5, Empty, &b, "c5");
-    board_move_do(&b, g1, f3, Empty, Valid);
-    variation_move_add(n.line_current, g1, f3, Empty, &b, "Nf3");
+    notation_variation_add(&n, c7, c5, Empty, Valid);
+    notation_move_add(&n, g1, f3, Empty, Valid);
     assert(!notation_line_is_main(&n));
     assert(notation_move_is_last(&n));
     notation_variation_promote(&n);
@@ -1027,29 +1019,36 @@ test_uci_line_parse()
 }
 
 void
-test_readme_example()
+test_readme_example_01()
 {
-    Board b;
-    board_fen_import(&b, FEN_DEFAULT);
-
     Notation n;
-    notation_init(&n, &b);
+    notation_init(&n, NULL); //NULL means default starting position
     notation_tag_set(&n, "White", "New game");
 
     const char *san = "e4";
     Status status;
     Square src, dst;
     Piece prom_piece;
-    status = board_move_san_status(&b, san, &src, &dst, &prom_piece);
+    status = notation_move_san_status(&n, san, &src, &dst, &prom_piece);
     if(status != Invalid){
-        board_move_do(&b, src, dst, prom_piece, status);
-        variation_move_add(n.line_current, src, dst, prom_piece, &b, san);
+        notation_move_add(&n, src, dst, prom_piece, status);
         FILE *f = fopen("new_game.pgn", "w");
         pgn_write_file(f, &n);
         fclose(f);
     }else{
         printf("Invalid move\n");
     }
+    notation_free(&n);
+}
+
+void
+test_readme_example_02()
+{
+    Notation n;
+    notation_init(&n, NULL);
+    FILE *f = fopen("files/game_list.pgn", "r");
+    pgn_read_file(f, &n, 1); //read second game to notation
+    fclose(f);
     notation_free(&n);
 }
 
@@ -1233,7 +1232,8 @@ int main(){
     //UCI FUNCTIONS
     test_uci_line_parse();
 
-    test_readme_example();
+    test_readme_example_01();
+    test_readme_example_02();
 
     test_game_list_functions();
     return 0;

@@ -16,21 +16,17 @@ Chess library for C/C++
 ```
 
 ```c
-Board b;
-board_fen_import(&b, FEN_DEFAULT);
-
 Notation n;
-notation_init(&n, &b);
+notation_init(&n, NULL); //NULL means default starting position
 notation_tag_set(&n, "White", "New game");
 
 const char *san = "e4";
 Status status;
 Square src, dst;
 Piece prom_piece;
-status = board_move_san_status(&b, san, &src, &dst, &prom_piece);
+status = notation_move_san_status(&n, san, &src, &dst, &prom_piece);
 if(status != Invalid){
-    board_move_do(&b, src, dst, prom_piece, status);
-    variation_move_add(n.line_current, src, dst, prom_piece, &b, san);
+    notation_move_add(&n, src, dst, prom_piece, status);
     FILE *f = fopen("new_game.pgn", "w");
     pgn_write_file(f, &n);
     fclose(f);
@@ -42,17 +38,17 @@ notation_free(&n);
 
 ```c
 Notation n;
-Board b;
-notation_init(&n, &b);
+notation_init(&n, NULL);
 FILE *f = fopen("games.pgn", "r");
-pgn_read_file(&n, f, 1); //read second game to notation
+pgn_read_file(f, &n, 1); //read second game to notation
 fclose(f);
 notation_free(&n);
 ```
 
 ### RUN TESTS
-Requires `valgrind g++`
+Requires `valgrind g++` (option valgrind)
 ```
 cd tests
 make check clean
+make valgrind clean
 ```
