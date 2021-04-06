@@ -1,5 +1,5 @@
 /*
-chess_utils v0.6.2
+chess_utils v0.6.3
 
 Copyright (c) 2021 David Murko
 
@@ -835,11 +835,7 @@ tag_extract(const char *str, Tag *tag)
         tag->value[j] = str[i++];
     }
     tag->value[j] = '\0';
-    if(strlen(str) < i+1)
-        return 0;
-    if(str[i] != '"' || str[i+1] != ']')
-        return 0;
-    return 1;
+    return !(strlen(str) < i+1 || str[i] != '"' || str[i+1] != ']');
 }
 
 void
@@ -2632,16 +2628,13 @@ pgn_write_comment(FILE *f, char *line, const char *str)
 }
 
 void
-pgn_write_variation(FILE *f, Variation *v, char *line, int i){
-
+pgn_write_variation(FILE *f, Variation *v, char *line, int i)
+{
     Move *m;
     int j, l;
     char num[MOVENUM_LEN];
-    int is_main = 0;
-    if(i == -1){
-        is_main = 1;
-        i = 0;
-    }
+    int is_main = (i == -1) ? 1 : 0;
+    i = (i == -1) ? 0 : i;
     for(j = 1; j < v->move_count; j++){
         m = &v->move_list[j];
         if(j == 1 && !is_main)
