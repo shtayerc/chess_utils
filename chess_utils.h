@@ -1,5 +1,5 @@
 /*
-chess_utils v0.6.3
+chess_utils v0.6.4
 
 Copyright (c) 2021 David Murko
 
@@ -350,6 +350,10 @@ void move_copy(Move *src, Move *dst, Variation *prev);
 
 //returns index of given variation in variation_list if not found returns -1
 int move_variation_find(Move *m, Variation *v);
+
+//remove given variation from variation_list, returns 1 if it is found and
+//removed else returns 0
+int move_variation_delete(Move *m, Variation *v);
 
 //
 //VARIATION FUNCTIONS
@@ -1946,6 +1950,24 @@ move_variation_find(Move *m, Variation *v)
     return -1;
 }
 
+int
+move_variation_delete(Move *m, Variation *v)
+{
+    int i, j;
+    i = move_variation_find(m, v);
+    if(i != -1){
+        m->variation_list[i] = NULL;
+        for(j = i + 1; j < m->variation_count; j++){
+            m->variation_list[j-1] = m->variation_list[j];
+        }
+        m->variation_count--;
+        variation_free(v);
+        free(v);
+        return 1;
+    }
+    return 0;
+}
+
 void
 variation_init(Variation *v, Board *b)
 {
@@ -2307,21 +2329,11 @@ notation_variation_delete(Notation *n)
     Variation *deleted = n->line_current;
     n->line_current = n->line_current->prev;
 
-    int i, j, l;
-    Move *m;
+    int i;
     for(i = 0; i < n->line_current->move_count; i++){
-        m = &n->line_current->move_list[i];
-        j = move_variation_find(m, deleted);
-        if(j != -1){
-            m->variation_list[j] = NULL;
-            for(l = j + 1; l < m->variation_count; l++){
-                m->variation_list[l-1] = m->variation_list[l];
-            }
-            m->variation_count--;
-        }
+        if(move_variation_delete(&n->line_current->move_list[i], deleted))
+            break;
     }
-    variation_free(deleted);
-    free(deleted);
 }
 
 void
