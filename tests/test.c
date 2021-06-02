@@ -812,6 +812,20 @@ test_notation_functions()
 }
 
 void
+test_notation_board_find()
+{
+    Board b;
+    Notation n;
+    notation_init(&n, NULL);
+    FILE *f = fopen("files/complex.pgn", "r");
+    pgn_read_file(f, &n, 0);
+    fclose(f);
+    board_fen_import(&b, "1r1qr1k1/1p3pbp/B2p1np1/2pP4/P3nB2/1QN1PN1b/1P3PP1/R2R2K1 w - - 0 16");
+    notation_board_find(&n, &b);
+    assert(!strcmp(notation_move_get(&n)->san, "Bxh3"));
+}
+
+void
 test_pgn_read_file()
 {
     Notation n;
@@ -1244,6 +1258,7 @@ int main(){
     //NOTATION FUNCTIONS
     test_notation_tag_functions();
     test_notation_functions();
+    test_notation_board_find();
 
     //PGN FUNCTIONS
     test_pgn_read_file();
