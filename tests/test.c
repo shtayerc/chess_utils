@@ -577,6 +577,11 @@ test_board_move_san_export()
     board_move_san_export(&b, f1, b5, Empty, san, SAN_LEN, Valid);
     snprintf(comp, SAN_LEN, "%sb5+", piece_map[WhiteBishop]);
     assert(!strcmp(san, comp));
+
+    board_fen_import(&b, "1k6/pN2b3/2n3p1/7p/7P/8/P2p1PP1/1R4K1 b - - 0 30");
+    board_move_san_export(&b, d2, d1, BlackQueen, san, SAN_LEN, Promotion);
+    snprintf(comp, SAN_LEN, "d1=Q+");
+    assert(!strcmp(san, comp));
 }
 
 void
