@@ -823,6 +823,7 @@ test_notation_board_find()
     board_fen_import(&b, "1r1qr1k1/1p3pbp/B2p1np1/2pP4/P3nB2/1QN1PN1b/1P3PP1/R2R2K1 w - - 0 16");
     notation_board_find(&n, &b);
     assert(!strcmp(notation_move_get(&n)->san, "Bxh3"));
+    notation_free(&n);
 }
 
 void
