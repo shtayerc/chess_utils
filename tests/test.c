@@ -358,6 +358,10 @@ test_board_is_equal()
     board_fen_import(&b1, "rnb1k2r/ppp1bppp/4pn2/q7/3P4/2N2N2/PPPB1PPP/R2QKB1R w KQkq - 2 7");
     board_fen_import(&b2, "rnb1k2r/ppp1bppp/4pn2/q7/3P4/2N2N2/PPPB1PPP/R2QKB1R w KQkq - 6 7");
     assert(board_is_equal(&b1, &b1, 0));
+
+    board_fen_import(&b1, "rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6");
+    board_fen_import(&b2, "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 1 5");
+    assert(!board_is_equal(&b1, &b2, 0));
 }
 
 void
