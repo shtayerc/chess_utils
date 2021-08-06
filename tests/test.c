@@ -1193,91 +1193,130 @@ test_game_list_functions()
     fclose(f);
 }
 
-int main(){
-    //STRING UTILS
-    test_strtok_r();
-    test_concate();
-    test_trimmove();
-    test_trimendl();
-    test_trimcomment();
-    test_charremove();
-    test_charcount();
-    test_charcount_before();
-    test_charcount_after();
-    test_str_is_move();
-    test_str_is_square();
-    test_str_is_fen();
-    test_tag_extract();
-    test_tag_escape_value();
+int main(int argc, char *argv[]){
+    if(argc == 1){
+        //STRING UTILS
+        test_strtok_r();
+        test_concate();
+        test_trimmove();
+        test_trimendl();
+        test_trimcomment();
+        test_charremove();
+        test_charcount();
+        test_charcount_before();
+        test_charcount_after();
+        test_str_is_move();
+        test_str_is_square();
+        test_str_is_fen();
+        test_tag_extract();
+        test_tag_escape_value();
 
-    //BOARD UTILS
-    test_filerank2square();
-    test_square2rank();
-    test_square2file();
-    test_char2rank();
-    test_char2file();
-    test_char2piece();
-    test_rank2char();
-    test_file2char();
-    test_piece2char();
-    test_move_offset_find();
-    test_move_uci_export();
+        //BOARD UTILS
+        test_filerank2square();
+        test_square2rank();
+        test_square2file();
+        test_char2rank();
+        test_char2file();
+        test_char2piece();
+        test_rank2char();
+        test_file2char();
+        test_piece2char();
+        test_move_offset_find();
+        test_move_uci_export();
 
-    //BOARD FUNCTIONS
-    test_board_square_piece_color();
-    test_board_square_set();
-    test_board_square_is_attacked();
-    test_board_is_check();
-    test_board_is_checkmate();
-    test_board_is_stalemate();
-    test_board_is_out_of_moves();
-    test_board_is_equal();
-    test_board_move_pattern_knight_is_valid();
-    test_board_move_pattern_bishop_is_valid();
-    test_board_move_pattern_rook_is_valid();
-    test_board_move_knight_is_valid();
-    test_board_move_bishop_is_valid();
-    test_board_move_rook_is_valid();
-    test_board_move_queen_is_valid();
-    test_board_move_pawn_status();
-    test_board_move_king_status();
-    test_board_move_is_promotion();
-    test_board_move_is_capture();
-    test_board_move_is_check();
-    test_board_move_is_checkmate();
-    test_board_move_status();
-    test_board_move_which();
-    test_board_move_san_export();
-    test_board_move_san_status();
-    test_board_move_do();
-    test_board_move_uci_status();
-    test_board_fen_import();
+        //BOARD FUNCTIONS
+        test_board_square_piece_color();
+        test_board_square_set();
+        test_board_square_is_attacked();
+        test_board_is_check();
+        test_board_is_checkmate();
+        test_board_is_stalemate();
+        test_board_is_out_of_moves();
+        test_board_is_equal();
+        test_board_move_pattern_knight_is_valid();
+        test_board_move_pattern_bishop_is_valid();
+        test_board_move_pattern_rook_is_valid();
+        test_board_move_knight_is_valid();
+        test_board_move_bishop_is_valid();
+        test_board_move_rook_is_valid();
+        test_board_move_queen_is_valid();
+        test_board_move_pawn_status();
+        test_board_move_king_status();
+        test_board_move_is_promotion();
+        test_board_move_is_capture();
+        test_board_move_is_check();
+        test_board_move_is_checkmate();
+        test_board_move_status();
+        test_board_move_which();
+        test_board_move_san_export();
+        test_board_move_san_status();
+        test_board_move_do();
+        test_board_move_uci_status();
+        test_board_fen_import();
 
-    //MOVE FUNCTIONS
-    test_move_functions();
+        //MOVE FUNCTIONS
+        test_move_functions();
 
-    //VARIATION FUNCTIONS
-    test_variation_functions();
-    test_variation_movenumber_export();
-    test_variation_delete_next_moves();
+        //VARIATION FUNCTIONS
+        test_variation_functions();
+        test_variation_movenumber_export();
+        test_variation_delete_next_moves();
 
-    //NOTATION FUNCTIONS
-    test_notation_tag_functions();
-    test_notation_functions();
-    test_notation_board_find();
+        //NOTATION FUNCTIONS
+        test_notation_tag_functions();
+        test_notation_functions();
+        test_notation_board_find();
 
-    //PGN FUNCTIONS
-    test_pgn_read_file();
-    test_pgn_write_file();
-    test_pgn_replace_game();
-    test_pgn_count_games();
+        //PGN FUNCTIONS
+        test_pgn_read_file();
+        test_pgn_write_file();
+        test_pgn_replace_game();
+        test_pgn_count_games();
 
-    //UCI FUNCTIONS
-    test_uci_line_parse();
+        //UCI FUNCTIONS
+        test_uci_line_parse();
 
-    test_readme_example_01();
-    test_readme_example_02();
+        test_readme_example_01();
+        test_readme_example_02();
 
-    test_game_list_functions();
+        test_game_list_functions();
+    }else if(argc > 1){
+        GameList gl, new_gl;
+        Board b;
+        FILE *f;
+        switch(argv[1][0]){
+        case 'l':
+            f = fopen(argv[2], "r");
+            game_list_read_pgn(&gl, f);
+            fclose(f);
+            game_list_free(&gl);
+            break;
+
+        case 'p':
+            board_fen_import(&b, argv[2]);
+            f = fopen(argv[3], "r");
+            game_list_read_pgn(&gl, f);
+            fseek(f, 0, SEEK_SET);
+            game_list_search_board(&gl, &new_gl, f, &b);
+            fclose(f);
+            printf("%d\n", new_gl.count);
+            game_list_free(&gl);
+            game_list_free(&new_gl);
+            break;
+
+        case 's':
+            f = fopen(argv[3], "r");
+            game_list_read_pgn(&gl, f);
+            fclose(f);
+            game_list_search_str(&gl, &new_gl, argv[2]);
+            printf("%d\n", new_gl.count);
+            game_list_free(&gl);
+            game_list_free(&new_gl);
+            break;
+
+        default:
+            break;
+        }
+    }
     return 0;
 }
