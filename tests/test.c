@@ -141,6 +141,10 @@ test_tag_extract()
 
     ok = tag_extract("[White \"Morphy, Paul\"]", &tag);
     assert(ok && !strcmp(tag.key, "White") && !strcmp(tag.value, "Morphy, Paul"));
+
+    char s[] = {-12,12,127,32,'[','E','v','e','n','t',' ','"','T','"',']'};
+    ok = tag_extract(s, &tag);
+    assert(ok && !strcmp(tag.key, "Event") && !strcmp(tag.value, "T"));
 }
 
 void
