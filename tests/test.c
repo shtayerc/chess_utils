@@ -736,273 +736,273 @@ test_variation_functions()
 void
 test_variation_movenumber_export()
 {
-    Notation n;
+    Game g;
     Variation *v;
     FILE *f;
     char num[MOVENUM_LEN];
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/complex.pgn", "r");
-    assert(pgn_read_file(f, &n, 0));
+    assert(pgn_read_file(f, &g, 0));
     fclose(f);
-    variation_movenumber_export(n.line_main, 1, 0, num, MOVENUM_LEN);
+    variation_movenumber_export(g.line_main, 1, 0, num, MOVENUM_LEN);
     assert(!strcmp(num, "1."));
-    variation_movenumber_export(n.line_main, 81, 0, num, MOVENUM_LEN);
+    variation_movenumber_export(g.line_main, 81, 0, num, MOVENUM_LEN);
     assert(!strcmp(num, "41."));
-    variation_movenumber_export(n.line_main, 82, 0, num, MOVENUM_LEN);
+    variation_movenumber_export(g.line_main, 82, 0, num, MOVENUM_LEN);
     assert(!strcmp(num, ""));
-    v = n.line_main->move_list[81].variation_list[0];
+    v = g.line_main->move_list[81].variation_list[0];
     variation_movenumber_export(v, 1, 81, num, MOVENUM_LEN);
     assert(!strcmp(num, "41..."));
     variation_movenumber_export(v, 2, 81, num, MOVENUM_LEN);
     assert(!strcmp(num, "42."));
-    v = n.line_main->move_list[27].variation_list[0]->move_list[3].variation_list[0];
+    v = g.line_main->move_list[27].variation_list[0]->move_list[3].variation_list[0];
     variation_movenumber_export(v, 1, 27+3, num, MOVENUM_LEN);
     assert(!strcmp("16.", num));
-    notation_free(&n);
+    game_free(&g);
 }
 
 void
 test_variation_delete_next_moves()
 {
-    Notation n;
+    Game g;
     FILE *f, *of;
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/delete_next_moves_before.pgn", "r");
     of = fopen("tmp_test_07.pgn", "w");
-    pgn_read_file(f, &n, 0);
-    notation_move_index_set(&n, 5);
-    variation_delete_next_moves(n.line_main);
-    pgn_write_file(of, &n);
+    pgn_read_file(f, &g, 0);
+    game_move_index_set(&g, 5);
+    variation_delete_next_moves(g.line_main);
+    pgn_write_file(of, &g);
     fclose(f);
     fclose(of);
-    notation_free(&n);
+    game_free(&g);
 }
 
 void
-test_notation_tag_functions()
+test_game_tag_functions()
 {
     Tag tag;
-    Notation n;
-    notation_init(&n, NULL); //notation_tag_init is called here
-    notation_tag_set(&n, "White", "Morphy, Paul");
-    tag = *notation_tag_get(&n, "White");
+    Game g;
+    game_init(&g, NULL); //game_tag_init is called here
+    game_tag_set(&g, "White", "Morphy, Paul");
+    tag = *game_tag_get(&g, "White");
     assert(!strcmp(tag.key, "White") && !strcmp(tag.value, "Morphy, Paul"));
     snprintf(tag.key, TAG_LEN, "NewTag");
     snprintf(tag.value, TAG_LEN, "Value");
-    notation_tag_add(&n, &tag);
-    tag = *notation_tag_get(&n, "NewTag");
+    game_tag_add(&g, &tag);
+    tag = *game_tag_get(&g, "NewTag");
     assert(!strcmp(tag.key, "NewTag") && !strcmp(tag.value, "Value"));
-    notation_tag_remove(&n, "NewTag");
-    assert(notation_tag_get(&n, "NewTag") == NULL && n.tag_count == 7);
-    notation_free(&n);
+    game_tag_remove(&g, "NewTag");
+    assert(game_tag_get(&g, "NewTag") == NULL && g.tag_count == 7);
+    game_free(&g);
 }
 
 void
-test_notation_functions()
+test_game_functions()
 {
-    Notation n;
+    Game g;
     char *comment = (char*)malloc(sizeof(char) * (strlen("Test") + 1));
     snprintf(comment, strlen("Test") + 1, "Test");
-    notation_init(&n, NULL);
-    notation_move_add(&n, e2, e4, Empty, Valid);
-    assert(notation_move_index_get(&n) == 1);
-    notation_move_get(&n)->comment = comment;
-    notation_move_add(&n, e7, e5, Empty, Valid);
-    notation_move_add(&n, g1, f3, Empty, Valid);
-    notation_move_index_set(&n, 1);
-    notation_variation_add(&n, c7, c5, Empty, Valid);
-    notation_move_add(&n, g1, f3, Empty, Valid);
-    assert(!notation_line_is_main(&n));
-    assert(notation_move_is_last(&n));
-    notation_variation_promote(&n);
-    notation_move_index_set(&n, 1);
-    assert(notation_move_is_present(&n, c7, c5, Empty));
-    assert(notation_move_is_present(&n, e7, e5, Empty));
-    n.line_current = notation_move_get(&n)->variation_list[0];
-    notation_variation_delete(&n);
-    notation_free(&n);
+    game_init(&g, NULL);
+    game_move_add(&g, e2, e4, Empty, Valid);
+    assert(game_move_index_get(&g) == 1);
+    game_move_get(&g)->comment = comment;
+    game_move_add(&g, e7, e5, Empty, Valid);
+    game_move_add(&g, g1, f3, Empty, Valid);
+    game_move_index_set(&g, 1);
+    game_variation_add(&g, c7, c5, Empty, Valid);
+    game_move_add(&g, g1, f3, Empty, Valid);
+    assert(!game_line_is_main(&g));
+    assert(game_move_is_last(&g));
+    game_variation_promote(&g);
+    game_move_index_set(&g, 1);
+    assert(game_move_is_present(&g, c7, c5, Empty));
+    assert(game_move_is_present(&g, e7, e5, Empty));
+    g.line_current = game_move_get(&g)->variation_list[0];
+    game_variation_delete(&g);
+    game_free(&g);
 }
 
 void
-test_notation_board_find()
+test_game_board_find()
 {
     Board b;
-    Notation n;
-    notation_init(&n, NULL);
+    Game g;
+    game_init(&g, NULL);
     FILE *f = fopen("files/complex.pgn", "r");
-    pgn_read_file(f, &n, 0);
+    pgn_read_file(f, &g, 0);
     fclose(f);
     board_fen_import(&b, "1r1qr1k1/1p3pbp/B2p1np1/2pP4/P3nB2/1QN1PN1b/1P3PP1/R2R2K1 w - - 0 16");
-    notation_board_find(&n, &b);
-    assert(!strcmp(notation_move_get(&n)->san, "Bxh3"));
-    notation_free(&n);
+    game_board_find(&g, &b);
+    assert(!strcmp(game_move_get(&g)->san, "Bxh3"));
+    game_free(&g);
 }
 
 void
 test_pgn_read_file()
 {
-    Notation n;
+    Game g;
     FILE *f;
     char fen[FEN_LEN];
     int same;
     int ok;
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/piece_hint.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
-    notation_move_index_set(&n, 46);
-    board_fen_export(&notation_move_get(&n)->board, fen);
+    ok = pgn_read_file(f, &g, 0);
+    game_move_index_set(&g, 46);
+    board_fen_export(&game_move_get(&g)->board, fen);
     same = !strcmp(fen, "r2q2k1/pp4pb/2pB1p1p/3n3P/P5P1/1B1P2Q1/1P2rP2/4R1K1 w - - 0 24");
     fclose(f);
     assert(ok && same);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/complex.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     fclose(f);
-    board_fen_export(&(n.line_main->move_list[n.line_main->move_count-1].board), fen);
+    board_fen_export(&(g.line_main->move_list[g.line_main->move_count-1].board), fen);
     same = !strcmp(fen, "8/7p/4Pkp1/p1b2p2/1p6/1B2P1PP/4KP2/8 w - - 0 51");
     assert(same && ok);
-    board_fen_export(&(n.line_main->move_list[0].board), fen);
+    board_fen_export(&(g.line_main->move_list[0].board), fen);
     same = !strcmp(fen, FEN_DEFAULT);
     assert(same && ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/FEN.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     fclose(f);
-    board_fen_export(&(n.line_main->move_list[n.line_main->move_count-1].board), fen);
+    board_fen_export(&(g.line_main->move_list[g.line_main->move_count-1].board), fen);
     same = !strcmp(fen, "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PP1/RNBQKB1R w KQkq - 2 3");
     assert(same && ok);
-    board_fen_export(&(n.line_main->move_list[0].board), fen);
+    board_fen_export(&(g.line_main->move_list[0].board), fen);
     same = !strcmp(fen, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPP1/RNBQKBNR w KQkq - 0 1");
     assert(same && ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/anglebracket.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     fclose(f);
-    notation_free(&n);
+    game_free(&g);
     assert(ok);
 
     //Empty file is valid pgn
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/empty.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     fclose(f);
-    notation_free(&n);
+    game_free(&g);
     assert(ok);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/variation.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/result_in_comment.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/large.pgn", "r");
-    ok = pgn_read_file(f, &n, 2); //pgn_read_next is called here
+    ok = pgn_read_file(f, &g, 2); //pgn_read_next is called here
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/subvariation_at_end.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/percent.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/very_complex.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     assert(ok);
-    assert(n.line_main->move_count == 68);
-    notation_free(&n);
+    assert(g.line_main->move_count == 68);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/result_overwrite.pgn", "r");
-    ok = pgn_read_file(f, &n, 0);
+    ok = pgn_read_file(f, &g, 0);
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/search_board.pgn", "r");
-    ok = pgn_read_file(f, &n, 1);
+    ok = pgn_read_file(f, &g, 1);
     fclose(f);
     assert(ok);
-    notation_free(&n);
+    game_free(&g);
 }
 
 void
 test_pgn_write_file()
 {
-    Notation n;
-    Notation *clone;
-    notation_init(&n, NULL);
+    Game g;
+    Game *clone;
+    game_init(&g, NULL);
     FILE * f = fopen("files/complex.pgn", "r");
     FILE * of = fopen("tmp_test_01.pgn", "w");
-    pgn_read_file(f, &n, 0);
-    pgn_write_file(of, &n);
+    pgn_read_file(f, &g, 0);
+    pgn_write_file(of, &g);
     fclose(f);
     fclose(of);
-    n.line_current = n.line_current->move_list[27].variation_list[0];
-    n.line_current = n.line_current->move_list[3].variation_list[0];
-    clone = notation_clone(&n);
-    notation_free(&n);
+    g.line_current = g.line_current->move_list[27].variation_list[0];
+    g.line_current = g.line_current->move_list[3].variation_list[0];
+    clone = game_clone(&g);
+    game_free(&g);
     of = fopen("tmp_test_04.pgn", "w");
     pgn_write_file(of, clone);
     fclose(of);
-    notation_variation_delete(clone);
+    game_variation_delete(clone);
     of = fopen("tmp_test_05.pgn", "w");
     pgn_write_file(of, clone);
     fclose(of);
-    notation_free(clone);
+    game_free(clone);
     free(clone);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/equal_variations.pgn", "r");
     of = fopen("tmp_test_02.pgn", "w");
-    pgn_read_file(f, &n, 0);
-    pgn_write_file(of, &n);
+    pgn_read_file(f, &g, 0);
+    pgn_write_file(of, &g);
     fclose(f);
     fclose(of);
-    notation_free(&n);
+    game_free(&g);
 
-    notation_init(&n, NULL);
+    game_init(&g, NULL);
     f = fopen("files/escaped_doublequote.pgn", "r");
     of = fopen("tmp_test_06.pgn", "w");
-    pgn_read_file(f, &n, 0);
-    pgn_write_file(of, &n);
+    pgn_read_file(f, &g, 0);
+    pgn_write_file(of, &g);
     fclose(f);
     fclose(of);
-    notation_free(&n);
+    game_free(&g);
 }
 
 void
 test_pgn_replace_game()
 {
-    Notation n;
-    notation_init(&n, NULL);
+    Game g;
+    game_init(&g, NULL);
     FILE *f = fopen("files/equal_variations.pgn", "r");
-    pgn_read_file(f, &n, 0);
+    pgn_read_file(f, &g, 0);
     fclose(f);
-    pgn_replace_game("tmp_test_03.pgn", &n, 1);
-    notation_free(&n);
+    pgn_replace_game("tmp_test_03.pgn", &g, 1);
+    game_free(&g);
 }
 
 void
@@ -1070,35 +1070,35 @@ test_uci_line_parse()
 void
 test_readme_example_01()
 {
-    Notation n;
-    notation_init(&n, NULL); //NULL means default starting position
-    notation_tag_set(&n, "White", "New game");
+    Game g;
+    game_init(&g, NULL); //NULL means default starting position
+    game_tag_set(&g, "White", "New game");
 
     const char *san = "e4";
     Status status;
     Square src, dst;
     Piece prom_piece;
-    status = notation_move_san_status(&n, san, &src, &dst, &prom_piece);
+    status = game_move_san_status(&g, san, &src, &dst, &prom_piece);
     if(status != Invalid){
-        notation_move_add(&n, src, dst, prom_piece, status);
+        game_move_add(&g, src, dst, prom_piece, status);
         FILE *f = fopen("new_game.pgn", "w");
-        pgn_write_file(f, &n);
+        pgn_write_file(f, &g);
         fclose(f);
     }else{
         printf("Invalid move\n");
     }
-    notation_free(&n);
+    game_free(&g);
 }
 
 void
 test_readme_example_02()
 {
-    Notation n;
-    notation_init(&n, NULL);
+    Game g;
+    game_init(&g, NULL);
     FILE *f = fopen("files/game_list.pgn", "r");
-    pgn_read_file(f, &n, 1); //read second game to notation
+    pgn_read_file(f, &g, 1); //read second game to game
     fclose(f);
-    notation_free(&n);
+    game_free(&g);
 }
 
 void
@@ -1270,10 +1270,10 @@ int main(int argc, char *argv[]){
         test_variation_movenumber_export();
         test_variation_delete_next_moves();
 
-        //NOTATION FUNCTIONS
-        test_notation_tag_functions();
-        test_notation_functions();
-        test_notation_board_find();
+        //GAME FUNCTIONS
+        test_game_tag_functions();
+        test_game_functions();
+        test_game_board_find();
 
         //PGN FUNCTIONS
         test_pgn_read_file();

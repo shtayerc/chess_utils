@@ -16,33 +16,33 @@ Chess library for C/C++
 ```
 
 ```c
-Notation n;
-notation_init(&n, NULL); //NULL means default starting position
-notation_tag_set(&n, "White", "New game");
+Game g;
+game_init(&g, NULL); //NULL means default starting position
+game_tag_set(&g, "White", "New game");
 
 const char *san = "e4";
 Status status;
 Square src, dst;
 Piece prom_piece;
-status = notation_move_san_status(&n, san, &src, &dst, &prom_piece);
+status = game_move_san_status(&g, san, &src, &dst, &prom_piece);
 if(status != Invalid){
-    notation_move_add(&n, src, dst, prom_piece, status);
+    game_move_add(&g, src, dst, prom_piece, status);
     FILE *f = fopen("new_game.pgn", "w");
-    pgn_write_file(f, &n);
+    pgn_write_file(f, &g);
     fclose(f);
 }else{
     printf("Invalid move\n");
 }
-notation_free(&n);
+game_free(&g);
 ```
 
 ```c
-Notation n;
-notation_init(&n, NULL);
-FILE *f = fopen("games.pgn", "r");
-pgn_read_file(f, &n, 1); //read second game to notation
+Game g;
+game_init(&g, NULL);
+FILE *f = fopen("files/game_list.pgn", "r");
+pgn_read_file(f, &g, 1); //read second game to game
 fclose(f);
-notation_free(&n);
+game_free(&g);
 ```
 
 ### RUN TESTS
