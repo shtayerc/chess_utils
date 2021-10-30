@@ -58,6 +58,14 @@ test_trimmove()
     snprintf(san, 10, "g8++");
     trimmove(san);
     assert(!strcmp(san, "g8"));
+
+    snprintf(san, 10, "1.e4");
+    trimmove(san);
+    assert(!strcmp(san, "e4"));
+
+    snprintf(san, 10, "11.");
+    trimmove(san);
+    assert(san[0] == '\0');
 }
 
 void
@@ -946,6 +954,13 @@ test_pgn_read_file()
     fclose(f);
     assert(ok);
     game_free(&g);
+
+    game_init(&g, NULL);
+    f = fopen("files/number_nospace.pgn", "r");
+    ok = pgn_read_file(f, &g, 0);
+    fclose(f);
+    assert(ok && g.line_main->move_count == 85);
+    game_free(&g);
 }
 
 void
@@ -1196,6 +1211,16 @@ test_game_list_functions()
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
+
+    board_fen_import(&b, "3r2r1/1pknQ2R/p4RP1/4p3/4q3/1P6/7P/7K w - - 12 43");
+    f = fopen("files/number_nospace.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    assert(new_gl.count == 1);
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
