@@ -3007,8 +3007,8 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
     Variation *v, *new_v;
     Move *m;
     Game g;
-    Square pawn_start[] = {a2, b2, c2, d2, e2, f2, g2, h2, a7, b7, c7, d7, e7,
-        f7, g7, h7};
+    Square wp_start[] = {a2, b2, c2, d2, e2, f2, g2, h2};
+    Square bp_start[] = {a7, b7, c7, d7, e7, f7, g7, h7};
 
     board_fen_import(&b_start, FEN_DEFAULT);
     game_list_init(new_gl);
@@ -3109,18 +3109,15 @@ game_list_search_board(GameList *gl, GameList *new_gl, FILE *f, Board *b)
                                 game_list_add(new_gl, &gl->list[i]);
                                 skip = 1;
                             }
-                            for(j = 0; j < 16 && !skip; j++){
-                                if(b->position[pawn_start[j]] == BlackPawn ||
-                                        b->position[pawn_start[j]] == WhitePawn){
-                                    if(b->position[pawn_start[j]]
-                                            != b_tmp.position[pawn_start[j]]){
-                                        if(v == g.line_main){
-                                            skip = 1;
-                                        }else{
-                                            skip_var = 1;
-                                        }
-                                        break;
+                            for(j = 0; j < 8 && !skip; j++){
+                                if((b->position[bp_start[j]] == BlackPawn && b->position[bp_start[j]] != b_tmp.position[bp_start[j]])
+                                        || (b->position[wp_start[j]] == WhitePawn && b->position[wp_start[j]] != b_tmp.position[wp_start[j]])){
+                                    if(v == g.line_main){
+                                        skip = 1;
+                                    }else{
+                                        skip_var = 1;
                                     }
+                                    break;
                                 }
                             }
                             variation_move_add(v, src, dst, prom_piece, &b_tmp,
