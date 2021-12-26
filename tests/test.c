@@ -787,6 +787,79 @@ test_variation_delete_next_moves()
     game_free(&g);
 }
 
+int
+test_variation_sequence_list_equal(VariationSequence *vs_list, int count)
+{
+    int i, j;
+    for(i = 0; i < count; i++){
+        for(j = i + 1; j < count; j++){
+            if(vs_is_equal(&vs_list[i], &vs_list[j]))
+                return 1;
+        }
+    }
+    return 0;
+}
+
+void
+test_variation_sequence_functions()
+{
+    VariationSequence vs;
+    vs_init(&vs);
+    vs_add(&vs, 1, 1, 1);
+    vs_add(&vs, 2, 2, 1);
+    assert(!vs_can_generate_next(&vs));
+    vs_free(&vs);
+
+    Game g;
+    FILE *f;
+    int i, equal;
+
+    VariationSequence *vs_list = (VariationSequence*)malloc(sizeof(VariationSequence));
+    int count = 1;
+    vs_init(&vs_list[0]);
+    game_init(&g, NULL);
+    f = fopen("files/equal_variations.pgn", "r");
+    pgn_read_file(f, &g, 0);
+    fclose(f);
+    vs_generate_first(&vs_list[0], g.line_main);
+    while(vs_can_generate_next(&vs_list[count-1])){
+        count++;
+        vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
+        vs_init(&vs_list[count-1]);
+        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2]);
+    }
+    equal = test_variation_sequence_list_equal(vs_list, count);
+    assert(count == 4 && !equal);
+    for(i = 0; i < count; i++){
+        vs_free(&vs_list[i]);
+    }
+    free(vs_list);
+    game_free(&g);
+
+    vs_list = (VariationSequence*)malloc(sizeof(VariationSequence));
+    count = 1;
+    vs_init(&vs_list[0]);
+    game_init(&g, NULL);
+    f = fopen("files/variation_sequence.pgn", "r");
+    pgn_read_file(f, &g, 0);
+    fclose(f);
+    vs_generate_first(&vs_list[0], g.line_main);
+    vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
+    while(vs_can_generate_next(&vs_list[count-1])){
+        count++;
+        vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
+        vs_init(&vs_list[count-1]);
+        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2]);
+    }
+    equal = test_variation_sequence_list_equal(vs_list, count);
+    assert(count == 9 && !equal);
+    for(i = 0; i < count; i++){
+        vs_free(&vs_list[i]);
+    }
+    free(vs_list);
+    game_free(&g);
+}
+
 void
 test_game_tag_functions()
 {
@@ -1300,6 +1373,9 @@ int main(int argc, char *argv[]){
         test_variation_functions();
         test_variation_movenumber_export();
         test_variation_delete_next_moves();
+
+        //VARIATION SEQUENCE FUNCTIONS
+        test_variation_sequence_functions();
 
         //GAME FUNCTIONS
         test_game_tag_functions();
