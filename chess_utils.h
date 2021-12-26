@@ -1,5 +1,5 @@
 /*
-chess_utils v0.7.1
+chess_utils v0.7.2
 
 Copyright (c) 2021 David Murko
 
@@ -143,6 +143,18 @@ typedef struct {
     GameRow * list;
     int count;
 } GameList;
+
+
+typedef struct {
+    int index;
+    int count;
+    int searched;
+} VariationBranch;
+
+typedef struct {
+    VariationBranch *list;
+    int count;
+} VariationSequence;
 
 //
 //GLOBAL VARIABLES
@@ -401,6 +413,42 @@ Variation *variation_clone(Variation *v, Variation *prev);
 //returns move index of given board found in given variation or sub variations.
 //found variation from which index was returned
 int variation_board_find(Variation *v, Board *b, Variation **found);
+
+//
+// VARIATION SEQUENCE FUNCTIONS
+//
+
+//initialize given VariationSequence
+void vs_init(VariationSequence *vs);
+
+//free give VariationSequence and each VariationBrach
+void vs_free(VariationSequence *vs);
+
+//add new VariationBranch at the end of VariationSequence list
+void vs_add(VariationSequence *vs, int index, int count, int searched);
+
+//remove last VariationBranch and resize VariationSequence
+void vs_remove_last(VariationSequence *vs);
+
+//returns 1 is both given VariationSequences are equal
+int vs_is_equal(VariationSequence *vs1, VariationSequence *vs2);
+
+//fill given VariationSequence with main line of given Variation
+void vs_generate_first(VariationSequence *vs, Variation *v);
+
+//returns 1 if next VariationSequence can be generated
+int vs_can_generate_next(VariationSequence *vs);
+
+//fill given VariationSequence with next branch from given Variation. Last
+//VariationBranch from prev VariationSequence is increased and its sub
+//variations are added (if there are any). This function is meant to be used
+//after vs_generate_first and before that one should check if it can be
+//generated with function vs_can_generate_next.
+void vs_generate_next(VariationSequence *vs, Variation *v,
+        VariationSequence *prev);
+
+//print VariatonSequence list of VariationBranches to standard output
+void vs_print(VariationSequence *vs);
 
 //
 //GAME FUNCTIONS
@@ -2151,6 +2199,127 @@ variation_board_find(Variation *v, Board *b, Variation **found)
         }
     }
     return index;
+}
+
+void
+vs_init(VariationSequence *vs)
+{
+    vs->list = NULL;
+    vs->count = 0;
+}
+
+void
+vs_free(VariationSequence *vs)
+{
+    if(vs->list != NULL)
+        free(vs->list);
+}
+
+void
+vs_add(VariationSequence *vs, int index, int count, int searched)
+{
+    vs->count++;
+    vs->list = (VariationBranch*)realloc(vs->list, sizeof(VariationBranch) * vs->count);
+    vs->list[vs->count-1].index = index;
+    vs->list[vs->count-1].count = count;
+    vs->list[vs->count-1].searched = searched;
+}
+
+void
+vs_remove_last(VariationSequence *vs)
+{
+    if(vs->count == 0)
+        return;
+    vs->count--;
+    vs->list = (VariationBranch*)realloc(vs->list, sizeof(VariationBranch) * vs->count);
+}
+
+int
+vs_is_equal(VariationSequence *vs1, VariationSequence *vs2)
+{
+    if(vs1->count != vs2->count)
+        return 0;
+
+    int i;
+    for(i = 0; i < vs1->count; i++){
+        if(vs1->list[i].index != vs2->list[i].index || vs1->list[i].count != vs2->list[i].count)
+            return 0;
+    }
+    return 1;
+}
+
+void
+vs_generate_first(VariationSequence *vs, Variation *v)
+{
+    int i, num;
+    Move *m;
+    for(i = v->move_current; i < v->move_count; i++){
+        m = &v->move_list[i];
+        if(m->variation_count > 0){
+            num = (v->move_current + 1 == v->move_count) + m->variation_count;
+            vs_add(vs, 0, num, 0);
+        }
+    }
+}
+
+void
+vs_generate_next(VariationSequence *vs, Variation *v, VariationSequence *prev)
+{
+    int i, j, l;
+    Move *m;
+    Variation *tmp = v;
+
+    //copy prev
+    for(i = 0; i < prev->count; i++){
+        vs_add(vs, prev->list[i].index, prev->list[i].count, prev->list[i].searched);
+    }
+    for(j = prev->count - 1; j > 0 && prev->list[j].index == prev->list[j].count
+            && prev->list[j].searched; j--){
+        vs_remove_last(vs);
+    }
+    vs->list[j].index++;
+    vs->list[j].searched = 0;
+
+    l = 0;
+    for(i = tmp->move_current; i < tmp->move_count; i++){
+        m = &tmp->move_list[i];
+        if(m->variation_count > 0){
+            if(l < vs->count){
+                if(vs->list[l].index > 0){ //if subvariation
+                    tmp = m->variation_list[vs->list[l].index-1];
+                    i = 0;
+
+                    if(l == j){
+                        vs->list[j].searched = 1;
+                        vs_generate_first(vs, tmp);
+                    }
+                }
+            }
+            l++;
+        }
+    }
+    vs->list[vs->count-1].searched = 1;
+}
+
+int
+vs_can_generate_next(VariationSequence *vs)
+{
+    int i;
+    for(i = 0; i < vs->count; i++){
+        if(vs->list[i].index != vs->list[i].count || !vs->list[i].searched)
+            return 1;
+    }
+    return 0;
+}
+
+void
+vs_print(VariationSequence *vs)
+{
+    int i;
+    for(i = 0; i < vs->count; i++){
+        printf("(%d/%d %d) ", vs->list[i].index, vs->list[i].count, vs->list[i].searched);
+    }
+    printf("\n");
 }
 
 void
