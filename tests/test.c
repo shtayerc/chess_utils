@@ -1145,6 +1145,7 @@ test_game_list_functions()
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
     assert(new_gl.count == 2);
+    game_list_free(&new_gl);
 
     board_fen_import(&b, "8/4k1P1/p2n3P/1p6/6Nr/8/1KP2R2/8 b - - 0 50");
     fseek(f, 0, SEEK_SET);
