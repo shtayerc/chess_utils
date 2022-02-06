@@ -821,12 +821,27 @@ test_variation_sequence_functions()
     f = fopen("files/equal_variations.pgn", "r");
     pgn_read_file(f, &g, 0);
     fclose(f);
-    vs_generate_first(&vs_list[0], g.line_main);
+    vs_generate_first(&vs_list[0], g.line_main, NoColor);
     while(vs_can_generate_next(&vs_list[count-1])){
         count++;
         vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
         vs_init(&vs_list[count-1]);
-        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2]);
+        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], NoColor);
+    }
+    equal = test_variation_sequence_list_equal(vs_list, count);
+    assert(count == 4 && !equal);
+    for(i = 0; i < count; i++){
+        vs_free(&vs_list[i]);
+    }
+
+    count = 1;
+    vs_init(&vs_list[0]);
+    vs_generate_first(&vs_list[0], g.line_main, White);
+    while(vs_can_generate_next(&vs_list[count-1])){
+        count++;
+        vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
+        vs_init(&vs_list[count-1]);
+        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], White);
     }
     equal = test_variation_sequence_list_equal(vs_list, count);
     assert(count == 4 && !equal);
@@ -843,19 +858,37 @@ test_variation_sequence_functions()
     f = fopen("files/variation_sequence.pgn", "r");
     pgn_read_file(f, &g, 0);
     fclose(f);
-    vs_generate_first(&vs_list[0], g.line_main);
+
+    vs_generate_first(&vs_list[0], g.line_main, NoColor);
     vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
     while(vs_can_generate_next(&vs_list[count-1])){
         count++;
         vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
         vs_init(&vs_list[count-1]);
-        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2]);
+        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], NoColor);
     }
     equal = test_variation_sequence_list_equal(vs_list, count);
     assert(count == 9 && !equal);
     for(i = 0; i < count; i++){
         vs_free(&vs_list[i]);
     }
+
+    count = 1;
+    vs_init(&vs_list[0]);
+    vs_generate_first(&vs_list[0], g.line_main, Black);
+    vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
+    while(vs_can_generate_next(&vs_list[count-1])){
+        count++;
+        vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
+        vs_init(&vs_list[count-1]);
+        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], Black);
+    }
+    equal = test_variation_sequence_list_equal(vs_list, count);
+    assert(count == 6 && !equal);
+    for(i = 0; i < count; i++){
+        vs_free(&vs_list[i]);
+    }
+
     free(vs_list);
     game_free(&g);
 }
