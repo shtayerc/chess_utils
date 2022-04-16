@@ -1122,7 +1122,7 @@ test_pgn_replace_game()
     FILE *f = fopen("files/equal_variations.pgn", "r");
     pgn_read_file(f, &g, 0);
     fclose(f);
-    pgn_replace_game("tmp_test_03.pgn", &g, 1);
+    assert(pgn_replace_game("tmp_test_03.pgn", &g, 1));
     game_free(&g);
 }
 
