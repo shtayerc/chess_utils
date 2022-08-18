@@ -493,6 +493,9 @@ test_board_move_is_capture()
     board_fen_import(&b, "rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
     assert(board_move_is_capture(&b, e4, d5));
     assert(!board_move_is_capture(&b, e4, e5));
+
+    board_fen_import(&b, "rnbqkbnr/ppp2ppp/4p3/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3");
+    assert(board_move_is_capture(&b, e5, d6));
 }
 
 void
