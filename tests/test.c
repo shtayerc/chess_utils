@@ -120,6 +120,7 @@ test_str_is_move()
     assert(!str_is_move(""));
     assert(str_is_move("e4"));
     assert(str_is_move("Nf3+"));
+    assert(!str_is_move("--"));
 }
 
 void
