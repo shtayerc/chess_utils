@@ -943,6 +943,27 @@ test_game_functions()
 }
 
 void
+test_variation_insert()
+{
+    Game g;
+    game_init(&g, NULL);
+    FILE *f = fopen("files/variation_insert_before.pgn", "r");
+    pgn_read_file(f, &g, 0);
+    fclose(f);
+    game_move_index_set(&g, 8);
+    g.line_current = game_move_get(&g)->variation_list[0];
+    game_variation_insert(&g);
+    f = fopen("tmp_test_08.pgn", "w");
+    g.line_current = g.line_main;
+    game_move_index_set(&g, 12);
+    g.line_current = game_move_get(&g)->variation_list[0];
+    game_variation_insert(&g);
+    pgn_write_file(f, &g);
+    fclose(f);
+    game_free(&g);
+}
+
+void
 test_game_board_find()
 {
     Board b;
@@ -1410,6 +1431,7 @@ int main(int argc, char *argv[]){
         test_variation_functions();
         test_variation_movenumber_export();
         test_variation_delete_next_moves();
+        test_variation_insert();
 
         //VARIATION SEQUENCE FUNCTIONS
         test_variation_sequence_functions();

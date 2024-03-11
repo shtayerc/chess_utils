@@ -12,12 +12,13 @@ TESTFILE_04=tmp_test_04.pgn
 TESTFILE_05=tmp_test_05.pgn
 TESTFILE_06=tmp_test_06.pgn
 TESTFILE_07=tmp_test_07.pgn
+TESTFILE_08=tmp_test_08.pgn
 
 all:
 	$(CC) $(FLAGS) -std=c99 $(FILES) -o $(EXE)
 
 clean:
-	rm -f $(EXE) $(EXAMPLEFILE) $(TESTFILE_01) $(TESTFILE_02) $(TESTFILE_03) $(TESTFILE_04) $(TESTFILE_05) $(TESTFILE_06) $(TESTFILE_07)
+	rm -f $(EXE) $(EXAMPLEFILE) tmp_test_*
 
 cpp:
 	$(CPP) $(FLAGS) $(FILES) -o $(EXE)
@@ -34,6 +35,7 @@ check:
 	diff $(TESTFILE_05) files/complex_less.pgn
 	diff $(TESTFILE_06) files/escaped_doublequote.pgn
 	diff $(TESTFILE_07) files/delete_next_moves_after.pgn
+	diff $(TESTFILE_08) files/variation_insert_after.pgn
 
 valgrind: VALGRIND = valgrind -q --leak-check=full --track-origins=yes
 valgrind: check
