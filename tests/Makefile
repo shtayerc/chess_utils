@@ -1,7 +1,7 @@
 CC=cc
 CPP=g++
 FILES=test.c
-FLAGS=-g -Wextra -Wall -Wformat-security -Wno-format-truncation
+FLAGS=-g -Wextra -Wall -Wformat-security -Wno-format-truncation #-Wconstant-logical-operand -Wconditional-uninitialized
 EXE=test
 VALGRIND=
 EXAMPLEFILE=new_game.pgn

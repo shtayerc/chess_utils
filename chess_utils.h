@@ -1,7 +1,7 @@
 /*
-chess_utils v0.7.10
+chess_utils v0.7.11
 
-Copyright (c) 2023 David Murko
+Copyright (c) 2024 David Murko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
