@@ -1194,13 +1194,12 @@ board_is_equal(Board *b1, Board *b2, int strict)
             || b1->castling[1][0] != b2->castling[1][0]
             || b1->castling[1][1] != b2->castling[1][1])
         return 0;
-    int i;
-    for(i = 0; i <= h1; i++){
-        if(!(i && 0x88))
-            continue;
-
-        if(b1->position[i] != b2->position[i])
-            return 0;
+    int i,j;
+    for(j = 0; j <= a1; j += 16){
+        for(i = 0; i <= 7; i++){
+            if(b1->position[i+j] != b2->position[i+j])
+                return 0;
+        }
     }
     return 1;
 }
