@@ -1547,7 +1547,7 @@ board_move_san_status(Board *b, const char *san, Square *src, Square *dst,
     char san_str[SAN_LEN];
     snprintf(san_str, SAN_LEN, "%s", san);
     trimmove(san_str);
-    Piece piece;
+    Piece piece = Empty;
     Status status = Invalid;
     *src = none;
     *prom_piece = Empty;
@@ -2578,7 +2578,8 @@ game_variation_promote(Game *g)
     Variation *tmp_v;
     Variation **tmp_list;
     int tmp_count;
-    int i, j, l;
+    int i, j;
+    int l = -1;
 
     //find move and variation index of promoted variation
     for(i = 0; i < parent->move_count; i++){
