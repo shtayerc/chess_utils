@@ -3,8 +3,7 @@
 #include "../chess_utils.h"
 
 void
-test_strtok_r()
-{
+test_strtok_r() {
     char str[100];
     char *tok, *saveptr;
     snprintf(str, 100, "Test strtok_r string");
@@ -22,8 +21,7 @@ test_strtok_r()
 }
 
 void
-test_concate()
-{
+test_concate() {
     char str[100];
     snprintf(str, 100, "Begining");
     concate(str, 100, " middle");
@@ -32,8 +30,7 @@ test_concate()
 }
 
 void
-test_trimmove()
-{
+test_trimmove() {
     char san[10];
     snprintf(san, 10, "Nxf3+");
     trimmove(san);
@@ -69,8 +66,7 @@ test_trimmove()
 }
 
 void
-test_trimendl()
-{
+test_trimendl() {
     char str[10];
     snprintf(str, 10, "Line\r\n");
     trimendl(str);
@@ -78,17 +74,16 @@ test_trimendl()
 }
 
 void
-test_trimcomment()
-{
+test_trimcomment() {
     char comment[COMMENT_LEN];
-    snprintf(comment, COMMENT_LEN, " {Dominguez Perez,L (2750)-Leko,P (2674) IMSA World Masters Blitz 2019 (6.2) 1/2-1/2})");
+    snprintf(comment, COMMENT_LEN,
+             " {Dominguez Perez,L (2750)-Leko,P (2674) IMSA World Masters Blitz 2019 (6.2) 1/2-1/2})");
     trimcomment(comment);
     assert(!strcmp(comment, "Dominguez Perez,L (2750)-Leko,P (2674) IMSA World Masters Blitz 2019 (6.2) 1/2-1/2"));
 }
 
 void
-test_charremove()
-{
+test_charremove() {
     char str[10];
     snprintf(str, 10, "Trest");
     charremove(str, 1);
@@ -96,26 +91,22 @@ test_charremove()
 }
 
 void
-test_charcount()
-{
+test_charcount() {
     assert(charcount("This is test string", 'i') == 3);
 }
 
 void
-test_charcount_before()
-{
+test_charcount_before() {
     assert(charcount_before("Text before (text after", 'e', '(') == 3);
 }
 
 void
-test_charcount_after()
-{
+test_charcount_after() {
     assert(charcount_after("Text before (text after", 'e', '(') == 2);
 }
 
 void
-test_str_is_move()
-{
+test_str_is_move() {
     assert(!str_is_move(")"));
     assert(!str_is_move(""));
     assert(str_is_move("e4"));
@@ -124,15 +115,13 @@ test_str_is_move()
 }
 
 void
-test_str_is_square()
-{
+test_str_is_square() {
     assert(str_is_square("a4"));
     assert(!str_is_square("a0"));
 }
 
 void
-test_str_is_fen()
-{
+test_str_is_fen() {
     assert(!str_is_fen(""));
     assert(str_is_fen(FEN_DEFAULT));
     assert(str_is_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -"));
@@ -143,22 +132,20 @@ test_str_is_fen()
 }
 
 void
-test_tag_extract()
-{
+test_tag_extract() {
     Tag tag;
     int ok;
 
     ok = tag_extract("[White \"Morphy, Paul\"]", &tag);
     assert(ok && !strcmp(tag.key, "White") && !strcmp(tag.value, "Morphy, Paul"));
 
-    char s[] = {-12,12,127,32,'[','E','v','e','n','t',' ','"','T','"',']'};
+    char s[] = {-12, 12, 127, 32, '[', 'E', 'v', 'e', 'n', 't', ' ', '"', 'T', '"', ']'};
     ok = tag_extract(s, &tag);
     assert(ok && !strcmp(tag.key, "Event") && !strcmp(tag.value, "T"));
 }
 
 void
-test_tag_escape_value()
-{
+test_tag_escape_value() {
     char str[100];
     tag_escape_value("Quote \"", str, 100);
     assert(!strcmp(str, "Quote \\\""));
@@ -168,8 +155,7 @@ test_tag_escape_value()
 }
 
 void
-test_filerank2square()
-{
+test_filerank2square() {
     Square sq;
     sq = filerank2square(File_a, Rank_1);
     assert(sq == a1);
@@ -179,71 +165,61 @@ test_filerank2square()
 }
 
 void
-test_square2rank()
-{
+test_square2rank() {
     assert(square2rank(a8) == Rank_8);
     assert(square2rank(b1) == Rank_1);
 }
 
 void
-test_square2file()
-{
+test_square2file() {
     assert(square2file(a8) == File_a);
     assert(square2file(h7) == File_h);
 }
 
 void
-test_char2rank()
-{
+test_char2rank() {
     assert(char2rank('8') == Rank_8);
     assert(char2rank('1') == Rank_1);
 }
 
 void
-test_char2file()
-{
+test_char2file() {
     assert(char2file('a') == 0);
     assert(char2file('h') == 7);
 }
 
 void
-test_char2piece()
-{
+test_char2piece() {
     assert(char2piece('p') == BlackPawn);
     assert(char2piece('N') == WhiteKnight);
 }
 
 void
-test_rank2char()
-{
+test_rank2char() {
     assert(rank2char(Rank_8) == '8');
     assert(rank2char(Rank_1) == '1');
 }
 
 void
-test_file2char()
-{
+test_file2char() {
     assert(file2char(File_a) == 'a');
     assert(file2char(File_h) == 'h');
 }
 
 void
-test_piece2char()
-{
+test_piece2char() {
     assert(piece2char(WhitePawn) == 'P');
     assert(piece2char(BlackKing) == 'k');
 }
 
 void
-test_move_offset_find()
-{
+test_move_offset_find() {
     assert(move_offset_find(h1, h4, OffsetRook) == -16);
     assert(move_offset_find(f1, c4, OffsetBishop) == -17);
 }
 
 void
-test_move_uci_export()
-{
+test_move_uci_export() {
     int UCI_LEN = 6;
     char uci[UCI_LEN];
     move_uci_export(e2, e4, Empty, uci, UCI_LEN);
@@ -254,8 +230,7 @@ test_move_uci_export()
 }
 
 void
-test_board_square_piece_color()
-{
+test_board_square_piece_color() {
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     assert(board_square_piece_color(&b, h1) == White);
@@ -264,8 +239,7 @@ test_board_square_piece_color()
 }
 
 void
-test_board_square_set()
-{
+test_board_square_set() {
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     board_square_set(&b, a1, Empty);
@@ -273,8 +247,7 @@ test_board_square_set()
 }
 
 void
-test_board_square_is_attacked()
-{
+test_board_square_is_attacked() {
     Board b;
     board_fen_import(&b, "r7/2bn2P1/5N2/1k3p2/8/3K2B1/R7/2Q4q w - - 0 1");
 
@@ -299,8 +272,7 @@ test_board_square_is_attacked()
 }
 
 void
-test_board_is_check()
-{
+test_board_is_check() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/ppp1pppp/8/1B1p4/4P3/8/PPPP1PPP/RNBQK1NR b KQkq - 1 2");
     assert(board_is_check(&b));
@@ -310,8 +282,7 @@ test_board_is_check()
 }
 
 void
-test_board_is_checkmate()
-{
+test_board_is_checkmate() {
     Board b;
     board_fen_import(&b, "rnbqk1nr/ppp2Qpp/3p4/2b1p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4");
     assert(board_is_checkmate(&b));
@@ -327,8 +298,7 @@ test_board_is_checkmate()
 }
 
 void
-test_board_is_stalemate()
-{
+test_board_is_stalemate() {
     Board b;
     board_fen_import(&b, "6k1/8/5K1Q/8/8/8/8/8 b - - 0 1");
     assert(board_is_stalemate(&b));
@@ -341,8 +311,7 @@ test_board_is_stalemate()
 }
 
 void
-test_board_is_out_of_moves()
-{
+test_board_is_out_of_moves() {
     Board b;
     board_fen_import(&b, "6k1/8/5K1Q/8/8/8/8/8 b - - 0 1");
     assert(board_is_out_of_moves(&b));
@@ -355,8 +324,7 @@ test_board_is_out_of_moves()
 }
 
 void
-test_board_is_equal()
-{
+test_board_is_equal() {
     Board b1, b2;
     board_fen_import(&b1, FEN_DEFAULT);
     board_fen_import(&b2, FEN_DEFAULT);
@@ -378,8 +346,7 @@ test_board_is_equal()
 }
 
 void
-test_board_move_pattern_knight_is_valid()
-{
+test_board_move_pattern_knight_is_valid() {
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     assert(board_move_pattern_knight_is_valid(&b, g1, f3, White));
@@ -389,8 +356,7 @@ test_board_move_pattern_knight_is_valid()
 }
 
 void
-test_board_move_pattern_bishop_is_valid()
-{
+test_board_move_pattern_bishop_is_valid() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/pppp1ppp/8/8/3pP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3");
     assert(!board_move_pattern_bishop_is_valid(&b, f1, h3, White));
@@ -400,8 +366,7 @@ test_board_move_pattern_bishop_is_valid()
 }
 
 void
-test_board_move_pattern_rook_is_valid()
-{
+test_board_move_pattern_rook_is_valid() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/1ppppppp/8/8/8/8/PPPPPPP1/RNBQKBNR w KQkq - 0 1");
     assert(board_move_pattern_rook_is_valid(&b, h1, h7, White));
@@ -412,8 +377,7 @@ test_board_move_pattern_rook_is_valid()
 }
 
 void
-test_board_move_knight_is_valid()
-{
+test_board_move_knight_is_valid() {
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     assert(board_move_knight_is_valid(&b, g1, f3, White));
@@ -423,8 +387,7 @@ test_board_move_knight_is_valid()
 }
 
 void
-test_board_move_bishop_is_valid()
-{
+test_board_move_bishop_is_valid() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/pppp1ppp/8/8/3pP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3");
     assert(!board_move_bishop_is_valid(&b, f1, h3, White));
@@ -434,8 +397,7 @@ test_board_move_bishop_is_valid()
 }
 
 void
-test_board_move_rook_is_valid()
-{
+test_board_move_rook_is_valid() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/1ppppppp/8/8/8/8/PPPPPPP1/RNBQKBNR w KQkq - 0 1");
     assert(board_move_rook_is_valid(&b, h1, h7, White));
@@ -446,8 +408,7 @@ test_board_move_rook_is_valid()
 }
 
 void
-test_board_move_queen_is_valid()
-{
+test_board_move_queen_is_valid() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/pppp1ppp/8/8/3pP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3");
     assert(board_move_queen_is_valid(&b, d1, h5, White));
@@ -458,8 +419,7 @@ test_board_move_queen_is_valid()
 }
 
 void
-test_board_move_pawn_status()
-{
+test_board_move_pawn_status() {
     Board b;
     board_fen_import(&b, "r1bqk1nr/ppp1b1Pp/2n1pp2/3pP3/8/8/PPPP1PP1/RNBQKBNR w KQkq d6 0 7");
     assert(board_move_pawn_status(&b, e5, d6, White) == EnPassant);
@@ -469,8 +429,7 @@ test_board_move_pawn_status()
 }
 
 void
-test_board_move_king_status()
-{
+test_board_move_king_status() {
     Board b;
     board_fen_import(&b, "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4");
     assert(board_move_king_status(&b, e1, g1, White) == Castling);
@@ -479,8 +438,7 @@ test_board_move_king_status()
 }
 
 void
-test_board_move_is_promotion()
-{
+test_board_move_is_promotion() {
     Board b;
     board_fen_import(&b, "r1bqk1nr/ppp1b1Pp/2n1pp2/3pP3/8/8/PPPP1PP1/RNBQKBNR w KQkq d6 0 7");
     assert(board_move_is_promotion(&b, g7, h8));
@@ -488,8 +446,7 @@ test_board_move_is_promotion()
 }
 
 void
-test_board_move_is_capture()
-{
+test_board_move_is_capture() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
     assert(board_move_is_capture(&b, e4, d5));
@@ -500,8 +457,7 @@ test_board_move_is_capture()
 }
 
 void
-test_board_move_is_check()
-{
+test_board_move_is_check() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
     assert(board_move_is_check(&b, f1, b5, Empty, Valid, Black));
@@ -511,8 +467,7 @@ test_board_move_is_check()
 }
 
 void
-test_board_move_is_checkmate()
-{
+test_board_move_is_checkmate() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2");
     assert(board_move_is_checkmate(&b, d8, h4, Empty, Valid));
@@ -525,8 +480,7 @@ test_board_move_is_checkmate()
 }
 
 void
-test_board_move_status()
-{
+test_board_move_status() {
     Board b;
     board_fen_import(&b, "r1bqkbnr/p1p2ppp/1pnpp3/4N2Q/4P3/8/PPPP1PPP/RNB1KB1R w KQkq - 0 5");
     assert(board_move_status(&b, h5, f7, Empty) == Valid);
@@ -545,8 +499,7 @@ test_board_move_status()
 }
 
 void
-test_board_move_which()
-{
+test_board_move_which() {
     Board b;
     char which[SQUARE_LEN];
 
@@ -568,8 +521,7 @@ test_board_move_which()
 }
 
 void
-test_board_move_san_export()
-{
+test_board_move_san_export() {
     Board b;
     char san[SAN_LEN];
     char comp[SAN_LEN];
@@ -605,8 +557,7 @@ test_board_move_san_export()
 }
 
 void
-test_board_move_san_status()
-{
+test_board_move_san_status() {
     Board b;
     Square src, dst;
     Piece prom_piece;
@@ -635,8 +586,7 @@ test_board_move_san_status()
 }
 
 void
-test_board_move_do()
-{
+test_board_move_do() {
     Board b;
     Status status;
     int same;
@@ -672,8 +622,7 @@ test_board_move_do()
 }
 
 void
-test_board_move_uci_status()
-{
+test_board_move_uci_status() {
     Status status;
     Square src;
     Square dst;
@@ -692,8 +641,7 @@ test_board_move_uci_status()
 
     board_fen_import(&b, "rnbqkb1r/pppp2Pp/5n2/4p3/8/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 5");
     status = board_move_uci_status(&b, "g7h8Q", &src, &dst, &prom_piece);
-    assert(status == Promotion && src == g7 && dst == h8
-            && prom_piece == WhiteQueen);
+    assert(status == Promotion && src == g7 && dst == h8 && prom_piece == WhiteQueen);
 
     board_fen_import(&b, "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4");
     status = board_move_uci_status(&b, "e1g1", &src, &dst, &prom_piece);
@@ -701,10 +649,9 @@ test_board_move_uci_status()
 }
 
 void
-test_board_fen_import()
-{
+test_board_fen_import() {
     Board b;
-    const char *input_fen;
+    const char* input_fen;
     board_fen_import(&b, FEN_DEFAULT);
     char fen[FEN_LEN];
     board_fen_export(&b, fen);
@@ -726,16 +673,14 @@ test_board_fen_import()
 }
 
 void
-test_move_functions()
-{
+test_move_functions() {
     Move m;
     move_init(&m);
     move_free(&m);
 }
 
 void
-test_variation_functions()
-{
+test_variation_functions() {
     Board b;
     board_fen_import(&b, FEN_DEFAULT);
     Variation v;
@@ -746,11 +691,10 @@ test_variation_functions()
 }
 
 void
-test_variation_movenumber_export()
-{
+test_variation_movenumber_export() {
     Game g;
-    Variation *v;
-    FILE *f;
+    Variation* v;
+    FILE* f;
     char num[MOVENUM_LEN];
     game_init(&g, NULL);
     f = fopen("files/complex.pgn", "r");
@@ -768,14 +712,13 @@ test_variation_movenumber_export()
     variation_movenumber_export(v, 2, 81, num, MOVENUM_LEN);
     assert(!strcmp(num, "42."));
     v = g.line_main->move_list[27].variation_list[0]->move_list[3].variation_list[0];
-    variation_movenumber_export(v, 1, 27+3, num, MOVENUM_LEN);
+    variation_movenumber_export(v, 1, 27 + 3, num, MOVENUM_LEN);
     assert(!strcmp("16.", num));
     game_free(&g);
 }
 
 void
-test_variation_delete_next_moves()
-{
+test_variation_delete_next_moves() {
     Game g;
     FILE *f, *of;
 
@@ -792,21 +735,20 @@ test_variation_delete_next_moves()
 }
 
 int
-test_variation_sequence_list_equal(VariationSequence *vs_list, int count)
-{
+test_variation_sequence_list_equal(VariationSequence* vs_list, int count) {
     int i, j;
-    for(i = 0; i < count; i++){
-        for(j = i + 1; j < count; j++){
-            if(vs_is_equal(&vs_list[i], &vs_list[j]))
+    for (i = 0; i < count; i++) {
+        for (j = i + 1; j < count; j++) {
+            if (vs_is_equal(&vs_list[i], &vs_list[j])) {
                 return 1;
+            }
         }
     }
     return 0;
 }
 
 void
-test_variation_sequence_functions()
-{
+test_variation_sequence_functions() {
     VariationSequence vs;
     vs_init(&vs);
     vs_add(&vs, 1, 1, 1);
@@ -815,10 +757,10 @@ test_variation_sequence_functions()
     vs_free(&vs);
 
     Game g;
-    FILE *f;
+    FILE* f;
     int i, equal;
 
-    VariationSequence *vs_list = (VariationSequence*)malloc(sizeof(VariationSequence));
+    VariationSequence* vs_list = (VariationSequence*)malloc(sizeof(VariationSequence));
     int count = 1;
     vs_init(&vs_list[0]);
     game_init(&g, NULL);
@@ -826,30 +768,30 @@ test_variation_sequence_functions()
     pgn_read_file(f, &g, 0);
     fclose(f);
     vs_generate_first(&vs_list[0], g.line_main, NoColor);
-    while(vs_can_generate_next(&vs_list[count-1])){
+    while (vs_can_generate_next(&vs_list[count - 1])) {
         count++;
         vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
-        vs_init(&vs_list[count-1]);
-        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], NoColor);
+        vs_init(&vs_list[count - 1]);
+        vs_generate_next(&vs_list[count - 1], g.line_main, &vs_list[count - 2], NoColor);
     }
     equal = test_variation_sequence_list_equal(vs_list, count);
     assert(count == 4 && !equal);
-    for(i = 0; i < count; i++){
+    for (i = 0; i < count; i++) {
         vs_free(&vs_list[i]);
     }
 
     count = 1;
     vs_init(&vs_list[0]);
     vs_generate_first(&vs_list[0], g.line_main, White);
-    while(vs_can_generate_next(&vs_list[count-1])){
+    while (vs_can_generate_next(&vs_list[count - 1])) {
         count++;
         vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
-        vs_init(&vs_list[count-1]);
-        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], White);
+        vs_init(&vs_list[count - 1]);
+        vs_generate_next(&vs_list[count - 1], g.line_main, &vs_list[count - 2], White);
     }
     equal = test_variation_sequence_list_equal(vs_list, count);
     assert(count == 4 && !equal);
-    for(i = 0; i < count; i++){
+    for (i = 0; i < count; i++) {
         vs_free(&vs_list[i]);
     }
     free(vs_list);
@@ -865,15 +807,15 @@ test_variation_sequence_functions()
 
     vs_generate_first(&vs_list[0], g.line_main, NoColor);
     vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
-    while(vs_can_generate_next(&vs_list[count-1])){
+    while (vs_can_generate_next(&vs_list[count - 1])) {
         count++;
         vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
-        vs_init(&vs_list[count-1]);
-        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], NoColor);
+        vs_init(&vs_list[count - 1]);
+        vs_generate_next(&vs_list[count - 1], g.line_main, &vs_list[count - 2], NoColor);
     }
     equal = test_variation_sequence_list_equal(vs_list, count);
     assert(count == 9 && !equal);
-    for(i = 0; i < count; i++){
+    for (i = 0; i < count; i++) {
         vs_free(&vs_list[i]);
     }
 
@@ -881,15 +823,15 @@ test_variation_sequence_functions()
     vs_init(&vs_list[0]);
     vs_generate_first(&vs_list[0], g.line_main, Black);
     vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
-    while(vs_can_generate_next(&vs_list[count-1])){
+    while (vs_can_generate_next(&vs_list[count - 1])) {
         count++;
         vs_list = (VariationSequence*)realloc(vs_list, sizeof(VariationSequence) * count);
-        vs_init(&vs_list[count-1]);
-        vs_generate_next(&vs_list[count-1], g.line_main, &vs_list[count-2], Black);
+        vs_init(&vs_list[count - 1]);
+        vs_generate_next(&vs_list[count - 1], g.line_main, &vs_list[count - 2], Black);
     }
     equal = test_variation_sequence_list_equal(vs_list, count);
     assert(count == 6 && !equal);
-    for(i = 0; i < count; i++){
+    for (i = 0; i < count; i++) {
         vs_free(&vs_list[i]);
     }
 
@@ -898,8 +840,7 @@ test_variation_sequence_functions()
 }
 
 void
-test_game_tag_functions()
-{
+test_game_tag_functions() {
     Tag tag;
     Game g;
     game_init(&g, NULL); //game_tag_init is called here
@@ -917,10 +858,9 @@ test_game_tag_functions()
 }
 
 void
-test_game_functions()
-{
+test_game_functions() {
     Game g;
-    char *comment = (char*)malloc(sizeof(char) * (strlen("Test") + 1));
+    char* comment = (char*)malloc(sizeof(char) * (strlen("Test") + 1));
     snprintf(comment, strlen("Test") + 1, "Test");
     game_init(&g, NULL);
     game_move_add(&g, e2, e4, Empty, Valid);
@@ -943,11 +883,10 @@ test_game_functions()
 }
 
 void
-test_variation_insert()
-{
+test_variation_insert() {
     Game g;
     game_init(&g, NULL);
-    FILE *f = fopen("files/variation_insert_before.pgn", "r");
+    FILE* f = fopen("files/variation_insert_before.pgn", "r");
     pgn_read_file(f, &g, 0);
     fclose(f);
     game_move_index_set(&g, 8);
@@ -964,12 +903,11 @@ test_variation_insert()
 }
 
 void
-test_game_board_find()
-{
+test_game_board_find() {
     Board b;
     Game g;
     game_init(&g, NULL);
-    FILE *f = fopen("files/complex.pgn", "r");
+    FILE* f = fopen("files/complex.pgn", "r");
     pgn_read_file(f, &g, 0);
     fclose(f);
     board_fen_import(&b, "1r1qr1k1/1p3pbp/B2p1np1/2pP4/P3nB2/1QN1PN1b/1P3PP1/R2R2K1 w - - 0 16");
@@ -979,10 +917,9 @@ test_game_board_find()
 }
 
 void
-test_pgn_read_file()
-{
+test_pgn_read_file() {
     Game g;
-    FILE *f;
+    FILE* f;
     char fen[FEN_LEN];
     int same;
     int ok;
@@ -1001,7 +938,7 @@ test_pgn_read_file()
     f = fopen("files/complex.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
     fclose(f);
-    board_fen_export(&(g.line_main->move_list[g.line_main->move_count-1].board), fen);
+    board_fen_export(&(g.line_main->move_list[g.line_main->move_count - 1].board), fen);
     same = !strcmp(fen, "8/7p/4Pkp1/p1b2p2/1p6/1B2P1PP/4KP2/8 w - - 0 51");
     assert(same && ok);
     board_fen_export(&(g.line_main->move_list[0].board), fen);
@@ -1013,7 +950,7 @@ test_pgn_read_file()
     f = fopen("files/FEN.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
     fclose(f);
-    board_fen_export(&(g.line_main->move_list[g.line_main->move_count-1].board), fen);
+    board_fen_export(&(g.line_main->move_list[g.line_main->move_count - 1].board), fen);
     same = !strcmp(fen, "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PP1/RNBQKB1R w KQkq - 2 3");
     assert(same && ok);
     board_fen_export(&(g.line_main->move_list[0].board), fen);
@@ -1095,13 +1032,12 @@ test_pgn_read_file()
 }
 
 void
-test_pgn_write_file()
-{
+test_pgn_write_file() {
     Game g;
-    Game *clone;
+    Game* clone;
     game_init(&g, NULL);
-    FILE * f = fopen("files/complex.pgn", "r");
-    FILE * of = fopen("tmp_test_01.pgn", "w");
+    FILE* f = fopen("files/complex.pgn", "r");
+    FILE* of = fopen("tmp_test_01.pgn", "w");
     pgn_read_file(f, &g, 0);
     pgn_write_file(of, &g);
     fclose(f);
@@ -1140,11 +1076,10 @@ test_pgn_write_file()
 }
 
 void
-test_pgn_replace_game()
-{
+test_pgn_replace_game() {
     Game g;
     game_init(&g, NULL);
-    FILE *f = fopen("files/equal_variations.pgn", "r");
+    FILE* f = fopen("files/equal_variations.pgn", "r");
     pgn_read_file(f, &g, 0);
     fclose(f);
     assert(pgn_replace_game("tmp_test_03.pgn", &g, 1));
@@ -1152,10 +1087,9 @@ test_pgn_replace_game()
 }
 
 void
-test_pgn_count_games()
-{
+test_pgn_count_games() {
 
-    FILE *f;
+    FILE* f;
     int count;
 
     f = fopen("files/large.pgn", "r");
@@ -1173,25 +1107,22 @@ test_pgn_count_games()
 }
 
 void
-test_uci_line_parse()
-{
+test_uci_line_parse() {
     Variation v;
     Board b;
     UciScoreType type;
     int depth, multipv, score;
-    const char * line = "info depth 20 seldepth 32 multipv 1 score cp 54 nodes 3442296 nps 1228952 hashfull 939 tbhits 0 time 2801 pv e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 g1f3 g8f6 c1e3 f8d6 f1d3 e8g8 e1g1 b8c6 b1c3 c6b4 c3b5 c7c6 b5d6 d8d6 c2c3 b4d3 d1d3";
+    const char* line = "info depth 20 seldepth 32 multipv 1 score cp 54 nodes 3442296 nps 1228952 hashfull 939 tbhits "
+                       "0 time 2801 pv e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 g1f3 g8f6 c1e3 f8d6 f1d3 e8g8 e1g1 b8c6 b1c3 c6b4 "
+                       "c3b5 c7c6 b5d6 d8d6 c2c3 b4d3 d1d3";
     board_fen_import(&b, FEN_DEFAULT);
     variation_init(&v, &b);
     uci_line_parse(line, 1024, &b, &depth, &multipv, &type, &score, &v);
-    assert(depth == 20 && multipv == 1 && type == Centipawn && score == 54
-            && !strcmp(v.move_list[1].san, "e4")
-            && !strcmp(v.move_list[10].san, "Bd6")
-            && !strcmp(v.move_list[23].san, "Qxd3") && v.move_count == 24);
+    assert(depth == 20 && multipv == 1 && type == Centipawn && score == 54 && !strcmp(v.move_list[1].san, "e4")
+           && !strcmp(v.move_list[10].san, "Bd6") && !strcmp(v.move_list[23].san, "Qxd3") && v.move_count == 24);
     uci_line_parse(line, 1024, &b, &depth, &multipv, &type, &score, &v);
-    assert(depth == 20 && multipv == 1 && type == Centipawn && score == 54
-            && !strcmp(v.move_list[1].san, "e4")
-            && !strcmp(v.move_list[10].san, "Bd6")
-            && !strcmp(v.move_list[23].san, "Qxd3"));
+    assert(depth == 20 && multipv == 1 && type == Centipawn && score == 54 && !strcmp(v.move_list[1].san, "e4")
+           && !strcmp(v.move_list[10].san, "Bd6") && !strcmp(v.move_list[23].san, "Qxd3"));
     uci_line_parse(line, 1024, NULL, &depth, &multipv, &type, &score, NULL);
     assert(depth == 20 && multipv == 1 && type == Centipawn && score == 54);
 
@@ -1202,60 +1133,59 @@ test_uci_line_parse()
 
     board_fen_import(&b, "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq g3 0 2");
     variation_init(&v, &b);
-    line = "info depth 21 seldepth 34 multipv 2 score cp 316 nodes 2412251 nps 504971 hashfull 842 tbhits 0 time 4777 pv h7h5 g4g5 d8g5 d2d3 g5h4 e1d2 d7d5 d1e1 h4e1 d2e1 b8c6 b1c3 g8f6 c3b5 e8d8 g1h3 f6h7 h3f2 a7a6 b5c3 c6d4 e1d1 c7c6";
+    line = "info depth 21 seldepth 34 multipv 2 score cp 316 nodes 2412251 nps 504971 hashfull 842 tbhits 0 time 4777 "
+           "pv h7h5 g4g5 d8g5 d2d3 g5h4 e1d2 d7d5 d1e1 h4e1 d2e1 b8c6 b1c3 g8f6 c3b5 e8d8 g1h3 f6h7 h3f2 a7a6 b5c3 "
+           "c6d4 e1d1 c7c6";
     uci_line_parse(line, 1024, &b, &depth, &multipv, &type, &score, &v);
     assert(v.move_count == 24);
     line = "info depth 245 seldepth 2 multipv 1 score mate 1 nodes 7351 nps 565461 tbhits 0 time 13 pv d8h4";
     uci_line_parse(line, 1024, &b, &depth, &multipv, &type, &score, &v);
-    assert(depth == 245 && multipv == 1 && type == Mate && score == 1
-            && !strcmp(v.move_list[1].san, "Qh4#")
-            && !strlen(v.move_list[2].san));
+    assert(depth == 245 && multipv == 1 && type == Mate && score == 1 && !strcmp(v.move_list[1].san, "Qh4#")
+           && !strlen(v.move_list[2].san));
     variation_free(&v);
 }
 
 void
-test_readme_example_01()
-{
+test_readme_example_01() {
     Game g;
     game_init(&g, NULL); //NULL means default starting position
     game_tag_set(&g, "White", "New game");
 
-    const char *san = "e4";
+    const char* san = "e4";
     Status status;
     Square src, dst;
     Piece prom_piece;
     status = game_move_san_status(&g, san, &src, &dst, &prom_piece);
-    if(status != Invalid){
+    if (status != Invalid) {
         game_move_add(&g, src, dst, prom_piece, status);
-        FILE *f = fopen("new_game.pgn", "w");
+        FILE* f = fopen("new_game.pgn", "w");
         pgn_write_file(f, &g);
         fclose(f);
-    }else{
+    } else {
         printf("Invalid move\n");
     }
     game_free(&g);
 }
 
 void
-test_readme_example_02()
-{
+test_readme_example_02() {
     Game g;
     game_init(&g, NULL);
-    FILE *f = fopen("files/game_list.pgn", "r");
+    FILE* f = fopen("files/game_list.pgn", "r");
     pgn_read_file(f, &g, 1); //read second game to game
     fclose(f);
     game_free(&g);
 }
 
 void
-test_game_list_functions()
-{
+test_game_list_functions() {
     GameList gl;
     GameList new_gl;
-    FILE *f = fopen("files/medium.pgn", "r");
+    FILE* f = fopen("files/medium.pgn", "r");
     game_list_read_pgn(&gl, f);
     assert(!strcmp(gl.list[0].title, "Carlsen,M-Utegaliyev,A/World Rapid 2019[1.1]/2019.12.26 (1-0)"));
-    assert(!strcmp(gl.list[1].title, "Castellanos Rodriguez,R-Vachier Lagrave,M/World Rapid 2019[1.2]/2019.12.26 (1/2-1/2)"));
+    assert(!strcmp(gl.list[1].title,
+                   "Castellanos Rodriguez,R-Vachier Lagrave,M/World Rapid 2019[1.2]/2019.12.26 (1/2-1/2)"));
     assert(gl.list[1].index == 1);
     game_list_search_str(&gl, &new_gl, "Carlsen");
     assert(new_gl.count == 1);
@@ -1301,7 +1231,7 @@ test_game_list_functions()
     game_list_free(&new_gl);
 
     board_fen_import(&b, "rnbq2k1/1p3pbp/p2p2p1/2pP4/Pr3B2/4P2P/1P1NBPP1/R2QK2R w KQ - 2 14");
-    fseek(f, 0 , SEEK_SET);
+    fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
     assert(new_gl.count == 1);
     game_list_free(&new_gl);
@@ -1363,8 +1293,9 @@ test_game_list_functions()
     fclose(f);
 }
 
-int main(int argc, char *argv[]){
-    if(argc == 1){
+int
+main(int argc, char* argv[]) {
+    if (argc == 1) {
         //STRING UTILS
         test_strtok_r();
         test_concate();
@@ -1454,42 +1385,41 @@ int main(int argc, char *argv[]){
         test_readme_example_02();
 
         test_game_list_functions();
-    }else if(argc > 1){
+    } else if (argc > 1) {
         GameList gl, new_gl;
         Board b;
-        FILE *f;
-        switch(argv[1][0]){
-        case 'l':
-            f = fopen(argv[2], "r");
-            game_list_read_pgn(&gl, f);
-            fclose(f);
-            game_list_free(&gl);
-            break;
+        FILE* f;
+        switch (argv[1][0]) {
+            case 'l':
+                f = fopen(argv[2], "r");
+                game_list_read_pgn(&gl, f);
+                fclose(f);
+                game_list_free(&gl);
+                break;
 
-        case 'p':
-            board_fen_import(&b, argv[2]);
-            f = fopen(argv[3], "r");
-            game_list_read_pgn(&gl, f);
-            fseek(f, 0, SEEK_SET);
-            game_list_search_board(&gl, &new_gl, f, &b);
-            fclose(f);
-            printf("%d\n", new_gl.count);
-            game_list_free(&gl);
-            game_list_free(&new_gl);
-            break;
+            case 'p':
+                board_fen_import(&b, argv[2]);
+                f = fopen(argv[3], "r");
+                game_list_read_pgn(&gl, f);
+                fseek(f, 0, SEEK_SET);
+                game_list_search_board(&gl, &new_gl, f, &b);
+                fclose(f);
+                printf("%d\n", new_gl.count);
+                game_list_free(&gl);
+                game_list_free(&new_gl);
+                break;
 
-        case 's':
-            f = fopen(argv[3], "r");
-            game_list_read_pgn(&gl, f);
-            fclose(f);
-            game_list_search_str(&gl, &new_gl, argv[2]);
-            printf("%d\n", new_gl.count);
-            game_list_free(&gl);
-            game_list_free(&new_gl);
-            break;
+            case 's':
+                f = fopen(argv[3], "r");
+                game_list_read_pgn(&gl, f);
+                fclose(f);
+                game_list_search_str(&gl, &new_gl, argv[2]);
+                printf("%d\n", new_gl.count);
+                game_list_free(&gl);
+                game_list_free(&new_gl);
+                break;
 
-        default:
-            break;
+            default: break;
         }
     }
     return 0;
