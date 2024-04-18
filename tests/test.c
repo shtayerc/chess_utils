@@ -691,6 +691,29 @@ test_variation_functions() {
 }
 
 void
+test_variation_move_current_reset() {
+    Game g;
+    game_init(&g, NULL);
+    game_move_add(&g, e2, e4, Empty, Valid);
+    game_move_add(&g, e7, e5, Empty, Valid);
+    game_move_index_set(&g, 1);
+    game_variation_add(&g, c7, c5, Empty, Valid);
+    game_move_add(&g, g1, f3, Empty, Valid);
+    game_move_add(&g, d7, d6, Empty, Valid);
+    game_move_index_set(&g, 1);
+    game_variation_add(&g, b8, c6, Empty, Valid);
+    game_move_add(&g, f1, b5, Empty, Valid);
+    game_move_index_set(&g, 1);
+    game_variation_add(&g, d2, d4, Empty, Valid);
+    variation_move_current_reset(g.line_main);
+    g.line_current = g.line_main;
+    assert(g.line_current->move_current == 1);
+    assert(g.line_current->move_list[1].variation_list[0]->move_current == 1);
+    assert(g.line_current->move_list[1].variation_list[0]->move_list[1].variation_list[0]->move_current == 1);
+    game_free(&g);
+}
+
+void
 test_variation_movenumber_export() {
     Game g;
     Variation* v;
@@ -1360,6 +1383,7 @@ main(int argc, char* argv[]) {
 
         //VARIATION FUNCTIONS
         test_variation_functions();
+        test_variation_move_current_reset();
         test_variation_movenumber_export();
         test_variation_delete_next_moves();
         test_variation_insert();
