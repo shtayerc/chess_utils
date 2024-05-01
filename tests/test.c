@@ -1211,10 +1211,10 @@ test_game_list_functions() {
                    "Castellanos Rodriguez,R-Vachier Lagrave,M/World Rapid 2019[1.2]/2019.12.26 (1/2-1/2)"));
     assert(gl.list[1].index == 1);
     game_list_search_str(&gl, &new_gl, "Carlsen");
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
     game_list_search_str(&gl, &new_gl, "world RAPID");
-    assert(new_gl.count == 6);
+    assert(new_gl.ai.count == 6);
     game_list_free(&new_gl);
 
     Board b;
@@ -1223,12 +1223,12 @@ test_game_list_functions() {
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
     game_list_free(&new_gl);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
 
     board_fen_import(&b, "r1bqkbnr/pp1npppp/3p4/1Bp5/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 4");
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    assert(new_gl.count == 2);
+    assert(new_gl.ai.count == 2);
     game_list_free(&new_gl);
 
     board_fen_import(&b, "8/4k1P1/p2n3P/1p6/6Nr/8/1KP2R2/8 b - - 0 50");
@@ -1236,7 +1236,7 @@ test_game_list_functions() {
     game_list_search_board(&gl, &new_gl, f, &b);
     fclose(f);
     game_list_free(&gl);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
 
     board_fen_import(&b, "rnbqr1k1/1p3pbp/p2p2p1/2pP4/P3nB2/2N1PN1P/1P2BPP1/R2QK2R w KQ - 3 12");
@@ -1244,19 +1244,19 @@ test_game_list_functions() {
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
 
     board_fen_import(&b, "8/7p/4Pkp1/p1b2p2/1p6/1B2P1PP/4KP2/8 w - - 0 51");
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
 
     board_fen_import(&b, "rnbq2k1/1p3pbp/p2p2p1/2pP4/Pr3B2/4P2P/1P1NBPP1/R2QK2R w KQ - 2 14");
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
@@ -1266,7 +1266,7 @@ test_game_list_functions() {
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
@@ -1310,7 +1310,7 @@ test_game_list_functions() {
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
-    assert(new_gl.count == 1);
+    assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
@@ -1428,7 +1428,7 @@ main(int argc, char* argv[]) {
                 fseek(f, 0, SEEK_SET);
                 game_list_search_board(&gl, &new_gl, f, &b);
                 fclose(f);
-                printf("%d\n", new_gl.count);
+                printf("%d\n", new_gl.ai.count);
                 game_list_free(&gl);
                 game_list_free(&new_gl);
                 break;
@@ -1438,7 +1438,7 @@ main(int argc, char* argv[]) {
                 game_list_read_pgn(&gl, f);
                 fclose(f);
                 game_list_search_str(&gl, &new_gl, argv[2]);
-                printf("%d\n", new_gl.count);
+                printf("%d\n", new_gl.ai.count);
                 game_list_free(&gl);
                 game_list_free(&new_gl);
                 break;
