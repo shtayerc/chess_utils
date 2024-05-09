@@ -1316,6 +1316,79 @@ test_game_list_functions() {
     fclose(f);
 }
 
+void
+test_gls_functions() {
+    GameList gl;
+    GameListStat gls;
+    Board b;
+    FILE* f = fopen("files/medium.pgn", "r");
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    gls_init(&gls);
+    board_fen_import(&b, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+    gls_read_pgn(&gls, &gl, f, &b);
+    assert(!strcmp(gls.list[0].san, "d5"));
+    assert(gls.list[0].white_win == 1);
+
+    assert(!strcmp(gls.list[1].san, "c5"));
+    assert(gls.list[1].white_win == 0);
+    assert(gls.list[1].draw == 2);
+
+    assert(!strcmp(gls.list[2].san, "e5"));
+    assert(gls.list[2].white_win == 1);
+    assert(gls.list[2].draw == 0);
+
+    assert(!strcmp(gls.list[3].san, "e6"));
+    assert(gls.list[3].white_win == 1);
+    assert(gls.list[3].black_win == 0);
+
+    gls_free(&gls);
+
+    fseek(f, 0, SEEK_SET);
+    gls_init(&gls);
+    board_fen_import(&b, FEN_DEFAULT);
+    gls_read_pgn(&gls, &gl, f, &b);
+
+    assert(!strcmp(gls.list[0].san, "e4"));
+    assert(gls.list[0].white_win == 3);
+    assert(gls.list[0].draw == 2);
+    assert(gls.list[0].black_win == 0);
+
+    assert(!strcmp(gls.list[1].san, "d4"));
+    assert(gls.list[1].white_win == 0);
+    assert(gls.list[1].draw == 0);
+    assert(gls.list[1].black_win == 1);
+
+    gls_free(&gls);
+
+    game_list_free(&gl);
+    fclose(f);
+
+    f = fopen("files/equal_variations.pgn", "r");
+    gls_init(&gls);
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    board_fen_import(&b, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+    gls_read_pgn(&gls, &gl, f, &b);
+    assert(!strcmp(gls.list[0].san, "e5"));
+    assert(gls.list[0].white_win == 1);
+    gls_free(&gls);
+    game_list_free(&gl);
+    fclose(f);
+
+    f = fopen("files/variation_insert_after.pgn", "r");
+    gls_init(&gls);
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    board_fen_import(&b, "r1bq1rk1/pppp1ppp/2n2n2/2b1p3/2B1P3/3P4/PPPN1PPP/RNBQ1RK1 b - - 4 6");
+    gls_read_pgn(&gls, &gl, f, &b);
+    assert(!strcmp(gls.list[0].san, "d6"));
+    assert(gls.list[0].draw == 1);
+    gls_free(&gls);
+    game_list_free(&gl);
+    fclose(f);
+}
+
 int
 main(int argc, char* argv[]) {
     if (argc == 1) {
@@ -1408,7 +1481,11 @@ main(int argc, char* argv[]) {
         test_readme_example_01();
         test_readme_example_02();
 
+        //GAME LIST FUNCTIONS
         test_game_list_functions();
+
+        //GAME LIST STAT FUNCTIONS
+        test_gls_functions();
     } else if (argc > 1) {
         GameList gl, new_gl;
         Board b;

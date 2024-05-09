@@ -23,7 +23,6 @@ clean:
 cpp:
 	$(CPP) $(FLAGS) $(FILES) -o $(EXE)
 
-check: cpp
 check: all
 check:
 	cp files/replace_before.pgn $(TESTFILE_03)
