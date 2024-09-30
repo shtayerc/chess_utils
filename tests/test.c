@@ -1395,6 +1395,8 @@ test_gls_functions() {
     board_fen_import(&b, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     gls_read_pgn_sort(&gls, &gl, f, &b);
     assert(gls.list[0].count > gls.list[1].count);
+    gls_free(&gls);
+    game_list_free(&gl);
 }
 
 int
