@@ -865,19 +865,19 @@ test_variation_sequence_functions() {
 void
 test_game_tag_functions() {
     Tag tag;
-    Game g;
-    game_init(&g, NULL); //game_tag_init is called here
-    game_tag_set(&g, "White", "Morphy, Paul");
-    tag = *game_tag_get(&g, "White");
+    TagList tl;
+    tag_list_init(&tl);
+    tag_list_set(&tl, "White", "Morphy, Paul");
+    tag = *tag_list_get(&tl, "White");
     assert(!strcmp(tag.key, "White") && !strcmp(tag.value, "Morphy, Paul"));
     snprintf(tag.key, TAG_LEN, "NewTag");
     snprintf(tag.value, TAG_LEN, "Value");
-    game_tag_add(&g, &tag);
-    tag = *game_tag_get(&g, "NewTag");
+    tag_list_add(&tl, &tag);
+    tag = *tag_list_get(&tl, "NewTag");
     assert(!strcmp(tag.key, "NewTag") && !strcmp(tag.value, "Value"));
-    game_tag_remove(&g, "NewTag");
-    assert(game_tag_get(&g, "NewTag") == NULL && g.tag_count == 7);
-    game_free(&g);
+    tag_list_delete(&tl, "NewTag");
+    assert(tag_list_get(&tl, "NewTag") == NULL && tl.ai.count == 1);
+    tag_list_free(&tl);
 }
 
 void
@@ -999,36 +999,42 @@ test_pgn_read_file() {
     game_init(&g, NULL);
     f = fopen("files/variation.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
+    fclose(f);
     assert(ok);
     game_free(&g);
 
     game_init(&g, NULL);
     f = fopen("files/result_in_comment.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
+    fclose(f);
     assert(ok);
     game_free(&g);
 
     game_init(&g, NULL);
     f = fopen("files/large.pgn", "r");
     ok = pgn_read_file(f, &g, 2); //pgn_read_next is called here
+    fclose(f);
     assert(ok);
     game_free(&g);
 
     game_init(&g, NULL);
     f = fopen("files/subvariation_at_end.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
+    fclose(f);
     assert(ok);
     game_free(&g);
 
     game_init(&g, NULL);
     f = fopen("files/percent.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
+    fclose(f);
     assert(ok);
     game_free(&g);
 
     game_init(&g, NULL);
     f = fopen("files/very_complex.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
+    fclose(f);
     assert(ok);
     assert(g.line_main->move_count == 68);
     game_free(&g);
@@ -1036,6 +1042,7 @@ test_pgn_read_file() {
     game_init(&g, NULL);
     f = fopen("files/result_overwrite.pgn", "r");
     ok = pgn_read_file(f, &g, 0);
+    fclose(f);
     assert(ok);
     game_free(&g);
 
@@ -1122,10 +1129,12 @@ test_pgn_count_games() {
 
     f = fopen("files/empty.pgn", "r");
     count = pgn_count_games(f);
+    fclose(f);
     assert(count == 0);
 
     f = fopen("files/invalid_tags.pgn", "r");
     count = pgn_count_games(f);
+    fclose(f);
     assert(count == -1);
 }
 
@@ -1172,7 +1181,7 @@ void
 test_readme_example_01() {
     Game g;
     game_init(&g, NULL); //NULL means default starting position
-    game_tag_set(&g, "White", "New game");
+    tag_list_set(g.tag_list, "White", "New game");
 
     const char* san = "e4";
     Status status;
@@ -1206,9 +1215,10 @@ test_game_list_functions() {
     GameList new_gl;
     FILE* f = fopen("files/medium.pgn", "r");
     game_list_read_pgn(&gl, f);
-    assert(!strcmp(gl.list[0].title, "Carlsen,M-Utegaliyev,A/World Rapid 2019[1.1]/2019.12.26 (1-0)"));
-    assert(!strcmp(gl.list[1].title,
-                   "Castellanos Rodriguez,R-Vachier Lagrave,M/World Rapid 2019[1.2]/2019.12.26 (1/2-1/2)"));
+    assert(!strcmp(gl.list[0].tag_list->list[4].value, "Carlsen,M"));
+    assert(!strcmp(gl.list[0].tag_list->list[5].value, "Utegaliyev,A"));
+    assert(!strcmp(gl.list[1].tag_list->list[2].value, "2019.12.26"));
+    assert(!strcmp(gl.list[1].tag_list->list[3].value, "1.2"));
     assert(gl.list[1].index == 1);
     game_list_search_str(&gl, &new_gl, "Carlsen");
     assert(new_gl.ai.count == 1);
@@ -1282,7 +1292,8 @@ test_game_list_functions() {
 
     f = fopen("files/escaped_doublequote.pgn", "r");
     game_list_read_pgn(&gl, f);
-    assert(!strcmp(gl.list[0].title, "-/Quote \"[]/2020.09.19 (*)"));
+    //assert(!strcmp(gl.list[0].tag_list.list[0].value, "Quote \""));
+    assert(!strcmp(gl.list[0].tag_list->list[0].value, "Quote \""));
     game_list_free(&new_gl);
     game_list_free(&gl);
     fclose(f);
@@ -1397,6 +1408,7 @@ test_gls_functions() {
     assert(gls.list[0].count > gls.list[1].count);
     gls_free(&gls);
     game_list_free(&gl);
+    fclose(f);
 }
 
 int
