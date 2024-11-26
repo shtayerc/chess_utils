@@ -881,6 +881,28 @@ test_game_tag_functions() {
 }
 
 void
+test_game_tag_filter_functions() {
+    TagList tl;
+    tag_list_init(&tl);
+    tag_list_set(&tl, "White", "Morphy, Paul");
+    tag_list_set(&tl, "Result", "1-0");
+
+    TagFilterList tfl;
+    tfl_init(&tfl);
+    TagFilter tf = {.tag = {.key = "White", .value = "morphy"}, .op = OperatorContains};
+    tfl_add(&tfl, &tf);
+    assert(tag_list_filter_is_valid(&tl, &tfl));
+    snprintf(tf.tag.value, TAG_LEN, "%s", "Morphy");
+    tf.op = OperatorEquals;
+    tfl_add(&tfl, &tf);
+    assert(tag_list_filter_is_valid(&tl, &tfl));
+    tfl_delete(&tfl, "White", OperatorContains);
+
+    tfl_free(&tfl);
+    tag_list_free(&tl);
+}
+
+void
 test_game_functions() {
     Game g;
     char* comment = (char*)malloc(sizeof(char) * (strlen("Test") + 1));
@@ -1214,6 +1236,7 @@ test_game_list_functions() {
     GameList gl;
     GameList new_gl;
     FILE* f = fopen("files/medium.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     assert(!strcmp(gl.list[0].tag_list->list[4].value, "Carlsen,M"));
     assert(!strcmp(gl.list[0].tag_list->list[5].value, "Utegaliyev,A"));
@@ -1251,6 +1274,7 @@ test_game_list_functions() {
 
     board_fen_import(&b, "rnbqr1k1/1p3pbp/p2p2p1/2pP4/P3nB2/2N1PN1P/1P2BPP1/R2QK2R w KQ - 3 12");
     f = fopen("files/complex.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
@@ -1273,6 +1297,7 @@ test_game_list_functions() {
 
     board_fen_import(&b, "7k/4R1p1/1P1B1p1p/7P/3p2r1/3bP3/7K/8 b - - 1 37");
     f = fopen("files/piece_hint.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
@@ -1283,6 +1308,7 @@ test_game_list_functions() {
 
     board_fen_import(&b, "r1bqkb1r/pp3p1p/2p3p1/2npP3/5P2/2NB4/PPP3PP/R1BQ1RK1 w kq - 0 10");
     f = fopen("files/search_board.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
@@ -1291,8 +1317,8 @@ test_game_list_functions() {
     fclose(f);
 
     f = fopen("files/escaped_doublequote.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
-    //assert(!strcmp(gl.list[0].tag_list.list[0].value, "Quote \""));
     assert(!strcmp(gl.list[0].tag_list->list[0].value, "Quote \""));
     game_list_free(&new_gl);
     game_list_free(&gl);
@@ -1300,6 +1326,7 @@ test_game_list_functions() {
 
     board_fen_import(&b, "r1b1kb1r/1p1n1ppp/pq1ppn2/6B1/3NP3/1BN5/PPPQ1PPP/R3K2R b KQkq - 1 9");
     f = fopen("files/skip_error.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
@@ -1309,6 +1336,7 @@ test_game_list_functions() {
 
     board_fen_import(&b, "4rrk1/1b4b1/1p2q1pp/2p5/4PPpB/2P1Q3/3N2PP/4RRK1 w - - 0 25");
     f = fopen("files/search_board.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
@@ -1318,12 +1346,37 @@ test_game_list_functions() {
 
     board_fen_import(&b, "3r2r1/1pknQ2R/p4RP1/4p3/4q3/1P6/7P/7K w - - 12 43");
     f = fopen("files/number_nospace.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     game_list_search_board(&gl, &new_gl, f, &b);
     assert(new_gl.ai.count == 1);
     game_list_free(&new_gl);
     game_list_free(&gl);
+    fclose(f);
+
+    f = fopen("files/medium.pgn", "r");
+    game_list_init(&gl);
+    game_list_filter_set(&gl, "White", OperatorEquals, "Carlsen,M");
+    game_list_read_pgn(&gl, f);
+    assert(gl.ai.count == 1);
+    game_list_free(&gl);
+
+    fseek(f, 0, SEEK_SET);
+    game_list_init(&gl);
+    game_list_filter_set(&gl, "Variation", OperatorContains, "variation");
+    game_list_read_pgn(&gl, f);
+    assert(gl.ai.count == 3);
+    game_list_free(&gl);
+
+    fseek(f, 0, SEEK_SET);
+    game_list_init(&gl);
+    game_list_read_pgn(&gl, f);
+    game_list_filter_set(&gl, "Variation", OperatorContains, "variation");
+    game_list_filter(&gl, &new_gl);
+    assert(new_gl.ai.count == 3);
+    game_list_free(&gl);
+    game_list_free(&new_gl);
     fclose(f);
 }
 
@@ -1333,6 +1386,7 @@ test_gls_functions() {
     GameListStat gls;
     Board b;
     FILE* f = fopen("files/medium.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     gls_init(&gls);
@@ -1377,6 +1431,7 @@ test_gls_functions() {
 
     f = fopen("files/equal_variations.pgn", "r");
     gls_init(&gls);
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     board_fen_import(&b, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
@@ -1389,6 +1444,7 @@ test_gls_functions() {
 
     f = fopen("files/variation_insert_after.pgn", "r");
     gls_init(&gls);
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     board_fen_import(&b, "r1bq1rk1/pppp1ppp/2n2n2/2b1p3/2B1P3/3P4/PPPN1PPP/RNBQ1RK1 b - - 4 6");
@@ -1400,6 +1456,7 @@ test_gls_functions() {
     fclose(f);
 
     f = fopen("files/medium.pgn", "r");
+    game_list_init(&gl);
     game_list_read_pgn(&gl, f);
     fseek(f, 0, SEEK_SET);
     gls_init(&gls);
@@ -1488,6 +1545,7 @@ main(int argc, char* argv[]) {
 
         //GAME FUNCTIONS
         test_game_tag_functions();
+        test_game_tag_filter_functions();
         test_game_functions();
         test_game_board_find();
 
@@ -1515,6 +1573,7 @@ main(int argc, char* argv[]) {
         switch (argv[1][0]) {
             case 'l':
                 f = fopen(argv[2], "r");
+                game_list_init(&gl);
                 game_list_read_pgn(&gl, f);
                 fclose(f);
                 game_list_free(&gl);
@@ -1523,6 +1582,7 @@ main(int argc, char* argv[]) {
             case 'p':
                 board_fen_import(&b, argv[2]);
                 f = fopen(argv[3], "r");
+                game_list_init(&gl);
                 game_list_read_pgn(&gl, f);
                 fseek(f, 0, SEEK_SET);
                 game_list_search_board(&gl, &new_gl, f, &b);
@@ -1534,6 +1594,7 @@ main(int argc, char* argv[]) {
 
             case 's':
                 f = fopen(argv[3], "r");
+                game_list_init(&gl);
                 game_list_read_pgn(&gl, f);
                 fclose(f);
                 game_list_search_str(&gl, &new_gl, argv[2]);
