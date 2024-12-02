@@ -1377,6 +1377,25 @@ test_game_list_functions() {
     assert(new_gl.ai.count == 3);
     game_list_free(&gl);
     game_list_free(&new_gl);
+
+    fseek(f, 0, SEEK_SET);
+    game_list_init(&gl);
+    game_list_read_pgn(&gl, f);
+    game_list_filter_set(&gl, "WhiteElo", OperatorGreater, "2700");
+    game_list_filter(&gl, &new_gl);
+    assert(new_gl.ai.count == 3);
+    game_list_free(&gl);
+    game_list_free(&new_gl);
+
+    fseek(f, 0, SEEK_SET);
+    game_list_init(&gl);
+    game_list_read_pgn(&gl, f);
+    game_list_filter_set(&gl, "Date", OperatorGreater, "2019.00.00");
+    game_list_filter(&gl, &new_gl);
+    assert(new_gl.ai.count == 6);
+    game_list_free(&gl);
+    game_list_free(&new_gl);
+
     fclose(f);
 }
 
