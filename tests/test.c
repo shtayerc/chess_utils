@@ -892,11 +892,11 @@ test_game_tag_filter_functions() {
     TagFilter tf = {.tag = {.key = "White", .value = "morphy"}, .op = OperatorContains};
     tfl_add(&tfl, &tf);
     assert(tag_list_filter_is_valid(&tl, &tfl));
-    snprintf(tf.tag.value, TAG_LEN, "%s", "Morphy");
+    snprintf(tf.tag.value, TAG_LEN, "%s", "Morphy, Paul");
     tf.op = OperatorEquals;
     tfl_add(&tfl, &tf);
     assert(tag_list_filter_is_valid(&tl, &tfl));
-    tfl_delete(&tfl, "White", OperatorContains);
+    tfl_delete(&tfl, "White", OperatorEquals);
 
     tfl_free(&tfl);
     tag_list_free(&tl);
