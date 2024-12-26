@@ -1397,6 +1397,39 @@ test_game_list_functions() {
     game_list_free(&new_gl);
 
     fclose(f);
+
+    GameRow gr;
+    game_list_init(&gl);
+    game_row_init(&gr);
+    gr.index = 3;
+    game_list_add(&gl, &gr);
+    game_row_init(&gr);
+    gr.index = 1;
+    game_list_add(&gl, &gr);
+    game_row_init(&gr);
+    gr.index = 2;
+    game_list_add(&gl, &gr);
+    qsort(gl.list, gl.ai.count, sizeof(GameRow), game_row_cmp_file_asc);
+    assert(gl.list[0].index == 1);
+    assert(gl.list[1].index == 2);
+    assert(gl.list[2].index == 3);
+    game_list_free(&gl);
+
+    game_list_init(&gl);
+    game_row_init(&gr);
+    gr.index = 3;
+    game_list_add(&gl, &gr);
+    game_row_init(&gr);
+    gr.index = 1;
+    game_list_add(&gl, &gr);
+    game_row_init(&gr);
+    gr.index = 2;
+    game_list_add(&gl, &gr);
+    qsort(gl.list, gl.ai.count, sizeof(GameRow), game_row_cmp_file_dsc);
+    assert(gl.list[0].index == 3);
+    assert(gl.list[1].index == 2);
+    assert(gl.list[2].index == 1);
+    game_list_free(&gl);
 }
 
 void
