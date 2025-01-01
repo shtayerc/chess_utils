@@ -1430,6 +1430,16 @@ test_game_list_functions() {
     assert(gl.list[1].index == 2);
     assert(gl.list[2].index == 1);
     game_list_free(&gl);
+
+    f = fopen("files/medium.pgn", "r");
+    game_list_init(&gl);
+    game_list_read_pgn(&gl, f);
+    snprintf(cmp_tag, TAG_LEN, "WhiteElo");
+    tag_list_delete(gl.list[0].tag_list, "WhiteElo");
+    qsort(gl.list, gl.ai.count, sizeof(GameRow), game_row_cmp_tag_desc);
+    assert(!strcmp(gl.list[0].tag_list->list[9].value, "2777"));
+    assert(!strcmp(gl.list[4].tag_list->list[9].value, "2474"));
+    game_list_free(&gl);
 }
 
 void
