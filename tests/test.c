@@ -1425,7 +1425,7 @@ test_game_list_functions() {
     game_row_init(&gr);
     gr.index = 2;
     game_list_add(&gl, &gr);
-    qsort(gl.list, gl.ai.count, sizeof(GameRow), game_row_cmp_file_dsc);
+    qsort(gl.list, gl.ai.count, sizeof(GameRow), game_row_cmp_file_desc);
     assert(gl.list[0].index == 3);
     assert(gl.list[1].index == 2);
     assert(gl.list[2].index == 1);
