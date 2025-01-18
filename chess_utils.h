@@ -1,5 +1,5 @@
 /*
-chess_utils v0.9.7
+chess_utils v0.9.8
 
 Copyright (c) 2024 David Murko
 
@@ -3982,6 +3982,7 @@ glsr_init(GameListStatRow* row) {
     row->prom_piece = Empty;
     row->san[0] = '\0';
     row->count = 0;
+    row->count_finished = 0;
     row->white_win = 0;
     row->black_win = 0;
     row->draw = 0;
@@ -3998,7 +3999,7 @@ glsr_aggregate(GameListStatRow* row, char* result) {
     if (!strcmp(result, RESULT_DRAW)) {
         (row->draw)++;
     }
-    if (!strcmp(result, RESULT_NONE)) {
+    if (strcmp(result, RESULT_NONE)) {
         (row->count_finished)++;
     }
     (row->count)++;

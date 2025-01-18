@@ -1456,10 +1456,12 @@ test_gls_functions() {
     gls_read_pgn(&gls, &gl, f, &b);
     assert(!strcmp(gls.list[0].san, "d5"));
     assert(gls.list[0].white_win == 1);
+    assert(gls.list[0].count_finished == 1);
 
     assert(!strcmp(gls.list[1].san, "c5"));
     assert(gls.list[1].white_win == 0);
     assert(gls.list[1].draw == 2);
+    assert(gls.list[1].count_finished == 2);
 
     assert(!strcmp(gls.list[2].san, "e5"));
     assert(gls.list[2].white_win == 1);
