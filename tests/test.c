@@ -860,6 +860,14 @@ test_variation_sequence_functions() {
 
     free(vs_list);
     game_free(&g);
+
+    game_init(&g, NULL);
+    f = fopen("files/equal_variations.pgn", "r");
+    pgn_read_file(f, &g, 0);
+    fclose(f);
+    count = variation_vs_count(g.line_main);
+    game_free(&g);
+    assert(count == 4);
 }
 
 void
