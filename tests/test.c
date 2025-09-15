@@ -1448,6 +1448,15 @@ test_game_list_functions() {
     assert(!strcmp(gl.list[0].tag_list->list[9].value, "2777"));
     assert(!strcmp(gl.list[4].tag_list->list[9].value, "2474"));
     game_list_free(&gl);
+
+    f = fopen("files/extra_empty_line.pgn", "r");
+    game_list_init(&gl);
+    game_list_read_pgn(&gl, f);
+    assert(gl.list[0].tag_list->ai.count == 7);
+    assert(gl.ai.count == 1);
+    game_list_sort(&gl, "Date", SortAscending);
+    assert(gl.list[0].tag_list->ai.count == 7);
+    game_list_free(&gl);
 }
 
 void
