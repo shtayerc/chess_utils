@@ -272,6 +272,150 @@ test_board_square_is_attacked() {
 }
 
 void
+move_guess_helper(Board *b, Square* src, Square dst) {
+    Status s;
+    *src = board_square_src_guess(b, dst);
+    s = board_move_status(b, *src, dst, Empty);
+    board_move_do(b, *src, dst, Empty, s);
+}
+
+void
+test_board_square_move_guess() {
+    Board b;
+    Square src;
+
+    board_fen_import(&b, FEN_DEFAULT);
+    move_guess_helper(&b, &src, e4);
+    assert(src == e2);
+    move_guess_helper(&b, &src, c5);
+    assert(src == c7);
+    move_guess_helper(&b, &src, f3);
+    assert(src == g1);
+    move_guess_helper(&b, &src, c6);
+    assert(src == b8);
+    move_guess_helper(&b, &src, d4);
+    assert(src == d2);
+    move_guess_helper(&b, &src, d4);
+    assert(src == c5);
+    move_guess_helper(&b, &src, d4);
+    assert(src == f3);
+    move_guess_helper(&b, &src, f6);
+    assert(src == g8);
+    move_guess_helper(&b, &src, c3);
+    assert(src == b1);
+    move_guess_helper(&b, &src, d6);
+    assert(src == d7);
+    move_guess_helper(&b, &src, g5);
+    assert(src == c1);
+    move_guess_helper(&b, &src, e6);
+    assert(src == e7);
+    move_guess_helper(&b, &src, d2);
+    assert(src == d1);
+
+    board_fen_import(&b, FEN_DEFAULT);
+    move_guess_helper(&b, &src, e4);
+    assert(src == e2);
+    move_guess_helper(&b, &src, c5);
+    assert(src == c7);
+    move_guess_helper(&b, &src, f3);
+    assert(src == g1);
+    move_guess_helper(&b, &src, d6);
+    assert(src == d7);
+    move_guess_helper(&b, &src, d4);
+    assert(src == d2);
+    move_guess_helper(&b, &src, d4);
+    assert(src == c5);
+    move_guess_helper(&b, &src, d4);
+    assert(src == f3);
+
+    board_fen_import(&b, FEN_DEFAULT);
+    move_guess_helper(&b, &src, e4);
+    assert(src == e2);
+    move_guess_helper(&b, &src, e5);
+    assert(src == e7);
+    move_guess_helper(&b, &src, d4);
+    assert(src == d2);
+    move_guess_helper(&b, &src, d4);
+    assert(src == e5);
+    move_guess_helper(&b, &src, c3);
+    assert(src == c2);
+
+    board_fen_import(&b, FEN_DEFAULT);
+    move_guess_helper(&b, &src, e4);
+    assert(src == e2);
+    move_guess_helper(&b, &src, e5);
+    assert(src == e7);
+    move_guess_helper(&b, &src, f3);
+    assert(src == g1);
+    move_guess_helper(&b, &src, c6);
+    assert(src == b8);
+    move_guess_helper(&b, &src, c4);
+    assert(src == f1);
+    move_guess_helper(&b, &src, f6);
+    assert(src == g8);
+    move_guess_helper(&b, &src, g1);
+    assert(src == e1);
+
+    board_fen_import(&b, FEN_DEFAULT);
+    move_guess_helper(&b, &src, e4);
+    assert(src == e2);
+    move_guess_helper(&b, &src, e5);
+    assert(src == e7);
+    move_guess_helper(&b, &src, f3);
+    assert(src == g1);
+    move_guess_helper(&b, &src, c6);
+    assert(src == b8);
+    move_guess_helper(&b, &src, c4);
+    assert(src == f1);
+    move_guess_helper(&b, &src, f6);
+    assert(src == g8);
+    move_guess_helper(&b, &src, g5);
+    assert(src == f3);
+    move_guess_helper(&b, &src, d5);
+    assert(src == d7);
+    move_guess_helper(&b, &src, d5);
+    assert(src == e4);
+    move_guess_helper(&b, &src, a5);
+    assert(src == c6);
+    move_guess_helper(&b, &src, b5);
+    assert(src == c4);
+    move_guess_helper(&b, &src, d7);
+    assert(src == c8);
+
+    board_fen_import(&b, "r2qkbnr/pp1n1ppp/2p1p3/3pPb2/3P4/1N3N2/PPP2PPP/R1BQKB1R b KQkq - 3 6");
+    move_guess_helper(&b, &src, c5);
+    assert(src == c6);
+
+    board_fen_import(&b, "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4");
+    move_guess_helper(&b, &src, d3);
+    assert(src == d2);
+
+    board_fen_import(&b, "r1bqkbnr/1ppp1ppp/p1n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4");
+    move_guess_helper(&b, &src, a4);
+    assert(src == b5);
+
+    board_fen_import(&b, "r1bqkbnr/1ppp1ppp/p1B5/4p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 4");
+    move_guess_helper(&b, &src, c6);
+    assert(src == d7);
+
+    board_fen_import(&b, "r1bqk2r/pppp1ppp/1Bn2n2/4p3/2B1P3/3P1N2/PPP2PPP/RN1QK2R b KQkq - 0 6");
+    move_guess_helper(&b, &src, b6);
+    assert(src == a7);
+
+    board_fen_import(&b, "rn1qkbnr/ppp1pppp/6B1/3p4/3P4/4P3/PPP2PPP/RNBQK1NR b KQkq - 0 4");
+    move_guess_helper(&b, &src, g6);
+    assert(src == h7);
+
+    board_fen_import(&b, "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3PBN2/PPP2PPP/RN1QK2R b KQkq - 2 5");
+    move_guess_helper(&b, &src, b6);
+    assert(src == c5);
+
+    board_fen_import(&b, "rnbqkbnr/pp2pppp/2p5/8/3PN3/8/PPP2PPP/R1BQKBNR b KQkq - 0 4");
+    move_guess_helper(&b, &src, f6);
+    assert(src == g8);
+}
+
+void
 test_board_is_check() {
     Board b;
     board_fen_import(&b, "rnbqkbnr/ppp1pppp/8/1B1p4/4P3/8/PPPP1PPP/RNBQK1NR b KQkq - 1 2");
@@ -1585,6 +1729,7 @@ main(int argc, char* argv[]) {
         test_board_square_piece_color();
         test_board_square_set();
         test_board_square_is_attacked();
+        test_board_square_move_guess();
         test_board_is_check();
         test_board_is_checkmate();
         test_board_is_stalemate();
