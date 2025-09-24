@@ -417,6 +417,10 @@ test_board_square_move_guess() {
     board_fen_import(&b, "rnbqkb1r/ppp1pppp/5n2/3P4/8/5N2/PPPP1PPP/RNBQKB1R b KQkq - 2 3");
     move_guess_helper(&b, &src, d5);
     assert(src == f6);
+
+    board_fen_import(&b, "r1bq1rk1/ppp1ppbp/1nn3p1/8/3P4/2N2NP1/PP2PPBP/R1BQ1RK1 w - - 3 9");
+    move_guess_helper(&b, &src, e3);
+    assert(src == e2);
 }
 
 void
