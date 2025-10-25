@@ -421,6 +421,14 @@ test_board_square_move_guess() {
     board_fen_import(&b, "r1bq1rk1/ppp1ppbp/1nn3p1/8/3P4/2N2NP1/PP2PPBP/R1BQ1RK1 w - - 3 9");
     move_guess_helper(&b, &src, e3);
     assert(src == e2);
+
+    board_fen_import(&b, "rn1qkbnr/pp2ppp1/2p4p/3pP2P/3Pb1P1/5P2/PPP5/RNBQKBNR b KQkq - 0 7");
+    move_guess_helper(&b, &src, h7);
+    assert(src == e4);
+
+    board_fen_import(&b, "r1b1kb1r/ppqp1ppp/2n1p1n1/4P3/2B1Q3/2P2N2/PP3PPP/RNB2RK1 w kq - 8 10");
+    move_guess_helper(&b, &src, e1);
+    assert(src == f1);
 }
 
 void
