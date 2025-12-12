@@ -1536,9 +1536,9 @@ board_square_is_developed(Board* b, Square sq) {
     Board starting;
     board_fen_import(&starting, FEN_DEFAULT);
     return b->position[sq] != starting.position[sq]
-    //lets asume that queenside castle has rook developed
-    && !(b->position[sq] == WhiteRook && b->position[g1] == WhiteKing)
-    && !(b->position[sq] == BlackRook && b->position[g8] == BlackKing);
+           //lets asume that queenside castle has rook developed
+           && !(b->position[sq] == WhiteRook && b->position[g1] == WhiteKing)
+           && !(b->position[sq] == BlackRook && b->position[g8] == BlackKing);
 }
 
 int
@@ -1632,7 +1632,8 @@ board_square_src_guess(Board* b, Square dst) {
             local_prio += 5;
         }
 
-        if (board_square_is_attacked_by_pawn(b, src, op_color) && src_piece != WhitePawn && src_piece != BlackPawn && de) {
+        if (board_square_is_attacked_by_pawn(b, src, op_color) && src_piece != WhitePawn && src_piece != BlackPawn
+            && de) {
             local_prio += 5;
         }
 
@@ -1653,9 +1654,10 @@ board_square_src_guess(Board* b, Square dst) {
             local_prio += 5;
         }
         //lower prio for bishop before central pawns
-        if ((src_piece == WhiteBishop && ((dst == e3 && b->position[e2] == WhitePawn) || (dst == d3 && b->position[d2] == WhitePawn)))
-            || (src_piece == BlackBishop && ((dst == e6 && b->position[e7] == BlackPawn) || (dst == d6 && b->position[d7] == BlackPawn)))
-        ) {
+        if ((src_piece == WhiteBishop
+             && ((dst == e3 && b->position[e2] == WhitePawn) || (dst == d3 && b->position[d2] == WhitePawn)))
+            || (src_piece == BlackBishop
+                && ((dst == e6 && b->position[e7] == BlackPawn) || (dst == d6 && b->position[d7] == BlackPawn)))) {
             local_prio = 2;
         }
 
