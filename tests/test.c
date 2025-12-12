@@ -1520,6 +1520,17 @@ test_game_list_functions() {
     game_list_free(&gl);
     fclose(f);
 
+    board_fen_import(&b, "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/2N2N2/PPPP1PPP/R1BQK2R b KQkq - 5 4");
+    f = fopen("files/search_board_subvariation.pgn", "r");
+    game_list_init(&gl);
+    game_list_read_pgn(&gl, f);
+    fseek(f, 0, SEEK_SET);
+    game_list_search_board(&gl, &new_gl, f, &b);
+    assert(new_gl.ai.count == 1);
+    game_list_free(&new_gl);
+    game_list_free(&gl);
+    fclose(f);
+
     board_fen_import(&b, "3r2r1/1pknQ2R/p4RP1/4p3/4q3/1P6/7P/7K w - - 12 43");
     f = fopen("files/number_nospace.pgn", "r");
     game_list_init(&gl);
