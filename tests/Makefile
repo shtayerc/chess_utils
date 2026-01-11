@@ -13,6 +13,7 @@ TESTFILE_05=tmp_test_05.pgn
 TESTFILE_06=tmp_test_06.pgn
 TESTFILE_07=tmp_test_07.pgn
 TESTFILE_08=tmp_test_08.pgn
+TESTFILE_09=tmp_test_09.pgn
 
 all:
 	$(CC) $(FLAGS) -std=c99 $(FILES) -o $(EXE)
@@ -35,6 +36,7 @@ check:
 	diff $(TESTFILE_06) files/escaped_doublequote.pgn
 	diff $(TESTFILE_07) files/delete_next_moves_after.pgn
 	diff $(TESTFILE_08) files/variation_insert_after.pgn
+	diff $(TESTFILE_09) files/import_move_annotation_after.pgn
 
 valgrind: VALGRIND = valgrind -q --leak-check=full --track-origins=yes
 valgrind: check

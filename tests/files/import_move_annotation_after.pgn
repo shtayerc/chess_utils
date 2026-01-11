@@ -1,0 +1,11 @@
+[Event "Test"]
+[Site "Test"]
+[Date "2026.01.08"]
+[Round "?"]
+[White "Test"]
+[Black "Test"]
+[Result "*"]
+
+1. e4 e5 2. f4 $5 exf4 3. Nc3 $6 Qh4+ $1 4. Ke2 d5 $3 5. exd5 $2 Bg4+ 6. Kd3
+$4 *
+

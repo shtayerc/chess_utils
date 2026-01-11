@@ -63,6 +63,30 @@ test_trimmove() {
     snprintf(san, 10, "11.");
     trimmove(san);
     assert(san[0] == '\0');
+
+    snprintf(san, 10, "1.Nf3!");
+    assert(trimmove(san) == 1);
+    assert(!strcmp(san, "Nf3"));
+
+    snprintf(san, 10, "1.f4?");
+    assert(trimmove(san) == 2);
+    assert(!strcmp(san, "f4"));
+
+    snprintf(san, 10, "O-O!!");
+    assert(trimmove(san) == 3);
+    assert(!strcmp(san, "O-O"));
+
+    snprintf(san, 10, "O-O??");
+    assert(trimmove(san) == 4);
+    assert(!strcmp(san, "O-O"));
+
+    snprintf(san, 10, "e4!?");
+    assert(trimmove(san) == 5);
+    assert(!strcmp(san, "e4"));
+
+    snprintf(san, 10, "e4?!");
+    assert(trimmove(san) == 6);
+    assert(!strcmp(san, "e4"));
 }
 
 void
@@ -1297,6 +1321,15 @@ test_pgn_write_file() {
     f = fopen("files/escaped_doublequote.pgn", "r");
     of = fopen("tmp_test_06.pgn", "w");
     pgn_read_file(f, &g, 0);
+    pgn_write_file(of, &g);
+    fclose(f);
+    fclose(of);
+    game_free(&g);
+
+    game_init(&g, NULL);
+    f = fopen("files/import_move_annotation_before.pgn", "r");
+    of = fopen("tmp_test_09.pgn", "w");
+    assert(pgn_read_file(f, &g, 0) == 1);
     pgn_write_file(of, &g);
     fclose(f);
     fclose(of);
