@@ -87,6 +87,10 @@ test_trimmove() {
     snprintf(san, 10, "e4?!");
     assert(trimmove(san) == 6);
     assert(!strcmp(san, "e4"));
+
+    snprintf(san, 10, "5...c4");
+    trimmove(san);
+    assert(!strcmp(san, "c4"));
 }
 
 void
@@ -1280,6 +1284,12 @@ test_pgn_read_file() {
     ok = pgn_read_file(f, &g, 0);
     fclose(f);
     assert(ok && g.line_main->move_count == 85);
+    game_free(&g);
+
+    game_init(&g, NULL);
+    f = fopen("files/3_dots_no_space.pgn", "r");
+    assert(pgn_read_file(f, &g, 0));
+    fclose(f);
     game_free(&g);
 }
 
