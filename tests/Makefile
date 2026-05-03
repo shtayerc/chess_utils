@@ -14,6 +14,8 @@ TESTFILE_06=tmp_test_06.pgn
 TESTFILE_07=tmp_test_07.pgn
 TESTFILE_08=tmp_test_08.pgn
 TESTFILE_09=tmp_test_09.pgn
+TESTFILE_10=tmp_test_10.pgn
+TESTFILE_11=tmp_test_11.pgn
 
 all:
 	$(CC) $(FLAGS) -std=c99 $(FILES) -o $(EXE)
@@ -37,6 +39,8 @@ check:
 	diff $(TESTFILE_07) files/delete_next_moves_after.pgn
 	diff $(TESTFILE_08) files/variation_insert_after.pgn
 	diff $(TESTFILE_09) files/import_move_annotation_after.pgn
+	diff $(TESTFILE_10) files/comment_promotion_black_after.pgn
+	diff $(TESTFILE_11) files/comment_promotion_white_after.pgn
 
 valgrind: VALGRIND = valgrind -q --leak-check=full --track-origins=yes
 valgrind: check

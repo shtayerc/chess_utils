@@ -1156,6 +1156,34 @@ test_variation_insert() {
 }
 
 void
+test_variation_promote_comment() {
+    Game g;
+    game_init(&g, NULL);
+    FILE* f = fopen("files/comment_promotion_before.pgn", "r");
+    pgn_read_file(f, &g, 0);
+    fclose(f);
+    game_move_index_set(&g, 3);
+    g.line_current = game_move_get(&g)->variation_list[0];
+    game_variation_promote(&g);
+    f = fopen("tmp_test_10.pgn", "w");
+    pgn_write_file(f, &g);
+    fclose(f);
+    game_free(&g);
+
+    game_init(&g, NULL);
+    f = fopen("files/comment_promotion_before.pgn", "r");
+    pgn_read_file(f, &g, 0);
+    fclose(f);
+    game_move_index_set(&g, 1);
+    g.line_current = game_move_get(&g)->variation_list[0];
+    game_variation_promote(&g);
+    f = fopen("tmp_test_11.pgn", "w");
+    pgn_write_file(f, &g);
+    fclose(f);
+    game_free(&g);
+}
+
+void
 test_game_board_find() {
     Board b;
     Game g;
@@ -1863,6 +1891,7 @@ main(int argc, char* argv[]) {
         test_variation_movenumber_export();
         test_variation_delete_next_moves();
         test_variation_insert();
+        test_variation_promote_comment();
 
         //VARIATION SEQUENCE FUNCTIONS
         test_variation_sequence_functions();
