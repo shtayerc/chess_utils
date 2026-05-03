@@ -300,7 +300,7 @@ test_board_square_is_attacked() {
 }
 
 void
-move_guess_helper(Board *b, Square* src, Square dst) {
+move_guess_helper(Board* b, Square* src, Square dst) {
     Status s;
     *src = board_square_src_guess(b, dst);
     s = board_move_status(b, *src, dst, Empty);
@@ -1629,6 +1629,22 @@ test_game_list_functions() {
     assert(new_gl.ai.count == 6);
     game_list_free(&gl);
     game_list_free(&new_gl);
+
+    fclose(f);
+
+    f = fopen("files/900.pgn", "r");
+    game_list_init(&gl);
+    game_list_filter_set(&gl, "WhiteElo", OperatorGreater, "1200");
+    game_list_read_pgn(&gl, f);
+    assert(gl.ai.count == 0);
+    game_list_free(&gl);
+
+    fseek(f, 0, SEEK_SET);
+    game_list_init(&gl);
+    game_list_filter_set(&gl, "WhiteElo", OperatorLower, "1200");
+    game_list_read_pgn(&gl, f);
+    assert(gl.ai.count == 1);
+    game_list_free(&gl);
 
     fclose(f);
 
