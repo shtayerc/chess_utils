@@ -1,5 +1,5 @@
 /*
-chess_utils v0.9.22
+chess_utils v0.9.23
 
 Copyright (c) 2026 David Murko
 
@@ -878,7 +878,7 @@ trimmove(char* str) {
     }
     i = strlen(str) - 1;
     int nag = 0;
-    while (str[i] == '?' || str[i] == '!') {
+    while (i >=0 && (str[i] == '?' || str[i] == '!')) {
         if (str[i] == '!') {
             nag = 2 * nag + 1;
         } else {
